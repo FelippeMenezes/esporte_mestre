@@ -1,2 +1,46 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="hero-section bg-primary text-white py-5 mb-5 rounded">
+<div class="container text-center">
+<h1 class="display-4 fw-bold">Bem-vindo ao Esporte Mestre</h1>
+<p class="lead">O melhor gerenciador de esportes, times e jogadores!</p>
+<% if user_signed_in? %>
+<div class="mt-4">
+<%= link_to "Ver Meus Times", "#", class: "btn btn-light btn-lg me-3" %>
+<%= link_to "Criar Novo Time", "#", class: "btn btn-outline-light btn-lg" %>
+</div>
+<% else %>
+<div class="mt-4">
+<%= link_to "Começar Agora", new_user_registration_path, class: "btn btn-light btn-lg me-3" %>
+<%= link_to "Já tenho conta", new_user_session_path, class: "btn btn-outline-light btn-lg" %>
+</div>
+<% end %>
+</div>
+</div>
+<div class="row">
+<div class="col-md-4 mb-4">
+<div class="card h-100">
+<div class="card-body text-center">
+<i class="fas fa-users fa-3x text-primary mb-3"></i>
+<h5 class="card-title">Gerencie Times</h5>
+<p class="card-text">Crie e gerencie times.</p>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4">
+<div class="card h-100">
+<div class="card-body text-center">
+<i class="fas fa-trophy fa-3x text-primary mb-3"></i>
+<h5 class="card-title">Partidas Épicas</h5>
+<p class="card-text">Jogue partidas emocionantes com jogadores exclusivos.</p>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4">
+<div class="card h-100">
+<div class="card-body text-center">
+<i class="fas fa-exchange-alt fa-3x text-primary mb-3"></i>
+<h5 class="card-title">Mercado de Transferências</h5>
+<p class="card-text">Compre e venda jogadores no mercado dinâmico de transferências.</p>
+</div>
+</div>
+</div>
+</div>
