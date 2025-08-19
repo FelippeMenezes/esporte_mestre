@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <h1>Detalhes da Partida</h1>
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <h3><%= @match.home_team.name %></h3>
+          <p class="text-muted">Time da Casa</p>
+        </div>
+        <div class="col-md-4">
+          <h2><%= @match.home_goals %> x <%= @match.away_goals %></h2>
+          <p class="text-muted"><%= @match.match_date.strftime("%d/%m/%Y às %H:%M") %></p>
+          <% if @match.winner %>
+            <p><strong>Vencedor:</strong> <%= @match.winner.name %></p>
+          <% else %>
+            <p><strong>Resultado:</strong> Empate</p>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <h3><%= @match.away_team.name %></h3>
+          <p class="text-muted">Time Visitante</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Voltar para Partidas", team_matches_path(@match.home_team.user ? @match.home_team : @match.away_team), class: "btn btn-primary" %>
+  </div>
+</div>

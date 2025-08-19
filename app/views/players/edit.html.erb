@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h1>Editar Jogador</h1>
+
+  <%= simple_form_for @player do |f| %>
+    <div class="card">
+      <div class="card-body">
+        <%= f.input :name, label: "Nome do Jogador" %>
+        <%= f.input :position, label: "Posição", 
+                    collection: [['Goleiro', 'G'], ['Defensor', 'D'], ['Meio-campo', 'M'], ['Atacante', 'A']] %>
+        <%= f.input :level, label: "Nível", 
+                    collection: (1..10).to_a %>
+        
+        <div class="d-flex justify-content-between">
+          <%= f.submit "Atualizar Jogador", class: "btn btn-success" %>
+          <%= link_to "Cancelar", @player, class: "btn btn-secondary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

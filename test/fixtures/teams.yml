@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  budget: 9.99
+  user: one
+  campaign: one
+  is_user_team: false
+
+two:
+  name: MyString
+  budget: 9.99
+  user: two
+  campaign: two
+  is_user_team: false
