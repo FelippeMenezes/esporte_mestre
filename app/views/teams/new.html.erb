@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <h1>Criar Novo Time</h1>
+
+  <%= simple_form_for @team do |f| %>
+    <div class="card">
+      <div class="card-body">
+        <%= f.input :name, label: "Nome do Time", placeholder: "Digite o nome do seu time" %>
+        
+        <div class="alert alert-info">
+          <h5>O que acontece quando você criar um time:</h5>
+          <ul>
+            <li>Uma nova campanha será criada exclusivamente para você</li>
+            <li>9 times rivais serão gerados automaticamente</li>
+            <li>Cada time (incluindo o seu) receberá 15 jogadores</li>
+            <li>Você começará com um orçamento de $1.000.000</li>
+          </ul>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <%= f.submit "Criar Time", class: "btn btn-success" %>
+          <%= link_to "Cancelar", teams_path, class: "btn btn-secondary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

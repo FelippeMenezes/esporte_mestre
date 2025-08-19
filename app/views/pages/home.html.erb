@@ -5,8 +5,8 @@
 
         <% if user_signed_in? %>
             <div class="actions">
-                <%= link_to "Ver Meus Times", "#", class: "btn btn-light" %>
-                <%= link_to "Criar Novo Time", "#", class: "btn btn-light" %>
+                <%= link_to "Ver Meus Times", teams_path, class: "btn btn-light" %>
+                <%= link_to "Criar Novo Time", new_team_path, class: "btn btn-light" %>
             </div>
         <% else %>
             <div class="actions">

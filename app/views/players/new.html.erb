@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h1>Adicionar Jogador - <%= @team.name %></h1>
+
+  <%= simple_form_for [@team, @player] do |f| %>
+    <div class="card">
+      <div class="card-body">
+        <%= f.input :name, label: "Nome do Jogador", placeholder: "Digite o nome do jogador" %>
+        <%= f.input :position, label: "Posição", 
+                    collection: [['Goleiro', 'G'], ['Defensor', 'D'], ['Meio-campo', 'M'], ['Atacante', 'A']],
+                    prompt: "Selecione uma posição" %>
+        <%= f.input :level, label: "Nível", 
+                    collection: (1..10).to_a,
+                    prompt: "Selecione o nível" %>
+        
+        <div class="d-flex justify-content-between">
+          <%= f.submit "Adicionar Jogador", class: "btn btn-success" %>
+          <%= link_to "Cancelar", team_players_path(@team), class: "btn btn-secondary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Partidas - <%= @team.name %></h1>
+    <%= link_to "Nova Partida", new_team_match_path(@team), class: "btn btn-success" %>
+  </div>
+
+  <% if @matches.any? %>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Time da Casa</th>
+            <th>Resultado</th>
+            <th>Time Visitante</th>
+            <th>Resultado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @matches.each do |match| %>
+            <tr>
+              <td><%= match.match_date.strftime("%d/%m/%Y %H:%M") %></td>
+              <td>
+                <%= match.home_team.name %>
+                <% if match.home_team == @team %>
+                  <span class="badge bg-primary">Seu Time</span>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <strong><%= match.home_goals %></strong>
+              </td>
+              <td>
+                <%= match.away_team.name %>
+                <% if match.away_team == @team %>
+                  <span class="badge bg-primary">Seu Time</span>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <strong><%= match.away_goals %></strong>
+              </td>
+              <td>
+                <%= link_to "Ver", match, class: "btn btn-sm btn-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <h4>Nenhuma partida encontrada</h4>
+      <p>Seu time ainda não jogou nenhuma partida. <%= link_to "Criar uma nova partida", new_team_match_path(@team) %> agora!</p>
+    </div>
+  <% end %>
+
+  <div class="mt-4">
+    <%= link_to "Voltar para o Time", @team, class: "btn btn-primary" %>
+  </div>
+</div>
