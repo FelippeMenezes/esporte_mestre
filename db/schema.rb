@@ -10,59 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_19_153628) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_19_202904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "campaigns", force: :cascade do |t|
-    t.string "name"
-    t.date "start_date"
-    t.date "end_date"
-    t.bigint "team_id", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id"], name: "index_campaigns_on_team_id"
-  end
-
-  create_table "markets", force: :cascade do |t|
-    t.bigint "campaign_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["campaign_id"], name: "index_markets_on_campaign_id"
   end
 
   create_table "matches", force: :cascade do |t|
-    t.string "home_team_name"
-    t.string "away_team_name"
-    t.integer "home_score"
-    t.integer "away_score"
+    t.bigint "home_team_id", null: false
+    t.bigint "away_team_id", null: false
+    t.integer "home_goals", default: 0
+    t.integer "away_goals", default: 0
     t.datetime "match_date"
-    t.bigint "campaign_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id"], name: "index_matches_on_campaign_id"
+    t.index ["away_team_id"], name: "index_matches_on_away_team_id"
+    t.index ["home_team_id"], name: "index_matches_on_home_team_id"
   end
 
   create_table "players", force: :cascade do |t|
-    t.string "name"
-    t.string "position"
-    t.integer "yellow_cards"
-    t.integer "red_cards"
-    t.boolean "injuries"
-    t.integer "goals_scored"
-    t.decimal "price"
-    t.bigint "campaign_id", null: false
+    t.string "name", null: false
+    t.string "position", null: false
+    t.integer "level", default: 1
+    t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id"], name: "index_players_on_campaign_id"
+    t.index ["position"], name: "index_players_on_position"
+    t.index ["team_id"], name: "index_players_on_team_id"
   end
 
   create_table "teams", force: :cascade do |t|
-    t.string "name"
-    t.decimal "budget"
-    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.decimal "budget", precision: 10, scale: 2, default: "1000000.0"
+    t.bigint "user_id"
+    t.bigint "campaign_id", null: false
+    t.boolean "is_user_team", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_teams_on_campaign_id"
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
@@ -78,9 +67,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_19_153628) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "campaigns", "teams"
-  add_foreign_key "markets", "campaigns"
-  add_foreign_key "matches", "campaigns"
-  add_foreign_key "players", "campaigns"
+  add_foreign_key "matches", "teams", column: "away_team_id"
+  add_foreign_key "matches", "teams", column: "home_team_id"
+  add_foreign_key "players", "teams"
+  add_foreign_key "teams", "campaigns"
   add_foreign_key "teams", "users"
 end
