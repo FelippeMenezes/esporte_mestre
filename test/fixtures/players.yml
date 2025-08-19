@@ -3,19 +3,11 @@
 one:
   name: MyString
   position: MyString
-  yellow_cards: 1
-  red_cards: 1
-  injuries: false
-  goals_scored: 1
-  price: 9.99
-  campaign: one
+  level: 1
+  team: one
 
 two:
   name: MyString
   position: MyString
-  yellow_cards: 1
-  red_cards: 1
-  injuries: false
-  goals_scored: 1
-  price: 9.99
-  campaign: two
+  level: 1
+  team: two

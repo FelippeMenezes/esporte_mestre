@@ -1,10 +1,7 @@
 class CreateCampaigns < ActiveRecord::Migration[7.1]
   def change
     create_table :campaigns do |t|
-      t.string :name
-      t.date :start_date
-      t.date :end_date
-      t.references :team, null: false, foreign_key: true
+      t.string :name, null: false
 
       t.timestamps
     end

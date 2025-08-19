@@ -1,0 +1,107 @@
+<div class="container mt-4">
+  <h1>Mercado de Transferências - <%= @team.name %></h1>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5>Jogadores Disponíveis para Compra</h5>
+          <small class="text-muted">Orçamento disponível: $<%= number_with_delimiter(@team.budget) %></small>
+        </div>
+        <div class="card-body">
+          <% if @available_players.any? %>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Posição</th>
+                    <th>Nível</th>
+                    <th>Valor</th>
+                    <th>Time</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @available_players.each do |player| %>
+                    <tr>
+                      <td><%= player.name %></td>
+                      <td><%= player.position_name %></td>
+                      <td><%= player.level %></td>
+                      <td>$<%= number_with_delimiter(player.market_value) %></td>
+                      <td><%= player.team.name %></td>
+                      <td>
+                        <% if @team.budget >= player.market_value %>
+                            <%= button_to "Comprar", buy_player_path(team_id: @team.id, id: player.id),
+                                  method: :post,
+                                  data: { turbo_confirm: "Comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
+                                  class: "btn btn-sm btn-success", form: { class: 'd-inline' } %>
+                        <% else %>
+                          <span class="text-muted">Sem orçamento</span>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <div class="alert alert-info">
+              Nenhum jogador disponível para compra no momento.
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5>Seus Jogadores</h5>
+          <small class="text-muted">Clique em "Vender" para colocar um jogador no mercado</small>
+        </div>
+        <div class="card-body">
+          <% if @my_players.any? %>
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Posição</th>
+                    <th>Nível</th>
+                    <th>Valor</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @my_players.each do |player| %>
+                    <tr>
+                      <td><%= player.name %></td>
+                      <td><%= player.position_name %></td>
+                      <td><%= player.level %></td>
+                      <td>$<%= number_with_delimiter(player.market_value) %></td>
+                      <td>
+                        <%= button_to "Vender", sell_player_path(team_id: @team.id, id: player.id),
+                              method: :post,
+                              data: { turbo_confirm: "Vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
+                              class: "btn btn-sm btn-warning", form: { class: 'd-inline' } %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <div class="alert alert-warning">
+              Você não tem jogadores no seu time.
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Voltar para o Time", @team, class: "btn btn-primary" %>
+  </div>
+</div>
