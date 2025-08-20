@@ -46,8 +46,9 @@
               </table>
             </div>
           <% else %>
-            <div class="alert alert-info">
+            <div class="alert alert-info alert-dismissible fade show m-1">
               Nenhum jogador disponível para compra no momento.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           <% end %>
         </div>
@@ -92,8 +93,9 @@
               </table>
             </div>
           <% else %>
-            <div class="alert alert-warning">
+            <div class="alert alert-warning alert-dismissible fade show m-1">
               Você não tem jogadores no seu time.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           <% end %>
         </div>

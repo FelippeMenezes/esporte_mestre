@@ -2,33 +2,29 @@
   <h1>Nova Partida - <%= @team.name %></h1>
 
   <% unless @team.can_play_match? %>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger alert-dismissible fade show m-1">
       <h5>Não é possível jogar uma partida!</h5>
       <p>Seu time precisa ter pelo menos 11 jogadores para jogar uma partida. Atualmente você tem <%= @team.total_players %> jogadores.</p>
       <%= link_to "Ver Jogadores", team_players_path(@team), class: "btn btn-primary" %>
       <%= link_to "Ir ao Mercado", team_market_path(@team), class: "btn btn-success" %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% else %>
     <%= simple_form_for [@team, @match] do |f| %>
       <div class="card">
         <div class="card-body">
-          <div class="alert alert-info">
-            <h5>Informações da Partida</h5>
-            <p><strong>Seu Time:</strong> <%= @team.name %> (Casa)</p>
-            <p><strong>Jogadores Disponíveis:</strong> <%= @team.total_players %></p>
-          </div>
-
           <%= f.input :away_team_id, label: "Time Adversário", 
                       collection: @rival_teams.map { |team| [team.name, team.id] },
                       prompt: "Selecione o time adversário" %>
           
-          <div class="alert alert-warning">
+          <div class="alert alert-warning alert-dismissible fade show m-1">
             <h6>Como funciona a simulação:</h6>
             <ul>
               <li>O resultado é calculado baseado no nível médio dos jogadores</li>
               <li>Há um fator aleatório para tornar o jogo mais emocionante</li>
               <li>A partida será jogada automaticamente quando você confirmar</li>
             </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
 
           <div class="d-flex justify-content-between">
