@@ -18,8 +18,7 @@
               </p>
               <%= link_to "Ver Time", team, class: "btn btn-primary" %>
               <%= link_to "Editar", edit_team_path(team), class: "btn btn-secondary" %>
-              <%= link_to "Excluir", team, method: :delete, 
-                          confirm: "Tem certeza?", class: "btn btn-danger" %>
+              <%= link_to "Excluir", team, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, class: "btn btn-danger" %>
             </div>
           </div>
         </div>

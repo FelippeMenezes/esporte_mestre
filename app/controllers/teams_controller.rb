@@ -81,7 +81,7 @@ class TeamsController < ApplicationController
       campaign.destroy
     end
     
-    redirect_to teams_path, notice: 'Time excluído com sucesso.'
+    redirect_to root_path, notice: 'Time excluído com sucesso.'
   end
 
   private
