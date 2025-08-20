@@ -48,9 +48,10 @@
       </table>
     </div>
   <% else %>
-    <div class="alert alert-info">
+    <div class="alert alert-info alert-dismissible fade show m-1">
       <h4>Nenhuma partida encontrada</h4>
       <p>Seu time ainda não jogou nenhuma partida. <%= link_to "Criar uma nova partida", new_team_match_path(@team) %> agora!</p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 
