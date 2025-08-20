@@ -26,9 +26,10 @@
       <% end %>
     </div>
   <% else %>
-    <div class="alert alert-info">
+    <div class="alert alert-info alert-dismissible fade show m-1">
       <h4>Nenhum time encontrado</h4>
       <p>Você ainda não criou nenhum time. <%= link_to "Criar seu primeiro time", new_team_path %> agora!</p>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 </div>
