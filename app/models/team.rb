@@ -7,7 +7,6 @@ class Team < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 3, maximum: 50 }
   validates :budget, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validate :unique_name_per_campaign
 
   def all_matches
     Match.where("home_team_id = ? OR away_team_id = ?", id, id)
@@ -47,14 +46,5 @@ class Team < ApplicationRecord
 
   def points
     wins * 3 + draws
-  end
-
-  private
-
-  def unique_name_per_campaign
-    return unless campaign
-
-    existing_team = campaign.teams.where(name: name).where.not(id: id).first
-    errors.add(:name, 'já existe nesta campanha') if existing_team
   end
 end
