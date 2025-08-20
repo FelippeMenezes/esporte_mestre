@@ -4,3 +4,6 @@
 @import "config/fonts";
 @import "components/index";
 @import "pages/index";
+@import "devise/sessions/new";
+@import "devise/registrations/new";
+@import "devise/passwords/new";
