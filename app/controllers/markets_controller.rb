@@ -2,16 +2,29 @@
 class MarketsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_team, only: [:index, :buy_player, :sell_player]
+  helper_method :sort_column, :sort_direction
 
   def index
+    order_clause = case sort_column
+                   when "market_value"
+                     # This CASE statement should match the logic in Player#market_value
+                     "CASE WHEN players.position = 'A' THEN players.level * 150000 " \
+                     "WHEN players.position = 'M' THEN players.level * 120000 " \
+                     "WHEN players.position = 'G' THEN players.level * 100000 " \
+                     "WHEN players.position = 'D' THEN players.level * 80000 " \
+                     "ELSE 50000 END"
+                   else
+                     "players.#{sort_column}"
+                   end
+
     @available_players = Player.joins(:team)
     .where(teams: { 
       is_user_team: false, 
       campaign_id: @team.campaign_id 
     })
-    .order(:name)
+    .order(Arel.sql("#{order_clause} #{sort_direction}"))
     
-    @my_players = @team.players.order(:position, :name)
+    @my_players = @team.players.order(Arel.sql("#{order_clause} #{sort_direction}"))
   end
 
   def show
@@ -68,6 +81,14 @@ class MarketsController < ApplicationController
   end
 
   private
+
+  def sort_column
+    %w[name position level market_value].include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 
   def set_team
     @team = current_user.teams.find(params[:team_id])
