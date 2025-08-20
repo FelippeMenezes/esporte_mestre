@@ -1,0 +1,12 @@
+.budget-display {
+  background: linear-gradient(45deg, #198754, #20c997);
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  
+  .amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
