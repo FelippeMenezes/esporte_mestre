@@ -11,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
                 <% if user_signed_in? %>
-          <%# Set all menu items in one place %>
           <% menu_items = [
-               { text: "Option 1", path: "#" },
-               { text: "Option 2", path: "#" },
+               { text: "Home", path: root_path },
+               { type: :divider },
+               { text: "Meus times", path: teams_path },
                { type: :divider },
                { text: "Log Out", path: destroy_user_session_path, method: :delete }
              ]
