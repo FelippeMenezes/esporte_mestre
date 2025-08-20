@@ -20,8 +20,57 @@
         </div>
       </div>
 
-      <!-- Incluir estatísticas -->
-      <%= render 'stats' %>
+      <div class="stats-card card mt-4">
+        <div class="card-header">
+          <h5>Estatísticas do Time</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-sm">
+                <tr>
+                  <td><strong>Partidas Jogadas:</strong></td>
+                  <td><%= @team_stats[:total_matches] %></td>
+                </tr>
+                <tr>
+                  <td><strong>Vitórias:</strong></td>
+                  <td class="text-success"><%= @team_stats[:wins] %></td>
+                </tr>
+                <tr>
+                  <td><strong>Empates:</strong></td>
+                  <td class="text-warning"><%= @team_stats[:draws] %></td>
+                </tr>
+                <tr>
+                  <td><strong>Derrotas:</strong></td>
+                  <td class="text-danger"><%= @team_stats[:losses] %></td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-sm">
+                <tr>
+                  <td><strong>Gols Marcados:</strong></td>
+                  <td class="text-success"><%= @team_stats[:goals_for] %></td>
+                </tr>
+                <tr>
+                  <td><strong>Gols Sofridos:</strong></td>
+                  <td class="text-danger"><%= @team_stats[:goals_against] %></td>
+                </tr>
+                <tr>
+                  <td><strong>Saldo de Gols:</strong></td>
+                  <td class="<%= @team_stats[:goal_difference] >= 0 ? 'text-success' : 'text-danger' %>">
+                    <%= @team_stats[:goal_difference] > 0 ? '+' : '' %><%= @team_stats[:goal_difference] %>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Pontos:</strong></td>
+                  <td class="text-primary"><strong><%= @team_stats[:points] %></strong></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <h3>Elenco por Posição</h3>
       <% if @players.any? %>
