@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-8">
       <h1><%= @team.name %></h1>
-      <div class="card mb-4">
+      <div class="team-card card mb-4">
         <div class="card-body">
           <h5 class="card-title">Informações do Time</h5>
           <div class="budget-display mb-3">
@@ -65,26 +65,25 @@
     </div>
 
     <div class="col-md-4">
-      <div class="card">
+      <div class="actions-card card">
         <div class="card-body">
           <h5 class="card-title">Ações</h5>
-          <%= link_to "Ver Jogadores", team_players_path(@team), class: "btn btn-primary btn-block mb-2 w-100" %>
+          <%= link_to "Meus Jogadores", team_players_path(@team), class: "btn btn-primary btn-block mb-2 w-100" %>
           <%= link_to "Mercado", market_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
           <% if @team.can_play_match? %>
-            <%= link_to "Nova Partida", new_team_match_path(@team), class: "btn btn-warning btn-block mb-2 w-100" %>
+            <%= link_to "Criar Partida", new_team_match_path(@team), class: "btn btn-warning btn-block mb-2 w-100" %>
           <% else %>
             <button class="btn btn-warning btn-block mb-2 w-100" disabled title="Precisa de 11 jogadores">
               Nova Partida
             </button>
           <% end %>
-          <%= link_to "Ver Partidas", team_matches_path(@team), class: "btn btn-info btn-block mb-2 w-100" %>
-          <%= link_to "Editar Time", edit_team_path(@team), class: "btn btn-secondary btn-block mb-2 w-100" %>
-          <%= link_to "Voltar", teams_path, class: "btn btn-outline-primary btn-block w-100" %>
+          <%= link_to "Minhas Partidas", team_matches_path(@team), class: "btn btn-info btn-block mb-2 w-100" %>
+          <%= link_to "Meus Times", teams_path, class: "btn btn-outline-primary btn-block w-100" %>
         </div>
       </div>
 
       <% if @recent_matches.any? %>
-        <div class="card mt-4">
+        <div class="matches-card card mt-4">
           <div class="card-body">
             <h5 class="card-title">Últimas Partidas</h5>
             <% @recent_matches.each do |match| %>
