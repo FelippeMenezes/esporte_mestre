@@ -8,7 +8,7 @@
           <h3><%= @match.home_team.name %></h3>
           <p class="text-muted">Time da Casa</p>
         </div>
-        <div class="col-md-4">
+        <div class="match-result col-md-4">
           <h2><%= @match.home_goals %> x <%= @match.away_goals %></h2>
           <p class="text-muted"><%= @match.match_date.strftime("%d/%m/%Y às %H:%M") %></p>
           <% if @match.winner %>
