@@ -11,13 +11,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
                 <% if user_signed_in? %>
-          <% menu_items = [
-               { text: "Home", path: root_path },
+                
+          <% 
+          
+              menu_items = []
+    if @team
+      menu_items.push({text: "Seus Jogadores", path: team_players_path(@team)})
+      menu_items.push({ type: :divider })
+      menu_items.push({text: "Suas Partidas", path: team_matches_path(@team)})
+      menu_items.push({ type: :divider })
+      menu_items.push({text: "Criar Partida", path: new_team_match_path(@team)})
+      menu_items.push({ type: :divider })
+      menu_items.push({text: "Mercado", path: market_path(@team)})
+    end
+
+              menu_items.concat([
+
                { type: :divider },
                { text: "Meus times", path: teams_path },
                { type: :divider },
                { text: "Log Out", path: destroy_user_session_path, method: :delete }
-             ]
+             ])
           %>
 
           <!-- ============== DESKTOP ============== -->
