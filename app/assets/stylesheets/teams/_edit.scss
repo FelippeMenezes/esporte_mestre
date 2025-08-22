@@ -1,0 +1,27 @@
+.team-edit {
+    display: flex;
+    justify-content: center;
+
+    h1 {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+    }
+
+  .team-edit-container {
+    background-color: #198754;
+    color: white;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .team-edit-card-body {
+    background-color: #1d975e;
+    color: white;
+    border-radius: 5px;
+  }
+}
