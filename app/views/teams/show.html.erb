@@ -117,7 +117,7 @@
       <div class="actions-card card">
         <div class="card-body">
           <h5 class="card-title">Ações</h5>
-          <%= link_to "Meus Jogadores", team_players_path(@team), class: "btn btn-primary btn-block mb-2 w-100" %>
+          <%= link_to "Seus Jogadores", team_players_path(@team), class: "btn btn-primary btn-block mb-2 w-100" %>
           <%= link_to "Mercado", market_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
           <% if @team.can_play_match? %>
             <%= link_to "Criar Partida", new_team_match_path(@team), class: "btn btn-warning btn-block mb-2 w-100" %>
@@ -126,8 +126,8 @@
               Nova Partida
             </button>
           <% end %>
-          <%= link_to "Minhas Partidas", team_matches_path(@team), class: "btn btn-info btn-block mb-2 w-100" %>
-          <%= link_to "Meus Times", teams_path, class: "btn btn-outline-primary btn-block w-100" %>
+          <%= link_to "Suas Partidas", team_matches_path(@team), class: "btn btn-info btn-block mb-2 w-100" %>
+          <%= link_to "Seus Times", teams_path, class: "btn btn-outline-primary btn-block w-100" %>
         </div>
       </div>
 
