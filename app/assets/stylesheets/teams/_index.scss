@@ -62,4 +62,16 @@
     text-shadow: none;
     font-weight: bold;
   }
+
+  .button-as-image {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Opcional: Efeito ao passar o mouse */
+.button-as-image:hover {
+  opacity: 0.8;
+}
 }

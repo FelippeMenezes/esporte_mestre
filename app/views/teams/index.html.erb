@@ -17,8 +17,8 @@
                     <%= link_to edit_team_path(team) do %>
                       <%= image_tag "edit.png", class:"edit-image", alt: "Editar"%>
                     <% end %>
-                    <%= link_to team, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" } do %>
-                      <%= image_tag "delete.png", class: "delete-image"%>
+                    <%= button_to team, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } }, class: "button-as-image" do %>
+                      <%= image_tag "delete.png", class: "delete-image" %>
                     <% end %>
                   </div>
                 </div>
