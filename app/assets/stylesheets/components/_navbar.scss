@@ -1,7 +1,12 @@
 .navbar-myproject {
   justify-content: space-between;
   background-color: #198754;
-  border-radius: 5px
+  border-radius: 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
 }
 
 .navbar-myproject .navbar-collapse {
@@ -9,7 +14,8 @@
 }
 
 .navbar-myproject .navbar-brand img {
-  width: 40px;
+  width: 55px;
+  height: 40px;
 }
 
 .nav-link {
@@ -18,9 +24,8 @@
 
 img {
   border-radius: 5px;
-}
 
-.avatar {
-  width: 55px;
-  height: 55px;
+  &:hover {
+    opacity: 0.8;
+  }
 }
