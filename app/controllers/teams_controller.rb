@@ -47,7 +47,16 @@ class TeamsController < ApplicationController
           # Criar 15 jogadores para o time do usuário
           create_players_for_team(@team)
 
-          redirect_to @team, notice: 'Time criado com sucesso! Sua campanha foi iniciada.'
+          redirect_to @team, notice: "Time criado com sucesso!
+                                    Sua campanha foi iniciada.
+                                    Utilize o MENU para gerenciar seu time.
+                                    Acesse:
+                                    
+                                    Seus Jogadores
+                                    Suas Partidas
+                                    Crie Partida
+                                    Mercado
+                                    Seus Times"
         else
           puts "ERROS AO SALVAR TIME: #{@team.errors.full_messages.join(", ")}"
           render :new, status: :unprocessable_entity
