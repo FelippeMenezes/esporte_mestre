@@ -1,34 +1,46 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Meus Times</h1>
-    <%= link_to "Criar Novo Time", new_team_path, class: "btn btn-success" %>
-  </div>
+<div class="team-index">
+  <div class="team-index-container container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Meus Times</h1>
+      <%= link_to "Criar Novo Time", new_team_path, class: "btn btn-success" %>
+    </div>
 
-  <% if @teams.any? %>
-    <div class="row">
-      <% @teams.each do |team| %>
-        <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><%= team.name %></h5>
-              <p class="card-text">
-                <strong>Orçamento:</strong> $<%= number_with_delimiter(team.budget) %><br>
-                <strong>Jogadores:</strong> <%= team.total_players %><br>
-                <strong>Campanha:</strong> <%= team.campaign.name %>
-              </p>
-              <%= link_to "Ver Time", team, class: "btn btn-primary" %>
-              <%= link_to "Editar", edit_team_path(team), class: "btn btn-secondary" %>
-              <%= link_to "Excluir", team, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, class: "btn btn-danger" %>
+    <% if @teams.any? %>
+      <div class="row">
+        <% @teams.each do |team| %>
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+              <div class="team-index-card-body card-body">
+                <div class="d-flex justify-content-between mb-2">
+                  <h5 class="card-team card-title text-center"><%= team.name %></h5>
+                  <div class="d-flex justify-content-end align-items-center">
+                    <%= link_to edit_team_path(team) do %>
+                      <%= image_tag "edit.png", class:"edit-image", alt: "Editar"%>
+                    <% end %>
+                    <%= link_to team, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" } do %>
+                      <%= image_tag "delete.png", class: "delete-image"%>
+                    <% end %>
+                  </div>
+                </div>
+
+                
+                <p class="card-text">
+                  <strong>Orçamento:</strong> $<%= number_with_delimiter(team.budget) %><br>
+                  <strong>Jogadores:</strong> <%= team.total_players %><br>
+                  <strong>Campanha:</strong> <%= team.campaign.name %>
+                </p>
+                <%= link_to "Ver Time", team, class: "team-index-btn btn btn-light" %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="alert alert-info alert-dismissible fade show m-1">
-      <h4>Nenhum time encontrado</h4>
-      <p>Você ainda não criou nenhum time. <%= link_to "Criar seu primeiro time", new_team_path %> agora!</p>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
-</div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-info alert-dismissible fade show m-1">
+        <h4>Nenhum time encontrado</h4>
+        <p>Você ainda não criou nenhum time. <%= link_to "Criar seu primeiro time", new_team_path %> agora!</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+  </div>
+  
