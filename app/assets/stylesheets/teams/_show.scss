@@ -27,7 +27,6 @@
   .team-show-card-body {
     background-color: #1d975e;
     color: white;
-    border-radius: 5px;
   }
 
   td {
@@ -37,24 +36,30 @@
   }
 
   .card-header {
-    background-color: #1d975e;
+    background-color: #198754;
     color: white;
+    border: none;
+
   }
 
   .team-card {
     height: auto;
+    border: none;
   }
 
   .actions-card {
     height: auto;
+    border: none;
   }
 
   .matches-card {
     height: auto;
+    border: none;
   }
 
   .stats-card {
     height: auto;
+    border: none;
   }
 
   .budget-display {
@@ -79,6 +84,13 @@
       text-shadow: 0 1px 1px black;
       color: white;
     }
+  }
+
+  .player-position-g,
+  .player-position-d,
+  .player-position-m,
+  .player-position-a {
+    border: none;
   }
 }
 
