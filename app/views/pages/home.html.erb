@@ -5,13 +5,13 @@
 
         <% if user_signed_in? %>
             <div class="actions">
-                <%= link_to "Ver Meus Times", teams_path, class: "btn btn-light" %>
+                <%= link_to "Ver Seus Times", teams_path, class: "btn btn-light" %>
                 <%= link_to "Criar Novo Time", new_team_path, class: "btn btn-light" %>
             </div>
         <% else %>
             <div class="actions">
-                <%= link_to "Começar Agora", new_user_registration_path, class: "btn btn-light" %>
-                <%= link_to "Já tenho conta", new_user_session_path, class: "btn btn-light" %>
+                <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-light" %>
+                <%= link_to "Log In", new_user_session_path, class: "btn btn-light" %>
             </div>
         <% end %>
     </div>
