@@ -1,0 +1,65 @@
+.team-index {
+    display: flex;
+    justify-content: center;
+
+    h1 {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+    }
+
+  .team-index-container {
+    background-color: #198754;
+    color: white;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .team-index-card-body {
+    background-color: #1d975e;
+    color: white;
+    border-radius: 5px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+        background-color: #198754;
+    }
+  }
+
+  h5 {
+    margin-top: 5px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .edit-image {
+    width: 1rem;
+    height: 1rem;
+    margin-bottom: 5px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  .delete-image {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 5px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  .team-index-btn {
+    color: #1d975e;
+    text-shadow: none;
+    font-weight: bold;
+  }
+}
