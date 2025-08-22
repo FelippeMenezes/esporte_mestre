@@ -26,8 +26,7 @@
                 
                 <p class="card-text">
                   <strong>Orçamento:</strong> $<%= number_with_delimiter(team.budget) %><br>
-                  <strong>Jogadores:</strong> <%= team.total_players %><br>
-                  <strong>Campanha:</strong> <%= team.campaign.name %>
+                  <strong>Jogadores:</strong> <%= team.total_players %>
                 </p>
                 <%= link_to "Ver Time", team, class: "team-index-btn btn btn-light" %>
               </div>
