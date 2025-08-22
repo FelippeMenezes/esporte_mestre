@@ -1,6 +1,7 @@
 .navbar-myproject {
   justify-content: space-between;
-  background: white;
+  background-color: #198754;
+  border-radius: 5px
 }
 
 .navbar-myproject .navbar-collapse {
@@ -9,6 +10,10 @@
 
 .navbar-myproject .navbar-brand img {
   width: 40px;
+}
+
+.nav-link {
+  color: white;
 }
 
 img {

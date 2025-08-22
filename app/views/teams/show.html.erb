@@ -1,157 +1,159 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8">
-      <h1><%= @team.name %></h1>
-      <div class="team-card card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Informações do Time</h5>
-          <div class="budget-display mb-3">
-            <div class="amount">$<%= number_with_delimiter(@team.budget) %></div>
-            <small>Orçamento Disponível</small>
+<div class="team-show">
+  <div class="team-show-container container mt-4">
+    <div class="row">
+      <div class="col-md-8">
+        <h1><%= @team.name %></h1>
+        <div class="team-card card mb-4">
+          <div class="team-show-card-body card-body">
+            <h5 class="card-title">Informações do Time</h5>
+            <div class="budget-display mb-3">
+              <div class="amount">$<%= number_with_delimiter(@team.budget) %></div>
+              <small>Orçamento Disponível</small>
+            </div>
+            <p><strong>Total de Jogadores:</strong> <%= @team.total_players %></p>
+            <p><strong>Pode Jogar:</strong> 
+              <% if @team.can_play_match? %>
+                <span class="badge bg-success">Sim</span>
+              <% else %>
+                <span class="badge bg-danger">Não (mínimo 11 jogadores)</span>
+              <% end %>
+            </p>
           </div>
-          <p><strong>Total de Jogadores:</strong> <%= @team.total_players %></p>
-          <p><strong>Pode Jogar:</strong> 
-            <% if @team.can_play_match? %>
-              <span class="badge bg-success">Sim</span>
-            <% else %>
-              <span class="badge bg-danger">Não (mínimo 11 jogadores)</span>
-            <% end %>
-          </p>
         </div>
-      </div>
 
-      <div class="stats-card card mt-4">
-        <div class="card-header">
-          <h5>Estatísticas do Time</h5>
+        <div class="stats-card card mt-4">
+          <div class="card-header">
+            <h5>Estatísticas do Time</h5>
+          </div>
+          <div class="team-show-card-body card-body">
+            <div class="row">
+              <div class="team-show-table col-md-6">
+                <table class="table table-sm">
+                  <tr>
+                    <td><strong>Partidas Jogadas:</strong></td>
+                    <td><span class="badge bg-success"><%= @team_stats[:total_matches] %></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Vitórias:</strong></td>
+                    <td class="text-success"><span class="badge bg-success"><%= @team_stats[:wins] %></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Empates:</strong></td>
+                    <td class="text-warning"><span class="badge bg-warning"><%= @team_stats[:draws] %></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Derrotas:</strong></td>
+                    <td class="text-danger"><span class="badge bg-danger"><%= @team_stats[:losses] %></span></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <table class="table table-sm">
+                  <tr>
+                    <td><strong>Gols Marcados:</strong></td>
+                    <td class="text-light"><span class="badge bg-success"><%= @team_stats[:goals_for] %></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Gols Sofridos:</strong></td>
+                    <td class="text-danger"><span class="badge bg-danger"><%= @team_stats[:goals_against] %></span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Saldo de Gols:</strong></td>
+                    <td class="<%= @team_stats[:goal_difference] >= 0 ? 'text-success' : 'text-danger' %>">
+                      <span class="badge bg-<%= @team_stats[:goal_difference] >= 0 ? 'success' : 'danger' %>"><%= @team_stats[:goal_difference] > 0 ? '+' : '' %><%= @team_stats[:goal_difference] %></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pontos:</strong></td>
+                    <td class="text-light"><span class="badge bg-<%= @team_stats[:points] >= 0 ? 'success' : 'danger' %>"><%= @team_stats[:points] %></span></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
+
+        <h3>Elenco por Posição</h3>
+        <% if @players.any? %>
           <div class="row">
-            <div class="col-md-6">
-              <table class="table table-sm">
-                <tr>
-                  <td><strong>Partidas Jogadas:</strong></td>
-                  <td><%= @team_stats[:total_matches] %></td>
-                </tr>
-                <tr>
-                  <td><strong>Vitórias:</strong></td>
-                  <td class="text-success"><%= @team_stats[:wins] %></td>
-                </tr>
-                <tr>
-                  <td><strong>Empates:</strong></td>
-                  <td class="text-warning"><%= @team_stats[:draws] %></td>
-                </tr>
-                <tr>
-                  <td><strong>Derrotas:</strong></td>
-                  <td class="text-danger"><%= @team_stats[:losses] %></td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-md-6">
-              <table class="table table-sm">
-                <tr>
-                  <td><strong>Gols Marcados:</strong></td>
-                  <td class="text-success"><%= @team_stats[:goals_for] %></td>
-                </tr>
-                <tr>
-                  <td><strong>Gols Sofridos:</strong></td>
-                  <td class="text-danger"><%= @team_stats[:goals_against] %></td>
-                </tr>
-                <tr>
-                  <td><strong>Saldo de Gols:</strong></td>
-                  <td class="<%= @team_stats[:goal_difference] >= 0 ? 'text-success' : 'text-danger' %>">
-                    <%= @team_stats[:goal_difference] > 0 ? '+' : '' %><%= @team_stats[:goal_difference] %>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Pontos:</strong></td>
-                  <td class="text-primary"><strong><%= @team_stats[:points] %></strong></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <h3>Elenco por Posição</h3>
-      <% if @players.any? %>
-        <div class="row">
-          <% %w[G D M A].each do |position| %>
-            <div class="col-md-6 col-lg-3 mb-4">
-              <div class="card player-position-<%= position.downcase %>">
-                <div class="card-header">
-                  <h6>
-                    <%= case position
-                        when 'G' then 'Goleiros'
-                        when 'D' then 'Defensores'
-                        when 'M' then 'Meio-campo'
-                        when 'A' then 'Atacantes'
-                        end %>
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <% position_players = @players.select { |p| p.position == position } %>
-                  <% if position_players.any? %>
-                    <% position_players.each do |player| %>
-                      <div class="mb-2">
-                        <%= link_to player.name, player, class: "text-decoration-none" %><br>
-                        <small class="text-muted">Nível: <%= player.level %></small>
-                      </div>
+            <% %w[G D M A].each do |position| %>
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card player-position-<%= position.downcase %>">
+                  <div class="card-header">
+                    <h6>
+                      <%= case position
+                          when 'G' then 'Goleiros'
+                          when 'D' then 'Defensores'
+                          when 'M' then 'Meio-campo'
+                          when 'A' then 'Atacantes'
+                          end %>
+                    </h6>
+                  </div>
+                  <div class="team-show-card-body card-body">
+                    <% position_players = @players.select { |p| p.position == position } %>
+                    <% if position_players.any? %>
+                      <% position_players.each do |player| %>
+                        <div class="mb-2">
+                          <%= link_to player.name, player, class: "text-player-show text-decoration-none" %><br>
+                          <small>Nível: <%= player.level %></small>
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <small>Nenhum jogador</small>
                     <% end %>
-                  <% else %>
-                    <small class="text-muted">Nenhum jogador</small>
-                  <% end %>
+                  </div>
                 </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="alert alert-warning alert-dismissible fade show m-1">
-          Nenhum jogador encontrado.
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="col-md-4">
-      <div class="actions-card card">
-        <div class="card-body">
-          <h5 class="card-title">Ações</h5>
-          <%= link_to "Seus Jogadores", team_players_path(@team), class: "btn btn-primary btn-block mb-2 w-100" %>
-          <%= link_to "Mercado", market_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
-          <% if @team.can_play_match? %>
-            <%= link_to "Criar Partida", new_team_match_path(@team), class: "btn btn-warning btn-block mb-2 w-100" %>
-          <% else %>
-            <button class="btn btn-warning btn-block mb-2 w-100" disabled title="Precisa de 11 jogadores">
-              Nova Partida
-            </button>
-          <% end %>
-          <%= link_to "Suas Partidas", team_matches_path(@team), class: "btn btn-info btn-block mb-2 w-100" %>
-          <%= link_to "Seus Times", teams_path, class: "btn btn-outline-primary btn-block w-100" %>
-        </div>
-      </div>
-
-      <% if @recent_matches.any? %>
-        <div class="matches-card card mt-4">
-          <div class="card-body">
-            <h5 class="card-title">Últimas Partidas</h5>
-            <% @recent_matches.each do |match| %>
-              <div class="mb-2">
-                <small class="text-muted"><%= match.match_date.strftime("%d/%m/%Y") %></small><br>
-                <% if match.home_team == @team %>
-                  <strong><%= match.home_team.name %></strong> <%= match.home_goals %> x <%= match.away_goals %> <%= match.away_team.name %>
-                <% else %>
-                  <%= match.home_team.name %> <%= match.home_goals %> x <%= match.away_goals %> <strong><%= match.away_team.name %></strong>
-                <% end %>
-                <% result = match.result_for_team(@team) %>
-                <span class="badge bg-<%= result == 'V' ? 'success' : result == 'E' ? 'warning' : 'danger' %>">
-                  <%= result %>
-                </span>
               </div>
             <% end %>
           </div>
+        <% else %>
+          <div class="alert alert-warning alert-dismissible fade show m-1">
+            Nenhum jogador encontrado.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-md-4">
+        <div class="actions-card card">
+          <div class="team-show-card-body card-body">
+            <h5 class="card-title">Ações</h5>
+            <%= link_to "Seus Jogadores", team_players_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
+            <%= link_to "Mercado", market_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
+            <% if @team.can_play_match? %>
+              <%= link_to "Criar Partida", new_team_match_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
+            <% else %>
+              <button class="btn btn-warning btn-block mb-2 w-100" disabled title="Precisa de 11 jogadores">
+                Nova Partida
+              </button>
+            <% end %>
+            <%= link_to "Suas Partidas", team_matches_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
+            <%= link_to "Seus Times", teams_path, class: "btn btn-success btn-block mb-2 w-100" %>
+          </div>
         </div>
-      <% end %>
+
+        <% if @recent_matches.any? %>
+          <div class="matches-card card mt-4">
+            <div class="team-show-card-body card-body">
+              <h5 class="card-title">Últimas Partidas</h5>
+              <% @recent_matches.each do |match| %>
+                <div class="mb-2">
+                  <small><%= match.match_date.strftime("%d/%m/%Y") %></small><br>
+                  <% if match.home_team == @team %>
+                    <strong><%= match.home_team.name %></strong> <%= match.home_goals %> x <%= match.away_goals %> <%= match.away_team.name %>
+                  <% else %>
+                    <%= match.home_team.name %> <%= match.home_goals %> x <%= match.away_goals %> <strong><%= match.away_team.name %></strong>
+                  <% end %>
+                  <% result = match.result_for_team(@team) %>
+                  <span class="badge bg-<%= result == 'V' ? 'success' : result == 'E' ? 'warning' : 'danger' %>">
+                    <%= result %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
