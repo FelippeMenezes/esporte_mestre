@@ -13,12 +13,9 @@ Rails.application.routes.draw do
   
   # Rotas para Players
   get '/teams/:team_id/players', to: 'players#index', as: 'team_players'
-  get '/teams/:team_id/players/new', to: 'players#new', as: 'new_team_player'
   post '/teams/:team_id/players', to: 'players#create'
   get '/players/:id', to: 'players#show', as: 'player'
-  get '/players/:id/edit', to: 'players#edit', as: 'edit_player'
   patch '/players/:id', to: 'players#update'
-  delete '/players/:id', to: 'players#destroy'
   
   # Rotas para Matches
   get '/teams/:team_id/matches', to: 'matches#index', as: 'team_matches'
