@@ -1,36 +1,77 @@
-.player-box-sell {
-    padding: 0;
-    margin: 0;
-}
+.market-new {
+    display: flex;
+    justify-content: center;
+    height: 275px;
 
-.market-card-sell {
-    padding: 0;
-    margin: 0;
-}
+    h1 {
+    color: white;
+    margin-left: 10px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+    }
 
-.player-box-buy {
-    padding: 0;
-    margin: 0;
-}
+    .market-new-container {
+    background-color: #198754;
+    color: white;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: auto;
+    }
 
-.market-card-buy {
-    padding: 0;
-    margin: 0;
-}
+    .market-new-card-body {
+    background-color: #1d975e;
+    color: white;
+    border-radius: 5px;
+    }
 
-.table {
-    td, th {
-    padding: 0;
-    margin: 0;
-    height: 60px;
-    vertical-align: middle;
-    text-align: center;
+    .player-box-sell {
+        padding: 0;
+        margin: 0;
+    }
+
+    .market-card-sell {
+        padding: 5px;
+        margin: 5px;
+    }
+
+    .player-box-buy {
+        padding: 0;
+        margin: 0;
+    }
+
+    .market-card-buy {
+        padding: 5px;
+        margin: 5px;
+    }
+
+    .table {
+        td, th {
+        padding: 0;
+        margin: 0;
+        height: 60px;
+        vertical-align: middle;
+        text-align: center;
+        background-color: #1d975e;
+        color: white;
+        border-radius: 5px;
+        }
+
+        a {
+        color: white;
+        }
+    }
+
+    .action-button {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        margin-left: 2px;
+        margin-right: 3px;
     }
 }
 
-.action-button {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-left: 2px;
-    margin-right: 3px;
-}
+

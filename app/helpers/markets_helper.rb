@@ -9,6 +9,6 @@ module MarketsHelper
       icon = sort_direction == "asc" ? " <i class='fas fa-sort-up'></i>" : " <i class='fas fa-sort-down'></i>"
     end
 
-    link_to((title + icon).html_safe, { sort: column, direction: direction }, { class: "text-dark text-decoration-none" })
+    link_to((title + icon).html_safe, { sort: column, direction: direction }, { class: "text-decoration-none" })
   end
 end
