@@ -1,49 +1,51 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Jogadores - <%= @team.name %></h1>
-    <%= link_to "Adicionar Jogador", new_team_player_path(@team), class: "btn btn-success" %>
-  </div>
+<div class="player-index">
+  <div class="player-index-container container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Jogadores - <%= @team.name %></h1>
+    </div>
 
-  <% if @players.any? %>
-    <div class="row">
-      <% %w[G D M A].each do |position| %>
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card">
-            <div class="card-header">
-              <h5>
-                <%= case position
-                    when 'G' then 'Goleiros'
-                    when 'D' then 'Defensores'
-                    when 'M' then 'Meio-campo'
-                    when 'A' then 'Atacantes'
-                    end %>
-              </h5>
-            </div>
-            <div class="card-body">
-              <% position_players = @players.select { |p| p.position == position } %>
-              <% if position_players.any? %>
-                <% position_players.each do |player| %>
-                  <div class="mb-2">
-                    <%= link_to player.name, player, class: "text-decoration-none" %><br>
-                    <small class="text-muted">Nível: <%= player.level %></small>
-                  </div>
+    <% if @players.any? %>
+      <div class="row">
+        <% %w[G D M A].each do |position| %>
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card">
+              <div class="card-header">
+                <h5>
+                  <%= case position
+                      when 'G' then 'Goleiros'
+                      when 'D' then 'Defensores'
+                      when 'M' then 'Meio-campo'
+                      when 'A' then 'Atacantes'
+                      end %>
+                </h5>
+              </div>
+              <div class="player-index-card-body card-body">
+                <% position_players = @players.select { |p| p.position == position } %>
+                <% if position_players.any? %>
+                  <% position_players.each do |player| %>
+                    <div class="mb-2">
+                      <%= link_to player.name, player, class: "player-name text-decoration-none" %><br>
+                      <small>Nível: <%= player.level %></small>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <small class="text-muted">Nenhum jogador nesta posição</small>
                 <% end %>
-              <% else %>
-                <small class="text-muted">Nenhum jogador nesta posição</small>
-              <% end %>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="alert alert-warning alert-dismissible fade show m-1">
-      Nenhum jogador encontrado.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-warning alert-dismissible fade show m-1">
+        Nenhum jogador encontrado.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
 
-  <div class="mt-4">
-    <%= link_to "Voltar para o Time", @team, class: "btn btn-primary" %>
+    <div class="d-flex justify-content-between mt-4">
+      <%= link_to "Voltar para o Time", @team, class: "btn btn-secondary" %>
+      <%= link_to "Mercado de Jogadores", market_path(@team), class: "btn btn-light" %>
+    </div>
   </div>
 </div>
