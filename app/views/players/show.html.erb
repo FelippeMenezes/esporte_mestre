@@ -12,11 +12,10 @@
             <p><strong>Nível:</strong> <%= @player.level %></p>
             <p><strong>Valor de Mercado:</strong> $<%= number_with_delimiter(@player.market_value) %></p>
           </div>
-
       </div>
-                  <div class="player-show-card-body card-body">
-              <%= link_to "Voltar para Jogadores", team_players_path(@player.team), class: "btn btn-secondary btn-block" %>
-            </div>
+      <div class="player-show-card-body card-body">
+        <%= link_to "Voltar para Jogadores", team_players_path(@player.team), class: "btn btn-secondary btn-block" %>
+      </div>
     </div>
   </div>
 </div>
