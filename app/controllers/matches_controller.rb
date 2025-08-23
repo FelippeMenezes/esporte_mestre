@@ -20,17 +20,23 @@ class MatchesController < ApplicationController
     @match.home_team = @team
     @match.match_date = Time.current
 
-    if @team.can_play_match?
-      simulate_match(@match)
-      if @match.save
-        redirect_to @match, notice: 'Partida realizada com sucesso!'
-      else
-        @rival_teams = @team.campaign.rival_teams
-        render :new
-      end
-    else
+    unless @team.can_play_match?
       @rival_teams = @team.campaign.rival_teams
       flash.now[:alert] = 'Seu time precisa ter pelo menos 11 jogadores para jogar uma partida.'
+      render :new and return
+    end
+
+    if @match.away_team.nil?
+      @rival_teams = @team.campaign.rival_teams
+      flash.now[:alert] = 'Você precisa selecionar um time adversário.'
+      render :new and return
+    end
+
+    simulate_match(@match)
+    if @match.save
+      redirect_to @match, notice: 'Partida realizada com sucesso!'
+    else
+      @rival_teams = @team.campaign.rival_teams
       render :new
     end
   end
