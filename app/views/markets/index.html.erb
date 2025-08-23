@@ -1,109 +1,111 @@
-<div class="container mt-4">
-  <h1>Mercado de Transferências - <%= @team.name %></h1>
-  
-  <div class="row">
+<div class="market-new">
+  <div class="market-new-container container mt-1">
+    <h1>Mercado de Transferências - <%= @team.name %></h1>
+    
+    <div class="row">
 
-    <div class="col-md-6">
-      <div class="player-box-sell card">
-        <div class="card-header">
-          <h5>Seus Jogadores</h5>
-          <small class="text-muted">Clique em "Vender" para colocar um jogador no mercado</small>
-        </div>
-        <div class="market-card-sell card-body">
-          <% if @my_players.any? %>
-            <div class="table-responsive">
-              <table class="table table-sm">
-                <thead>
-                  <tr>
-                    <th><%= sortable "name", "Nome" %></th>
-                    <th><%= sortable "position", "P" %></th>
-                    <th><%= sortable "level", "L" %></th>
-                    <th><%= sortable "market_value", "$" %></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @my_players.each do |player| %>
+      <div class="col-md-6">
+        <div class="player-box-sell card">
+          <div class="card-header">
+            <h5>Seus Jogadores</h5>
+            <small>Venda e compre jogadores do mercado</small>
+          </div>
+          <div class="market-card-sell card-body">
+            <% if @my_players.any? %>
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
                     <tr>
-                      <td><%= player.name %></td>
-                      <td><%= player.position %></td>
-                      <td><%= player.level %></td>
-                      <td>$<%= number_with_delimiter(player.market_value) %></td>
-                      <td>
-                        <%= button_to "Vender", sell_player_path(team_id: @team.id, id: player.id),
-                              method: :post,
-                              data: { turbo_confirm: "Vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
-                              class: "btn btn-sm btn-warning action-button", form: { class: 'd-inline' } %>
-                      </td>
+                      <th><%= sortable "name", "Nome" %></th>
+                      <th><%= sortable "position", "P" %></th>
+                      <th><%= sortable "level", "L" %></th>
+                      <th><%= sortable "market_value", "$" %></th>
+                      <th scope="col"></th>
                     </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          <% else %>
-            <div class="alert alert-warning alert-dismissible fade show m-1">
-              Você não tem jogadores no seu time.
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          <% end %>
+                  </thead>
+                  <tbody>
+                    <% @my_players.each do |player| %>
+                      <tr>
+                        <td><%= player.name %></td>
+                        <td><%= player.position %></td>
+                        <td><%= player.level %></td>
+                        <td>$<%= number_with_delimiter(player.market_value) %></td>
+                        <td>
+                          <%= button_to "Vender", sell_player_path(team_id: @team.id, id: player.id),
+                                method: :post,
+                                data: { turbo_confirm: "Vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
+                                class: "btn btn-sm btn-warning action-button", form: { class: 'd-inline' } %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% else %>
+              <div class="alert alert-warning alert-dismissible fade show m-1">
+                Você não tem jogadores no seu time.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-md-6">
-      <div class="player-box-buy card">
-        <div class="card-header">
-          <h5>Jogadores Disponíveis para Compra</h5>
-          <small class="text-muted">Orçamento disponível: $<%= number_with_delimiter(@team.budget) %></small>
-        </div>
-        <div class="market-card-buy card-body">
-          <% if @available_players.any? %>
-            <div class="table-responsive">
-              <table class="table table-sm">
-                <thead>
-                  <tr>
-                    <th><%= sortable "name", "Nome" %></th>
-                    <th><%= sortable "position", "P" %></th>
-                    <th><%= sortable "level", "L" %></th>
-                    <th><%= sortable "market_value", "$" %></th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @available_players.each do |player| %>
+      <div class="col-md-6">
+        <div class="player-box-buy card">
+          <div class="card-header">
+            <h5>Jogadores Disponíveis para Compra</h5>
+            <small>Orçamento disponível: $<strong><%= number_with_delimiter(@team.budget) %></strong></small>
+          </div>
+          <div class="market-card-buy card-body">
+            <% if @available_players.any? %>
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
                     <tr>
-                      <td><%= player.name %></td>
-                      <td><%= player.position %></td>
-                      <td><%= player.level %></td>
-                      <td>$<%= number_with_delimiter(player.market_value) %></td>
-                      <td>
-                        <% if @team.budget >= player.market_value %>
-                            <%= button_to "Comprar", buy_player_path(team_id: @team.id, id: player.id),
-                                  method: :post,
-                                  data: { turbo_confirm: "Comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
-                                  class: "btn btn-sm btn-success action-button", form: { class: 'd-inline' } %>
-                        <% else %>
-                          <span class="text-muted">Sem orçamento</span>
-                        <% end %>
-                      </td>
+                      <th><%= sortable "name", "Nome" %></th>
+                      <th><%= sortable "position", "P" %></th>
+                      <th><%= sortable "level", "L" %></th>
+                      <th><%= sortable "market_value", "$" %></th>
+                      <th scope="col"></th>
                     </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          <% else %>
-            <div class="alert alert-info alert-dismissible fade show m-1">
-              Nenhum jogador disponível para compra no momento.
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          <% end %>
+                  </thead>
+                  <tbody>
+                    <% @available_players.each do |player| %>
+                      <tr>
+                        <td><%= player.name %></td>
+                        <td><%= player.position %></td>
+                        <td><%= player.level %></td>
+                        <td>$<%= number_with_delimiter(player.market_value) %></td>
+                        <td>
+                          <% if @team.budget >= player.market_value %>
+                              <%= button_to "Comprar", buy_player_path(team_id: @team.id, id: player.id),
+                                    method: :post,
+                                    data: { turbo_confirm: "Comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
+                                    class: "btn btn-sm btn-success action-button", form: { class: 'd-inline' } %>
+                          <% else %>
+                            <span>Sem orçamento</span>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% else %>
+              <div class="alert alert-info alert-dismissible fade show m-1">
+                Nenhum jogador disponível para compra no momento.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
+
     </div>
 
-  </div>
-
-  <div class="mt-4">
-    <%= link_to "Voltar para o Time", @team, class: "btn btn-primary" %>
+    <div class="mt-4">
+      <%= link_to "Voltar para o Time", @team, class: "btn btn-primary" %>
+    </div>
   </div>
 </div>
