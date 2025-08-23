@@ -1,17 +1,13 @@
 class PlayersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: [:index, :new, :create]
-  before_action :set_player, only: [:show, :edit, :update, :destroy]
+  before_action :set_team, only: [:index, :create]
+  before_action :set_player, only: [:show, :update]
 
   def index
     @players = @team.players.order(:position, :name)
   end
 
   def show
-  end
-
-  def new
-    @player = @team.players.build
   end
 
   def create
@@ -24,21 +20,12 @@ class PlayersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
     if @player.update(player_params)
       redirect_to @player, notice: 'Jogador atualizado com sucesso.'
     else
       render :edit
     end
-  end
-
-  def destroy
-    team = @player.team
-    @player.destroy
-    redirect_to team_players_path(team), notice: 'Jogador excluído com sucesso.'
   end
 
   private
