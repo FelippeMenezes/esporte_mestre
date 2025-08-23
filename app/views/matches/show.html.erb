@@ -13,7 +13,11 @@
             <p>Time da Casa</p>
           </div>
           <div class="match-result col-md-4">
-            <h2><%= @match.home_goals %> x <%= @match.away_goals %></h2>
+            <h2><%= @match.home_goals %></h2>
+            <div class="match-time">
+              <p>00:00</p>
+            </div>
+            <h2><%= @match.away_goals %></h2>
             <% if @match.winner %>
               <p><strong>Vencedor:</strong> <%= @match.winner.name %></p>
             <% else %>
