@@ -1,6 +1,6 @@
-<div class="team-new">
-  <div class="team-new-container container mt-1">
-    <h1>Partida</h1>
+<div class="match-new">
+  <div class="match-new-container container mt-1">
+    <h1>Iniciar Partida</h1>
 
     <% unless @team.can_play_match? %>
       <div class="alert alert-danger alert-dismissible fade show m-1">
@@ -13,10 +13,11 @@
     <% else %>
       <%= simple_form_for [@team, @match] do |f| %>
         <div class="card">
-          <div class="team-new-card-body card-body">
+          <div class="match-new-card-body card-body">
             <%= f.input :away_team_id, label: "Time Adversário", 
                         collection: @rival_teams.map { |team| [team.name, team.id] },
-                        prompt: "Selecione o time adversário" %>
+                        prompt: "Selecione o time adversário",
+                        required: true %>
             
             <div class="alert alert-warning alert-dismissible fade show m-1">
               <h6>Como funciona a simulação:</h6>
