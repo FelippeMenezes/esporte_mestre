@@ -1,0 +1,51 @@
+.player-index {
+    display: flex;
+    justify-content: center;
+    height: 275px;
+
+    h1 {
+    color: white;
+    margin-left: 10px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+    }
+
+    .player-index-container {
+    background-color: #198754;
+    color: white;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: fit-content;
+    }
+
+    .player-index-card-body {
+    background-color: #1d975e;
+    color: white;
+    border-radius: 5px;
+    }
+
+    .player-name {
+        color: white;
+        font-weight: bold;
+
+        &:hover {
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    .btn-light {
+        margin-left: 5px;
+        margin-bottom: 5px;
+        color: #198754;
+    }
+
+    .btn-secondary {
+        margin-bottom: 5px;
+        margin-left: 5px;
+    }
+}
