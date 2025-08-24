@@ -40,6 +40,58 @@
     margin-right: 10px;
     margin-bottom: 10px;
     height: max-content;
+
+      .match-result {
+        .goal-alert {
+          color: #ffc107; // Amarelo para destaque
+          font-weight: bold;
+          animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .match-time {
+          #game-clock {
+            cursor: pointer;
+            user-select: none; /* Impede que o texto seja selecionado ao clicar */
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+
+      // Seção de notificações e resultados
+      .notifications-and-results {
+        text-align: center;
+        padding: 10px;
+        
+        #goal-notifications {
+          .goal-alert {
+            color: #ffc107;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in-out;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: rgba(255, 193, 7, 0.1);
+          }
+        }
+
+        #final-result {
+          p {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
     }
 
   .match-back-btn {
@@ -47,6 +99,99 @@
     margin-bottom: 15px;
     color: #21ad6a;
     text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+// Media queries para dispositivos móveis
+@media (max-width: 768px) {
+  .match-show {
+    .match-show-container {
+      margin-left: 5px;
+      margin-right: 5px;
+      
+      .match-show-card-body {
+        margin-left: 5px;
+        margin-right: 5px;
+        
+        .row {
+          margin: 0;
+          
+          .col-12 {
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 15px;
+          }
+        }
+        
+        // Garantir que as notificações apareçam centralizadas em mobile
+        .notifications-and-results {
+          margin-top: 20px;
+          padding: 15px 10px;
+          
+          #goal-notifications {
+            margin-top: 15px;
+            
+            .goal-alert {
+              font-size: 0.95em;
+              padding: 10px;
+              margin-bottom: 10px;
+              border-radius: 6px;
+              background-color: rgba(255, 193, 7, 0.15);
+              border: 1px solid rgba(255, 193, 7, 0.3);
+            }
+          }
+
+          #final-result {
+            margin-top: 15px;
+            
+            p {
+              font-size: 1.05em;
+              padding: 12px;
+              margin-bottom: 10px;
+              border-radius: 6px;
+              background-color: rgba(255, 255, 255, 0.15);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Media queries para dispositivos muito pequenos (smartphones pequenos)
+@media (max-width: 480px) {
+  .match-show {
+    .match-show-container {
+      margin-left: 2px;
+      margin-right: 2px;
+      
+      h1 {
+        font-size: 1.5em;
+        margin-left: 5px;
+      }
+      
+      .match-date {
+        font-size: 0.9em;
+        margin-right: 5px;
+      }
+      
+      .match-show-card-body {
+        .notifications-and-results {
+          padding: 10px 5px;
+          
+          #goal-notifications .goal-alert {
+            font-size: 0.9em;
+            padding: 8px;
+          }
+          
+          #final-result p {
+            font-size: 1em;
+            padding: 10px;
+          }
+        }
+      }
     }
   }
 }
