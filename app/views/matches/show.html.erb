@@ -6,27 +6,36 @@
     </div>
     
     <div class="match-show-card card d-flex justify-content-between align-items-center">
-      <div class="match-show-card-body card-body">
+      <div class="match-show-card-body card-body" data-goal-events="<%= @goal_events.to_json %>">
         <div class="row text-center">
-          <div class="col-md-4">
+          <div class="col-md-4 col-12">
             <h3><%= @match.home_team.name %></h3>
             <p>Time da Casa</p>
           </div>
-          <div class="match-result col-md-4">
-            <h2><%= @match.home_goals %></h2>
+          <div class="match-result col-md-4 col-12">
+            <h2 id="home-score">0</h2>
             <div class="match-time">
-              <p>00:00</p>
+              <p id="game-clock">00:00</p>
             </div>
-            <h2><%= @match.away_goals %></h2>
-            <% if @match.winner %>
-              <p><strong>Vencedor:</strong> <%= @match.winner.name %></p>
-            <% else %>
-              <p><strong>Resultado:</strong> Empate</p>
-            <% end %>
+            <h2 id="away-score">0</h2>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 col-12">
             <h3><%= @match.away_team.name %></h3>
             <p>Time Visitante</p>
+          </div>
+        </div>
+        
+        <!-- Seção de notificações e resultado final - aparece abaixo em mobile -->
+        <div class="row">
+          <div class="col-12">
+            <div class="notifications-and-results">
+              <div id="goal-notifications" class="mt-3">
+                <!-- Notificações de gol aparecerão aqui -->
+              </div>
+              <div id="final-result" class="mt-3">
+                <!-- O resultado final aparecerá aqui -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -37,3 +46,131 @@
     </div>
   </div>
 </div>
+
+<script>
+// Variável global para controlar o intervalo
+let matchSimulationInterval = null;
+let matchSimulationRunning = false;
+
+// Função para limpar simulação anterior
+function clearMatchSimulation() {
+  if (matchSimulationInterval) {
+    clearInterval(matchSimulationInterval);
+    matchSimulationInterval = null;
+  }
+  matchSimulationRunning = false;
+}
+
+// Função para iniciar a simulação da partida
+function startMatchSimulation() {
+  // Evita múltiplas execuções
+  if (matchSimulationRunning) {
+    return;
+  }
+
+  const gameClockElement = document.getElementById('game-clock');
+  const notificationsElement = document.getElementById('goal-notifications');
+  const finalResultElement = document.getElementById('final-result');
+  const homeScoreElement = document.getElementById('home-score');
+  const awayScoreElement = document.getElementById('away-score');
+  const matchCardBody = document.querySelector('.match-show-card-body');
+
+  if (!gameClockElement || !notificationsElement || !matchCardBody || !homeScoreElement || !awayScoreElement || !finalResultElement) {
+    console.error("Um ou mais elementos do DOM para a simulação da partida não foram encontrados.");
+    return;
+  }
+
+  // Limpa conteúdo anterior
+  notificationsElement.innerHTML = '';
+  finalResultElement.innerHTML = '';
+  homeScoreElement.textContent = '0';
+  awayScoreElement.textContent = '0';
+  gameClockElement.textContent = '00:00';
+
+  const goalEvents = JSON.parse(matchCardBody.dataset.goalEvents);
+  const shownGoals = new Set();
+  let homeScore = 0;
+  let awayScore = 0;
+  let gameSeconds = 0;
+  const gameDurationInMinutes = 90;
+  const gameSpeedMultiplier = 10; // 10x mais rápido
+
+  matchSimulationRunning = true;
+
+  matchSimulationInterval = setInterval(() => {
+    gameSeconds++;
+
+    const currentMinute = Math.floor(gameSeconds / 60);
+    const currentSecondInMinute = gameSeconds % 60;
+
+    // Atualiza o relógio no formato MM:SS
+    gameClockElement.textContent = `${String(currentMinute).padStart(2, '0')}:${String(currentSecondInMinute).padStart(2, '0')}`;
+
+    // Verifica se há um gol para anunciar
+    goalEvents.forEach((goal, index) => {
+      if (currentMinute === goal.minute && !shownGoals.has(index)) {
+        const notification = document.createElement('p');
+        notification.innerHTML = `<strong>GOL!</strong> ${goal.team_name} marcou aos ${goal.minute}'.`;
+        notification.classList.add('goal-alert');
+        notificationsElement.appendChild(notification);
+
+        // Alerta visual e sonoro do navegador
+        alert(`GOL! ${goal.team_name} marcou aos ${goal.minute}'`);
+
+        // Atualiza o placar
+        if (goal.type === 'home') {
+          homeScore++;
+          homeScoreElement.textContent = homeScore;
+        } else {
+          awayScore++;
+          awayScoreElement.textContent = awayScore;
+        }
+
+        shownGoals.add(index);
+      }
+    });
+
+    // Para o relógio aos 90 minutos
+    if (currentMinute >= gameDurationInMinutes) {
+      clearInterval(matchSimulationInterval);
+      matchSimulationInterval = null;
+      matchSimulationRunning = false;
+      gameClockElement.textContent = "90:00";
+      
+      const endMessage = document.createElement('p');
+      endMessage.innerHTML = "<strong>Fim de Jogo!</strong>";
+      finalResultElement.appendChild(endMessage);
+
+      // Exibe o resultado final
+      <% if @match.winner %>
+        const winnerMessage = document.createElement('p');
+        winnerMessage.innerHTML = `<strong>Vencedor:</strong> <%= j @match.winner.name %>`;
+        finalResultElement.appendChild(winnerMessage);
+      <% else %>
+        const drawMessage = document.createElement('p');
+        drawMessage.innerHTML = `<strong>Resultado:</strong> Empate`;
+        finalResultElement.appendChild(drawMessage);
+      <% end %>
+    }
+  }, 10 / gameSpeedMultiplier); // Intervalo de 100ms para acelerar 10x
+}
+
+// Event listeners
+document.addEventListener('turbo:load', () => {
+  // Limpa qualquer simulação anterior
+  clearMatchSimulation();
+  
+  // Inicia nova simulação após um pequeno delay
+  setTimeout(startMatchSimulation, 100);
+});
+
+// Limpa a simulação quando a página é deixada
+document.addEventListener('turbo:before-cache', () => {
+  clearMatchSimulation();
+});
+
+// Limpa a simulação quando a página é descarregada
+document.addEventListener('beforeunload', () => {
+  clearMatchSimulation();
+});
+</script>
