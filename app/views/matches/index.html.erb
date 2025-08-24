@@ -15,7 +15,6 @@
               <th></th>
               <th> </th>
               <th class="text-center">Time Visitante</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -40,9 +39,6 @@
                   <% if match.away_team == @team %>
                     <span class="badge-matches badge bg-light mb-1"><small>Seu Time</small></span>
                   <% end %>
-                </td>
-                <td>
-                  <%= link_to "Info", match, class: "match-info btn btn-sm btn-light mx-1" %>
                 </td>
               </tr>
             <% end %>
