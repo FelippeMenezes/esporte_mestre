@@ -1,17 +1,25 @@
 <div class="home">
-    <div class="container">
+    <div class="home-container container">
         <h1>Bem-vindo ao Esporte Mestre</h1>
         <p>O melhor gerenciador de esportes, times e jogadores!</p>
 
         <% if user_signed_in? %>
             <div class="actions">
-                <%= link_to "Ver Seus Times", teams_path, class: "btn btn-light" %>
-                <%= link_to "Criar Novo Time", new_team_path, class: "btn btn-light" %>
+                <div class="action-btn">
+                    <%= link_to "Ver Seus Times", teams_path, class: "home-btn btn btn-light" %>
+                </div>
+                <div class="action-btn">
+                    <%= link_to "Criar Novo Time", new_team_path, class: "home-btn btn btn-light" %>
+                </div>
             </div>
         <% else %>
             <div class="actions">
-                <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-light" %>
-                <%= link_to "Log In", new_user_session_path, class: "btn btn-light" %>
+                <div class="action-btn">
+                    <%= link_to "Sign Up", new_user_registration_path, class: "home-btn btn btn-light" %>
+                </div>
+                <div class="action-btn">
+                    <%= link_to "Log In", new_user_session_path, class: "home-btn btn btn-light" %>
+                </div>
             </div>
         <% end %>
     </div>
