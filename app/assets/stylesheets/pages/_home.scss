@@ -1,16 +1,18 @@
 .home {
   background-color: #198754;
   color: #fff;
-  padding: 3rem 0;
-  margin-top: 80px;
+  padding: 1rem 0;
+  margin-top: 65px;
   margin-bottom: 1rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   border-radius: 0.25rem;
   width: auto;
 
-  .container {
+  .home-container {
     text-align: center;
+
+    
   }
 
   .p {
@@ -18,7 +20,7 @@
     font-weight: 300;
   }
 
-  .btn {
+  .home-btn {
     margin-top: 0.25rem;
     padding: 0.50rem 1.0rem;
     margin-left: 0.5rem;
@@ -26,6 +28,7 @@
     font-size: 1.25rem;
     background-color: #198754;;
     color: white;
+    width: 200px;
 
     &:hover {
       background-color: white;
