@@ -1,4 +1,4 @@
-.market-new {
+.market-index {
     display: flex;
     justify-content: center;
     height: 275px;
@@ -10,7 +10,7 @@
     margin-left: 10px;
     }
 
-    .market-new-container {
+    .market-index-container {
     background-color: #198754;
     color: white;
     border-radius: 5px;
@@ -23,7 +23,7 @@
     height: auto;
     }
 
-    .market-new-card-body {
+    .market-index-card-body {
     background-color: #1d975e;
     color: white;
     border-radius: 5px;
@@ -71,6 +71,10 @@
         padding-right: 0.5rem;
         margin-left: 2px;
         margin-right: 3px;
+    }
+
+    .back-btn {
+        margin-bottom: 10px;
     }
 }
 
