@@ -61,7 +61,7 @@
 
       .match-result {
         .goal-alert {
-          color: #ffc107; // Amarelo para destaque
+          color: #ffc107; 
           font-weight: bold;
           animation: fadeIn 0.5s ease-in-out;
         }
@@ -69,7 +69,7 @@
         .match-time {
           #game-clock {
             cursor: pointer;
-            user-select: none; /* Impede que o texto seja selecionado ao clicar */
+            user-select: none;
             &:hover {
               opacity: 0.8;
             }
@@ -77,7 +77,6 @@
         }
       }
 
-      // Seção de notificações e resultados
       .notifications-and-results {
         text-align: center;
         padding: 2px;
@@ -103,13 +102,23 @@
             border-radius: 4px;
             background-color: rgba(255, 255, 255, 0.1);
           }
+
+          .clickable-end-game {
+            cursor: pointer;
+            text-decoration: none;
+            background-color: wheat;
+            color: seagreen;
+            &:hover {
+              opacity: 0.8;
+            }
+          }
         }
       }
 
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
     }
 
   .match-back-btn {
@@ -121,7 +130,6 @@
   }
 }
 
-// Media queries para dispositivos móveis
 @media (max-width: 768px) {
   .match-show {
     .match-show-container {
@@ -142,7 +150,6 @@
           }
         }
         
-        // Garantir que as notificações apareçam centralizadas em mobile
         .notifications-and-results {
           padding: 15px 10px;
           
@@ -175,7 +182,6 @@
   }
 }
 
-// Media queries para dispositivos muito pequenos (smartphones pequenos)
 @media (max-width: 480px) {
   .match-show {
     .match-show-container {
