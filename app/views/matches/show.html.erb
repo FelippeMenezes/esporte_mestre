@@ -1,8 +1,8 @@
 <div class="match-show">
   <div class="match-show-container container mt-1">
     <div class="match-show-flex d-flex justify-content-between align-items-center">
-      <h1>Detalhes da Partida</h1>
-      <h5 class="match-date"><%= @match.match_date.strftime("%d/%m/%Y %H:%M") %></h5>
+      <h1>Partida</h1>
+      <!-- <h5 class="match-date"><%= @match.match_date.strftime("%d/%m/%Y %H:%M") %></h5> -->
     </div>
     
     <div class="match-show-card card d-flex justify-content-between align-items-center mb-1">
@@ -26,7 +26,6 @@
           </div>
         </div>
         
-        <!-- Seção de notificações e resultado final - aparece abaixo em mobile -->
         <div class="row">
           <div class="col-12">
             <div class="notifications-and-results">
@@ -38,10 +37,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="mt-4">
-      <%= link_to "Voltar para Partidas", team_matches_path(@match.home_team.user ? @match.home_team : @match.away_team), class: "match-back-btn btn btn-light" %>
     </div>
   </div>
 </div>
@@ -108,7 +103,7 @@ function startMatchSimulation() {
         notification.classList.add('goal-alert');
         notificationsElement.prepend(notification);
 
-        alert(`GOL! ${goal.team_name} marcou aos ${goal.minute}'`);
+        // alert(`GOL! ${goal.team_name} marcou aos ${goal.minute}'`);
 
         if (goal.type === 'home') {
           homeScore++;
@@ -129,8 +124,13 @@ function startMatchSimulation() {
       gameClockElement.textContent = "90:00";
       
       const endMessage = document.createElement('p');
-      endMessage.innerHTML = "<strong>Fim de Jogo!</strong>";
+      endMessage.innerHTML = "<strong>Fim de Jogo</strong>";
+      endMessage.classList.add('clickable-end-game');
       finalResultElement.prepend(endMessage);
+
+      endMessage.addEventListener('click', () => {
+        window.location.href = "<%= team_matches_path(@match.home_team.user ? @match.home_team : @match.away_team) %>";
+      });
 
       <% if @match.winner %>
         const winnerMessage = document.createElement('p');
