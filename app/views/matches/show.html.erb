@@ -30,9 +30,9 @@
         <div class="row">
           <div class="col-12">
             <div class="notifications-and-results">
-              <div id="goal-notifications" class="mt-1">
-              </div>
               <div id="final-result" class="mt-1">
+              </div>
+              <div id="goal-notifications" class="mt-1">
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@ function startMatchSimulation() {
         const notification = document.createElement('p');
         notification.innerHTML = `<strong>GOL!</strong> ${goal.team_name} marcou aos ${goal.minute}'.`;
         notification.classList.add('goal-alert');
-        notificationsElement.appendChild(notification);
+        notificationsElement.prepend(notification);
 
         alert(`GOL! ${goal.team_name} marcou aos ${goal.minute}'`);
 
@@ -130,7 +130,7 @@ function startMatchSimulation() {
       
       const endMessage = document.createElement('p');
       endMessage.innerHTML = "<strong>Fim de Jogo!</strong>";
-      finalResultElement.appendChild(endMessage);
+      finalResultElement.prepend(endMessage);
 
       <% if @match.winner %>
         const winnerMessage = document.createElement('p');
