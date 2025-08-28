@@ -35,7 +35,7 @@ class MatchesController < ApplicationController
 
     simulate_match(@match)
     if @match.save
-      redirect_to @match, notice: 'Partida iniciada com sucesso!'
+      redirect_to @match
     else
       @rival_teams = @team.campaign.rival_teams
       render :new
