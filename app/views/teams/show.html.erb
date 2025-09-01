@@ -138,18 +138,20 @@
               <h5 class="card-title">Últimas Partidas</h5>
               <% @recent_matches.each do |match| %>
                 <div class="last-matches-row">
-                  <small><%= match.match_date.strftime("%d/%m/%Y") %></small><br>
-                  <div>
-                    <div><%= match.home_team.name %></div>
-                    <div><strong><%= match.home_goals %></strong></div>
-                    <div>
-                      <% result = match.result_for_team(@team) %>
+                  <div class="match-details">
+                    <small class="match-date"><%= match.match_date.strftime("%d/%m/%Y") %></small>
+                    <div class="last-results">
+                      <div class="team-home"><%= match.home_team.name %></div>
+                      <div class="goals"><strong><%= match.home_goals %></strong></div>
+                      <div class="result-badge">
+                        <% result = match.result_for_team(@team) %>
                         <span class="badge bg-<%= result == 'V' ? 'success' : result == 'E' ? 'warning' : 'danger' %>">
-                        <%= result %>
+                          <%= result %>
                         </span>
+                      </div>
+                      <div class="goals"><strong><%= match.away_goals %></strong></div>
+                      <div class="team-away"><%= match.away_team.name %></div>
                     </div>
-                    <div><strong><%= match.away_goals %></strong></div>
-                    <div><%= match.away_team.name %></div>
                   </div>
                 </div>
               <% end %>
