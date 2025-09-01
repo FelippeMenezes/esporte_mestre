@@ -134,20 +134,23 @@
 
         <% if @recent_matches.any? %>
           <div class="matches-card card mt-4">
-            <div class="team-show-card-body card-body">
+            <div class="players-team-card card-body">
               <h5 class="card-title">Últimas Partidas</h5>
               <% @recent_matches.each do |match| %>
-                <div class="mb-2">
+                <div class="last-matches-row">
                   <small><%= match.match_date.strftime("%d/%m/%Y") %></small><br>
-                  <% if match.home_team == @team %>
-                    <strong><%= match.home_team.name %></strong> <%= match.home_goals %> x <%= match.away_goals %> <%= match.away_team.name %>
-                  <% else %>
-                    <%= match.home_team.name %> <%= match.home_goals %> x <%= match.away_goals %> <strong><%= match.away_team.name %></strong>
-                  <% end %>
-                  <% result = match.result_for_team(@team) %>
-                  <span class="badge bg-<%= result == 'V' ? 'success' : result == 'E' ? 'warning' : 'danger' %>">
-                    <%= result %>
-                  </span>
+                  <div>
+                    <div><%= match.home_team.name %></div>
+                    <div><strong><%= match.home_goals %></strong></div>
+                    <div>
+                      <% result = match.result_for_team(@team) %>
+                        <span class="badge bg-<%= result == 'V' ? 'success' : result == 'E' ? 'warning' : 'danger' %>">
+                        <%= result %>
+                        </span>
+                    </div>
+                    <div><strong><%= match.away_goals %></strong></div>
+                    <div><%= match.away_team.name %></div>
+                  </div>
                 </div>
               <% end %>
             </div>
