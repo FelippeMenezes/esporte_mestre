@@ -13,14 +13,17 @@
         <% if user_signed_in? %>
           <%  
           menu_items = []
+
             if @team && @team.persisted? 
               menu_items.push({text: "#{@team.name}", path: team_path(@team)})
               menu_items.push({ type: :divider })
               menu_items.push({text: "Seus Jogadores", path: team_players_path(@team)})
               menu_items.push({ type: :divider })
               menu_items.push({text: "Suas Partidas", path: team_matches_path(@team)})
-              menu_items.push({ type: :divider })
-              menu_items.push({text: "Criar Partida", path: new_team_match_path(@team)})
+              if @team.can_play_match?
+                menu_items.push({ type: :divider })
+                menu_items.push({text: "Criar Partida", path: new_team_match_path(@team)})
+              end
               menu_items.push({ type: :divider })
               menu_items.push({text: "Mercado", path: market_path(@team)})
             end
