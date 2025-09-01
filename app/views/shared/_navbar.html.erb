@@ -14,6 +14,8 @@
           <%  
           menu_items = []
             if @team && @team.persisted? 
+              menu_items.push({text: "#{@team.name}", path: team_path(@team)})
+              menu_items.push({ type: :divider })
               menu_items.push({text: "Seus Jogadores", path: team_players_path(@team)})
               menu_items.push({ type: :divider })
               menu_items.push({text: "Suas Partidas", path: team_matches_path(@team)})
