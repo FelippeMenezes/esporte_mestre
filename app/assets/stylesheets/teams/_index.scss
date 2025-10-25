@@ -8,26 +8,22 @@
     }
 
   .team-index-container {
-    background-color: #198754;
+    background-color: #1d975e;
     color: white;
     border-radius: 5px;
     padding-top: 15px;
     padding-left: 0;
-    padding-right: 0;
+    padding-right: 10px;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
   }
 
   .team-index-card-body {
-    background-color: #1d975e;
+    background-color: #198754;
     color: white;
     border-radius: 5px;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-
-    &:hover {
-        background-color: #198754;
-    }
   }
 
   h5 {
@@ -70,7 +66,6 @@
   cursor: pointer;
 }
 
-/* Opcional: Efeito ao passar o mouse */
 .button-as-image:hover {
   opacity: 0.8;
 }
