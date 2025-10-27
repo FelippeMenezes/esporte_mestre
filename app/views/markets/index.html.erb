@@ -33,8 +33,8 @@
                         <td>
                           <%= button_to "Vender", sell_player_path(team_id: @team.id, id: player.id),
                                 method: :post,
-                                data: { turbo_confirm: "Vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
-                                class: "btn btn-sm btn-warning action-button", form: { class: 'd-inline' } %>
+                                data: { action: "click->sell-confirmation#confirm", "sell-confirmation-message-value": "Deseja vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
+                                class: "btn btn-sm btn-warning action-button", form: { data: { controller: "sell-confirmation" }, class: 'd-inline' } %>
                         </td>
                       </tr>
                     <% end %>
@@ -42,10 +42,7 @@
                 </table>
               </div>
             <% else %>
-              <div class="alert alert-warning alert-dismissible fade show m-1">
-                Você não tem jogadores no seu time.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+              <div data-controller="no-player-team"></div>
             <% end %>
           </div>
         </div>
@@ -81,8 +78,8 @@
                           <% if @team.budget >= player.market_value %>
                               <%= button_to "Comprar", buy_player_path(team_id: @team.id, id: player.id),
                                     method: :post,
-                                    data: { turbo_confirm: "Comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
-                                    class: "btn btn-sm btn-success action-button", form: { class: 'd-inline' } %>
+                                    data: { action: "click->buy-confirmation#confirm", "buy-confirmation-message-value": "Deseja comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
+                                    class: "btn btn-sm btn-success action-button", form: { data: { controller: "buy-confirmation" }, class: 'd-inline' } %>
                           <% else %>
                             <span>Sem orçamento</span>
                           <% end %>
@@ -93,10 +90,7 @@
                 </table>
               </div>
             <% else %>
-              <div class="alert alert-info alert-dismissible fade show m-1">
-                Nenhum jogador disponível para compra no momento.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+              <div data-controller="no-available-players"></div>
             <% end %>
           </div>
         </div>
