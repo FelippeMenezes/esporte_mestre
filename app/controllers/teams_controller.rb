@@ -82,11 +82,11 @@ class TeamsController < ApplicationController
   def destroy
     campaign = @team.campaign
     @team.destroy
-    
+
     if campaign && campaign.teams.where(is_user_team: true).empty?
       campaign.destroy
     end
-    
+
     redirect_to root_path, notice: 'Time excluído com sucesso.'
   end
 
