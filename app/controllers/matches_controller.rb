@@ -81,15 +81,12 @@ class MatchesController < ApplicationController
 
   def generate_goal_events(match)
     events = []
-    # Gera momentos de gol para o time da casa
     match.home_goals.times do
       events << { minute: rand(1..90), team_name: match.home_team.name, type: 'home' }
     end
-    # Gera momentos de gol para o time visitante
     match.away_goals.times do
       events << { minute: rand(1..90), team_name: match.away_team.name, type: 'away' }
     end
-    # Ordena os eventos por minuto
     events.sort_by { |event| event[:minute] }
   end
 end
