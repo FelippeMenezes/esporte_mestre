@@ -36,7 +36,6 @@ class PlayersController < ApplicationController
 
   def set_player
     @player = Player.find(params[:id])
-    # Verificar se o jogador pertence a um time do usuário atual
     unless @player.team.user == current_user
       redirect_to teams_path, alert: 'Acesso negado.'
     end

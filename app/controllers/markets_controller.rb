@@ -1,4 +1,3 @@
-# app/controllers/markets_controller.rb
 class MarketsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_team, only: [:index, :buy_player, :sell_player]
@@ -7,7 +6,6 @@ class MarketsController < ApplicationController
   def index
     order_clause = case sort_column
                    when "market_value"
-                     # This CASE statement should match the logic in Player#market_value
                      "CASE WHEN players.position = 'A' THEN players.level * 150000 " \
                      "WHEN players.position = 'M' THEN players.level * 120000 " \
                      "WHEN players.position = 'G' THEN players.level * 100000 " \
