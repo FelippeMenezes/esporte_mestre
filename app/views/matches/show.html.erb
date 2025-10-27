@@ -8,7 +8,7 @@
     <div class="match-show-card card d-flex justify-content-between align-items-center mb-1">
       <div class="match-show-card-body card-body" data-goal-events="<%= @goal_events.to_json %>">
         <div class="match-row row text-center">
-          <div class="col-md-4 col-12">
+          <div class="col-md-4 col-12 align-self-center">
             <p>Time da Casa</p>
             <h3><%= @match.home_team.name %></h3>
           </div>
@@ -19,7 +19,7 @@
             </div>
             <h2 id="away-score">0</h2>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-md-4 col-12 align-self-center">
             <p>Time Visitante</p>
             <h3><%= @match.away_team.name %></h3>
             
