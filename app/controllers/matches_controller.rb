@@ -57,17 +57,20 @@ class MatchesController < ApplicationController
   end
 
   def simulate_match(match)
-    # Simulação simples baseada no nível médio dos jogadores
     home_strength = calculate_team_strength(match.home_team)
     away_strength = calculate_team_strength(match.away_team)
+
+    home_rand = rand(-1..3)
+    away_rand = rand(-1..3)
     
-    # Adicionar fator aleatório
-    home_performance = home_strength + rand(0..3)
-    away_performance = away_strength + rand(0..3)
-    
-    # Calcular gols baseado na performance
-    match.home_goals = [home_performance / 2, 0].max
-    match.away_goals = [away_performance / 2, 0].max
+    home_performance = home_strength + home_rand
+    away_performance = away_strength + away_rand
+
+    home_goal_divisor = rand(2..5)
+    away_goal_divisor = rand(2..5)
+  
+    match.home_goals = [home_performance / home_goal_divisor, 0].max
+    match.away_goals = [away_performance / away_goal_divisor, 0].max
   end
 
   def calculate_team_strength(team)
