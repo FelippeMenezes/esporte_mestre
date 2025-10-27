@@ -21,7 +21,6 @@ class Player < ApplicationRecord
   end
 
   def market_value
-    # Valor baseado no nível e posição
     case position
     when 'G' then level * 100000
     when 'D' then level * 80000
@@ -33,7 +32,6 @@ class Player < ApplicationRecord
 
 
   def performance_rating
-    # Rating baseado no nível com alguma variação
     base_rating = level * 10
     variation = rand(-10..10)
     [base_rating + variation, 10].max
@@ -42,13 +40,6 @@ class Player < ApplicationRecord
   private
 
   def team_position_limits
-    # Limites de jogadores por posição para um time de 15 jogadores
-    # G: Goleiro (2)
-    # D: Defensor (5)
-    # M: Meio-campo (5)
-    # A: Atacante (3)
-    # Total: 2 + 5 + 5 + 3 = 15
-
     case position
     when 'G'
       max_players = 2
@@ -59,10 +50,9 @@ class Player < ApplicationRecord
     when 'A'
       max_players = 3
     else
-      return # Posição inválida, a validação de inclusão já cuida disso
+      return
     end
 
-    # Conta quantos jogadores já existem para esta posição no time, excluindo o jogador atual (se for uma atualização)
     existing_players_count = team.players.where(position: position).where.not(id: id).count
 
     if existing_players_count >= max_players

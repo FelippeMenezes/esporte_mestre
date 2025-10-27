@@ -29,7 +29,6 @@ class TeamsController < ApplicationController
         @team.campaign = campaign
 
         if @team.save
-          # Criar 9 times rivais
           9.times do |i|
             rival_team = Team.new(
               name: generate_team_name,
@@ -44,7 +43,6 @@ class TeamsController < ApplicationController
             create_players_for_team(rival_team)
           end
           
-          # Criar 15 jogadores para o time do usuário
           create_players_for_team(@team)
 
           redirect_to @team, notice: "Time criado com sucesso!
@@ -85,7 +83,6 @@ class TeamsController < ApplicationController
     campaign = @team.campaign
     @team.destroy
     
-    # Se não há mais times do usuário na campanha, excluir a campanha
     if campaign && campaign.teams.where(is_user_team: true).empty?
       campaign.destroy
     end
