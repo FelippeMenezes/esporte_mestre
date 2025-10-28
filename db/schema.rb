@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_19_202904) do
 
   create_table "teams", force: :cascade do |t|
     t.string "name", null: false
-    t.decimal "budget", precision: 10, scale: 2, default: "1000000.0"
+    t.decimal "budget", precision: 10, scale: 2, default: "500000.0"
     t.bigint "user_id"
     t.bigint "campaign_id", null: false
     t.boolean "is_user_team", default: false
