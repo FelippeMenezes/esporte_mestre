@@ -22,11 +22,11 @@ class Player < ApplicationRecord
 
   def market_value
     case position
-    when 'G' then level * 100000
-    when 'D' then level * 80000
-    when 'M' then level * 120000
-    when 'A' then level * 150000
-    else 50000
+    when 'G' then level * 10000
+    when 'D' then level * 8000
+    when 'M' then level * 12000
+    when 'A' then level * 15000
+    else 5000
     end
   end
 

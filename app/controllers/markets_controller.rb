@@ -6,11 +6,11 @@ class MarketsController < ApplicationController
   def index
     order_clause = case sort_column
                    when "market_value"
-                     "CASE WHEN players.position = 'A' THEN players.level * 150000 " \
-                     "WHEN players.position = 'M' THEN players.level * 120000 " \
-                     "WHEN players.position = 'G' THEN players.level * 100000 " \
-                     "WHEN players.position = 'D' THEN players.level * 80000 " \
-                     "ELSE 50000 END"
+                     "CASE WHEN players.position = 'A' THEN players.level * 15000 " \
+                     "WHEN players.position = 'M' THEN players.level * 12000 " \
+                     "WHEN players.position = 'G' THEN players.level * 10000 " \
+                     "WHEN players.position = 'D' THEN players.level * 8000 " \
+                     "ELSE 5000 END"
                    else
                      "players.#{sort_column}"
                    end

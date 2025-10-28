@@ -10,7 +10,7 @@ export default class extends Controller {
           <li>Uma nova campanha será criada exclusivamente para você</li>
           <li>9 times rivais serão gerados automaticamente</li>
           <li>Cada time (incluindo o seu) receberá 15 jogadores</li>
-          <li>Você começará com um orçamento de $10.000.000</li>
+          <li>Você começará com um orçamento de $500.000</li>
         </ul>
       `,
       icon: "info",
