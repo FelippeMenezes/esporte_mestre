@@ -122,15 +122,6 @@ function startMatchSimulation() {
       matchSimulationInterval = null;
       matchSimulationRunning = false;
       gameClockElement.textContent = "90:00";
-      
-      const endMessage = document.createElement('p');
-      endMessage.innerHTML = "<strong>Fim de Jogo</strong>";
-      endMessage.classList.add('clickable-end-game');
-      finalResultElement.prepend(endMessage);
-
-      endMessage.addEventListener('click', () => {
-        window.location.href = "<%= team_matches_path(@match.home_team.user ? @match.home_team : @match.away_team) %>";
-      });
 
       <% if @match.winner %>
         const winnerMessage = document.createElement('p');
@@ -141,6 +132,15 @@ function startMatchSimulation() {
         drawMessage.innerHTML = `<strong>Resultado:</strong> Empate`;
         finalResultElement.appendChild(drawMessage);
       <% end %>
+      
+      const endMessage = document.createElement('p');
+      endMessage.innerHTML = "<strong>Histórico de Particas</strong>";
+      endMessage.classList.add('clickable-end-game');
+      finalResultElement.prepend(endMessage);
+
+      endMessage.addEventListener('click', () => {
+        window.location.href = "<%= team_matches_path(@match.home_team.user ? @match.home_team : @match.away_team) %>";
+      });
     }
   }, 10 / gameSpeedMultiplier);
 }
