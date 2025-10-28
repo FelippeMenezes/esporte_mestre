@@ -39,7 +39,7 @@ class MarketsController < ApplicationController
       player.update!(team: @team)
     end
 
-    redirect_to team_market_path(@team), notice: "#{player.name} comprado com sucesso!"
+    redirect_to team_market_path(@team), notice: "#{player.name} foi comprado com sucesso!"
   rescue ActiveRecord::RecordInvalid => e
     redirect_to team_market_path(@team), alert: "Erro ao comprar #{player.name}: #{e.message}"
   rescue ActiveRecord::RecordNotFound
@@ -60,7 +60,7 @@ class MarketsController < ApplicationController
       player.update!(team: new_team)
     end
 
-    redirect_to team_market_path(@team), notice: "#{player.name} vendido com sucesso para #{new_team.name}!"
+    redirect_to team_market_path(@team), notice: "#{player.name} foi vendido com sucesso para #{new_team.name}!"
   rescue ActiveRecord::RecordInvalid => e
     redirect_to team_market_path(@team), alert: "Erro ao vender #{player.name}: #{e.message}"
   rescue ActiveRecord::RecordNotFound
