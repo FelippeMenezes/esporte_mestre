@@ -21,51 +21,25 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
     @team.user = current_user
     @team.is_user_team = true
-    @team.budget = 500000.00
+    @team.budget = 500_000.00
 
-    begin
-      ActiveRecord::Base.transaction do
-        campaign = Campaign.create!(name: "Campanha de #{@team.name}")
-        @team.campaign = campaign
+    ActiveRecord::Base.transaction do
+      campaign = Campaign.create!(name: "Campanha de #{@team.name}")
+      @team.campaign = campaign
 
-        if @team.save
-          9.times do |i|
-            rival_team = Team.new(
-              name: generate_team_name,
-              campaign: campaign,
-              is_user_team: false,
-              budget: rand(30000..60000)
-            )
-            unless rival_team.save
-              puts "ERROS AO SALVAR TIME RIVAL: #{rival_team.errors.full_messages.join(", ")}"
-              raise ActiveRecord::Rollback
-            end
-            create_players_for_team(rival_team)
-          end
-          
-          create_players_for_team(@team)
+      if @team.save
+        create_rival_teams(campaign)
+        create_players_for_team(@team)
 
-          redirect_to @team, notice: "Time criado com sucesso!
-                                    Sua campanha foi iniciada.
-                                    Utilize o MENU para gerenciar seu time.
-                                    Acesse:
-                                    
-                                    Seus Jogadores
-                                    Suas Partidas
-                                    Crie Partida
-                                    Mercado
-                                    Seus Times"
-        else
-          puts "ERROS AO SALVAR TIME: #{@team.errors.full_messages.join(", ")}"
-          render :new, status: :unprocessable_entity
-        end
+        redirect_to @team, notice: team_creation_success_message
+      else
+        render :new, status: :unprocessable_entity
       end
-    rescue => e
-      Rails.logger.error "Erro ao criar time: #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
-      @team.errors.add(:base, "Erro interno: #{e.message}")
-      render :new, status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Erro ao criar time: #{e.message}"
+    @team.errors.add(:base, "Erro interno: #{e.message}")
+    render :new, status: :unprocessable_entity
   end
 
   def edit
@@ -116,22 +90,37 @@ class TeamsController < ApplicationController
   end
 
   def create_players_for_team(team)
-    positions = ['G', 'G', 'D', 'D', 'D', 'D', 'D', 'M', 'M', 'M', 'M', 'M', 'A', 'A', 'A']
-    
-    positions.each_with_index do |position, index|
+    positions = %w[G G D D D D D M M M M M A A A]
+
+    positions.each do |position|
       player = Player.new(
         name: generate_player_name,
         position: position,
         level: rand(1..10),
         team: team
       )
-      unless player.save
-        puts "ERROS AO SALVAR JOGADOR: #{player.errors.full_messages.join(", ")}"
-        puts "Time do jogador: #{team.name}"
-        puts "Posição do jogador: #{position}"
-        raise ActiveRecord::Rollback
-      end
+      player.save!
     end
+  end
+
+  def create_rival_teams(campaign)
+    9.times do
+      rival_team = Team.new(
+        name: generate_team_name,
+        campaign: campaign,
+        is_user_team: false,
+        budget: rand(30_000..60_000)
+      )
+      rival_team.save!
+      create_players_for_team(rival_team)
+    end
+  end
+
+  def team_creation_success_message
+    <<~MSG.squish
+      Time criado com sucesso! Sua campanha foi iniciada.
+      Utilize o MENU para gerenciar seu time. Acesse: Seus Jogadores, Suas Partidas, Crie Partida, Mercado, Seus Times
+    MSG
   end
 
   def generate_player_name

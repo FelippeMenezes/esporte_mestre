@@ -60,22 +60,14 @@ class MatchesController < ApplicationController
     home_strength = calculate_team_strength(match.home_team)
     away_strength = calculate_team_strength(match.away_team)
 
-    home_rand = rand(-1..3)
-    away_rand = rand(-1..3)
-    
-    home_performance = home_strength + home_rand
-    away_performance = away_strength + away_rand
+    home_performance = home_strength + rand(-1..3)
+    away_performance = away_strength + rand(-1..3)
 
-    home_goal_divisor = rand(2..5)
-    away_goal_divisor = rand(2..5)
-  
-    match.home_goals = [home_performance / home_goal_divisor, 0].max
-    match.away_goals = [away_performance / away_goal_divisor, 0].max
+    match.home_goals = [(home_performance / rand(2..5)), 0].max
+    match.away_goals = [(away_performance / rand(2..5)), 0].max
   end
 
   def calculate_team_strength(team)
-    return 0 if team.players.empty?
-    
     team.players.average(:level).to_i
   end
 

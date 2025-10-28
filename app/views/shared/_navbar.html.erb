@@ -25,7 +25,7 @@
                 menu_items.push({text: "Criar Partida", path: new_team_match_path(@team)})
               end
               menu_items.push({ type: :divider })
-              menu_items.push({text: "Mercado", path: market_path(@team)})
+              menu_items.push({text: "Mercado", path: team_market_path(@team)})
             end
 
           menu_items.concat([

@@ -80,14 +80,7 @@
               <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card player-position-<%= position.downcase %>">
                   <div class="card-header">
-                    <h6>
-                      <%= case position
-                          when 'G' then 'Goleiros'
-                          when 'D' then 'Defensores'
-                          when 'M' then 'Meio-campo'
-                          when 'A' then 'Atacantes'
-                          end %>
-                    </h6>
+                    <h6><%= Player::POSITION_NAMES[position] %>s</h6>
                   </div>
                   <div class="team-show-card-body card-body">
                     <% position_players = @players.select { |p| p.position == position } %>
@@ -116,7 +109,7 @@
           <div class="team-show-card-body card-body">
             <h5 class="card-title">Ações</h5>
             <%= link_to "Seus Jogadores", team_players_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
-            <%= link_to "Mercado", market_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
+            <%= link_to "Mercado", team_market_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
             <% if @team.can_play_match? %>
               <%= link_to "Criar Partida", new_team_match_path(@team), class: "btn btn-success btn-block mb-2 w-100" %>
             <% else %>

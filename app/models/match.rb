@@ -12,14 +12,13 @@ class Match < ApplicationRecord
   end
 
   def result_for_team(team)
-    if team == home_team
-      return 'V' if home_goals > away_goals
-      return 'E' if home_goals == away_goals
-      return 'D'
-    elsif team == away_team
-      return 'V' if away_goals > home_goals
-      return 'E' if home_goals == away_goals
-      return 'D'
+    case team
+    when home_team
+      home_goals > away_goals ? 'V' : home_goals == away_goals ? 'E' : 'D'
+    when away_team
+      away_goals > home_goals ? 'V' : home_goals == away_goals ? 'E' : 'D'
+    else
+      nil
     end
   end
 end

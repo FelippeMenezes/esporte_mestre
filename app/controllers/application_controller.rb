@@ -10,18 +10,12 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_team_ownership(team)
-    unless team.user == current_user
-      redirect_to teams_path, alert: 'Acesso negado.'
-      return false
-    end
+    return redirect_to teams_path, alert: 'Acesso negado.' unless team.user == current_user
     true
   end
 
   def ensure_player_ownership(player)
-    unless player.team.user == current_user
-      redirect_to teams_path, alert: 'Acesso negado.'
-      return false
-    end
+    return redirect_to teams_path, alert: 'Acesso negado.' unless player.team.user == current_user
     true
   end
 end
