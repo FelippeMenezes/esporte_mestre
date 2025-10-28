@@ -21,7 +21,7 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
     @team.user = current_user
     @team.is_user_team = true
-    @team.budget = 10000000.00
+    @team.budget = 500000.00
 
     begin
       ActiveRecord::Base.transaction do
@@ -34,7 +34,7 @@ class TeamsController < ApplicationController
               name: generate_team_name,
               campaign: campaign,
               is_user_team: false,
-              budget: rand(800000..1200000)
+              budget: rand(30000..60000)
             )
             unless rival_team.save
               puts "ERROS AO SALVAR TIME RIVAL: #{rival_team.errors.full_messages.join(", ")}"
@@ -137,24 +137,27 @@ class TeamsController < ApplicationController
   def generate_player_name
     first_names = [
       'João', 'Pedro', 'Carlos', 'Luis', 'André', 'Rafael', 'Bruno', 'Diego', 'Felipe', 'Gabriel',
-      'Marcos', 'Paulo', 'Ricardo', 'Fernando', 'Roberto', 'Alexandre', 'Rodrigo', 'Daniel', 'Thiago', 'Leonardo'
+      'Marcos', 'Paulo', 'Ricardo', 'Fernando', 'Roberto', 'Alexandre', 'Rodrigo', 'Daniel', 'Thiago', 'Leonardo',
+      'Lucas', 'Matheus', 'Vinícius', 'Eduardo', 'Marcelo', 'Vitor', 'Gustavo', 'Henrique', 'Júlio',
+      'Ramon', 'Murilo', 'Elias', 'Breno', 'César', 'Hugo', 'Samuel', 'Túlio', 'Otávio', 'Cauã',
+      'Miguel', 'Benício', 'Antônio', 'Davi', 'Erick'
     ]
     last_names = [
       'Silva', 'Santos', 'Oliveira', 'Souza', 'Lima', 'Costa', 'Pereira', 'Alves', 'Ferreira', 'Rodrigues',
-      'Nascimento', 'Carvalho', 'Araújo', 'Gomes', 'Barbosa', 'Rocha', 'Dias', 'Monteiro', 'Cardoso', 'Reis'
+      'Carvalho', 'Araújo', 'Gomes', 'Barbosa', 'Rocha', 'Dias', 'Monteiro', 'Cardoso', 'Reis',
+      'Paulista', 'Carioca', 'Paraíba', 'Mineiro', 'Gaúcho', 'Pará', 'Goiano', 'Baiano'
     ]
     
     "#{first_names.sample} #{last_names.sample}"
   end
 
   def generate_team_name
-    prefixes = ['FC', 'SC', 'EC', 'AC', 'CR']
-    cities = [
-      'São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Salvador', 'Brasília',
-      'Fortaleza', 'Manaus', 'Curitiba', 'Recife', 'Porto Alegre'
+    team_name = [
+      'Flamingo', 'Cristovão Colombo', 'Três Marias', 'Litoral', 'Vale Alto',
+      'Interior', 'Capital', 'Nacional', 'Praia', 'Montanha'
     ]
-    suffixes = ['United', 'City', 'Rovers', 'Athletic', 'Sporting']
+    suffixes = ['FC', 'CF', 'AF', 'SC']
     
-    "#{prefixes.sample} #{cities.sample} #{suffixes.sample}"
+    "#{team_name.sample} #{suffixes.sample}"
   end
 end
