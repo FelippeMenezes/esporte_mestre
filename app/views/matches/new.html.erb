@@ -3,12 +3,10 @@
     <h1>Iniciar Partida</h1>
 
     <% unless @team.can_play_match? %>
-      <div class="alert alert-danger alert-dismissible fade show m-1">
-        <h5>Não é possível jogar uma partida!</h5>
-        <p>Seu time precisa ter pelo menos 11 jogadores para jogar uma partida. Atualmente você tem <%= @team.total_players %> jogadores.</p>
-        <%= link_to "Ver Jogadores", team_players_path(@team), class: "btn btn-primary" %>
-        <%= link_to "Ir ao Mercado", team_market_path(@team), class: "btn btn-success" %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <div data-controller="insufficient-players"
+           data-insufficient-players-team-players-path-value="<%= team_players_path(@team) %>"
+           data-insufficient-players-team-market-path-value="<%= team_market_path(@team) %>"
+           data-insufficient-players-total-players-value="<%= @team.total_players %>">
       </div>
     <% else %>
       <%= simple_form_for [@team, @match] do |f| %>
