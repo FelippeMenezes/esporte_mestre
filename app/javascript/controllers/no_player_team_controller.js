@@ -1,6 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
 import Swal from "sweetalert2"
 
+const SWAL_CLASSES = {
+  container: 'swal-container',
+  popup: 'swal-popup',
+  title: 'swal-title',
+  htmlContainer: 'swal-text',
+  icon: 'swal-icon',
+  actions: 'swal-actions',
+  confirmButton: 'swal-confirm-button',
+}
+
 export default class extends Controller {
   connect() {
     Swal.fire({
@@ -12,15 +22,7 @@ export default class extends Controller {
       toast: true,
       timer: 15000,
       showConfirmButton: true,
-      customClass: {
-        container: 'swal-container',
-        popup: 'swal-popup',
-        title: 'swal-title',
-        htmlContainer: 'swal-text',
-        icon: 'swal-icon',
-        actions: 'swal-actions',
-        confirmButton: 'swal-confirm-button',
-      }
-    });
+      customClass: SWAL_CLASSES
+    })
   }
 }

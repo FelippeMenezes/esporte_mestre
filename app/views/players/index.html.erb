@@ -10,14 +10,7 @@
           <div class="col-md-6 col-lg-3 mb-4">
             <div class="card">
               <div class="card-header">
-                <h5>
-                  <%= case position
-                      when 'G' then 'Goleiros'
-                      when 'D' then 'Defensores'
-                      when 'M' then 'Meio-campo'
-                      when 'A' then 'Atacantes'
-                      end %>
-                </h5>
+                <h5><%= Player::POSITION_NAMES[position] %>s</h5>
               </div>
               <div class="player-index-card-body card-body">
                 <% position_players = @players.select { |p| p.position == position } %>
@@ -42,7 +35,7 @@
 
     <div class="d-flex justify-content-between mt-4">
       <%= link_to "Voltar para o Time", @team, class: "btn btn-secondary" %>
-      <%= link_to "Mercado de Jogadores", market_path(@team), class: "btn btn-light" %>
+      <%= link_to "Mercado de Jogadores", team_market_path(@team), class: "btn btn-light" %>
     </div>
   </div>
 </div>

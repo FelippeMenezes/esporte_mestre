@@ -1,9 +1,32 @@
 class Player < ApplicationRecord
+  POSITION_NAMES = {
+    'G' => 'Goleiro',
+    'D' => 'Defensor',
+    'M' => 'Meio-campo',
+    'A' => 'Atacante'
+  }.freeze
+
+  MARKET_VALUE_MULTIPLIERS = {
+    'G' => 10_000,
+    'D' => 8_000,
+    'M' => 12_000,
+    'A' => 15_000
+  }.freeze
+
+  POSITION_LIMITS = {
+    'G' => 2,
+    'D' => 5,
+    'M' => 5,
+    'A' => 3
+  }.freeze
+
   belongs_to :team
 
   validates :name, presence: true, length: { minimum: 3, maximum: 30 }
-  validates :position, presence: true, inclusion: { in: %w[G D M A] }
+  validates :position, presence: true, inclusion: { in: POSITION_NAMES.keys }
   validates :level, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+
+  validate :team_position_limits, on: :create
 
   scope :goalkeepers, -> { where(position: 'G') }
   scope :defenders, -> { where(position: 'D') }
@@ -11,25 +34,19 @@ class Player < ApplicationRecord
   scope :attackers, -> { where(position: 'A') }
 
   def position_name
-      case position
-      when 'G' then 'Goleiro'
-      when 'D' then 'Defensor'
-      when 'M' then 'Meio-campo'
-      when 'A' then 'Atacante'
-      else position
-      end
+    POSITION_NAMES.fetch(position, position)
   end
+
+  MARKET_VALUE_MULTIPLIERS = {
+    'G' => 10_000,
+    'D' => 8_000,
+    'M' => 12_000,
+    'A' => 15_000
+  }.freeze
 
   def market_value
-    case position
-    when 'G' then level * 10000
-    when 'D' then level * 8000
-    when 'M' then level * 12000
-    when 'A' then level * 15000
-    else 5000
-    end
+    level * MARKET_VALUE_MULTIPLIERS.fetch(position, 5_000)
   end
-
 
   def performance_rating
     base_rating = level * 10
@@ -40,18 +57,8 @@ class Player < ApplicationRecord
   private
 
   def team_position_limits
-    case position
-    when 'G'
-      max_players = 2
-    when 'D'
-      max_players = 5
-    when 'M'
-      max_players = 5
-    when 'A'
-      max_players = 3
-    else
-      return
-    end
+    max_players = POSITION_LIMITS[position]
+    return unless max_players
 
     existing_players_count = team.players.where(position: position).where.not(id: id).count
 

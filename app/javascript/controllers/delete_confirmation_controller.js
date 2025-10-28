@@ -1,6 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 import Swal from "sweetalert2"
 
+const SWAL_CLASSES = {
+  container: 'swal-container',
+  popup: 'swal-popup',
+  title: 'swal-title',
+  htmlContainer: 'swal-text',
+  icon: 'swal-icon',
+  actions: 'swal-actions',
+  confirmButton: 'swal-confirm-button',
+  denyButton: 'swal-deny-button',
+}
+
 export default class extends Controller {
   confirm(event) {
     event.preventDefault()
@@ -16,39 +27,32 @@ export default class extends Controller {
       denyButtonColor: '#198754',
       toast: true,
       timer: 10000,
-      showConfirmButton: true,
-      showDenyButton: true,
-      customClass: {
-        container: 'swal-container',
-        popup: 'swal-popup',
-        title: 'swal-title',
-        htmlContainer: 'swal-text',
-        icon: 'swal-icon',
-        actions: 'swal-actions',
-        confirmButton: 'swal-confirm-button',
-        denyButton: 'swal-deny-button',
-      }
+      customClass: SWAL_CLASSES
     }).then((result) => {
       if (result.isConfirmed) {
         this.element.submit()
       } else if (result.isDenied) {
-        Swal.fire({
-          title: "Ação cancelada",
-          text: "",
-          icon: "info",
-          confirmButtonColor: '#198754',
-          toast: true,
-          timer: 3000,
-          customClass: {
-            container: 'swal-container',
-            popup: 'swal-popup',
-            title: 'swal-title',
-            htmlContainer: 'swal-text',
-            icon: 'swal-icon',
-            actions: 'swal-actions',
-            confirmButton: 'swal-confirm-button',
-          }
-        });
+        this.showCancellationAlert("Ação cancelada")
+      }
+    })
+  }
+
+  showCancellationAlert(title) {
+    Swal.fire({
+      title,
+      text: "",
+      icon: "info",
+      confirmButtonColor: '#198754',
+      toast: true,
+      timer: 3000,
+      customClass: {
+        container: SWAL_CLASSES.container,
+        popup: SWAL_CLASSES.popup,
+        title: SWAL_CLASSES.title,
+        htmlContainer: SWAL_CLASSES.htmlContainer,
+        icon: SWAL_CLASSES.icon,
+        actions: SWAL_CLASSES.actions,
+        confirmButton: SWAL_CLASSES.confirmButton,
       }
     })
   }

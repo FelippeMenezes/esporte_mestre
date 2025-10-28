@@ -44,118 +44,145 @@
 
 
 <script>
-let matchSimulationInterval = null;
-let matchSimulationRunning = false;
+  document.addEventListener('turbo:load', () => {
+    const matchSimulation = new MatchSimulation();
+    matchSimulation.start();
+  });
 
-function clearMatchSimulation() {
-  if (matchSimulationInterval) {
-    clearInterval(matchSimulationInterval);
-    matchSimulationInterval = null;
-  }
-  matchSimulationRunning = false;
-}
+  document.addEventListener('turbo:before-cache', () => {
+    if (window.matchSimulation) {
+      window.matchSimulation.clear();
+    }
+  });
 
-function startMatchSimulation() {
-  if (matchSimulationRunning) {
-    return;
-  }
+  document.addEventListener('beforeunload', () => {
+    if (window.matchSimulation) {
+      window.matchSimulation.clear();
+    }
+  });
 
-  const gameClockElement = document.getElementById('game-clock');
-  const notificationsElement = document.getElementById('goal-notifications');
-  const finalResultElement = document.getElementById('final-result');
-  const homeScoreElement = document.getElementById('home-score');
-  const awayScoreElement = document.getElementById('away-score');
-  const matchCardBody = document.querySelector('.match-show-card-body');
+  class MatchSimulation {
+    constructor() {
+      this.interval = null;
+      this.running = false;
+      this.gameClockElement = document.getElementById('game-clock');
+      this.notificationsElement = document.getElementById('goal-notifications');
+      this.finalResultElement = document.getElementById('final-result');
+      this.homeScoreElement = document.getElementById('home-score');
+      this.awayScoreElement = document.getElementById('away-score');
+      this.matchCardBody = document.querySelector('.match-show-card-body');
+      this.goalEvents = JSON.parse(this.matchCardBody.dataset.goalEvents);
+      this.shownGoals = new Set();
+      this.homeScore = 0;
+      this.awayScore = 0;
+      this.gameSeconds = 0;
+      this.gameDurationInMinutes = 90;
+      this.gameSpeedMultiplier = 10;
+    }
 
-  if (!gameClockElement || !notificationsElement || !matchCardBody || !homeScoreElement || !awayScoreElement || !finalResultElement) {
-    console.error("Um ou mais elementos do DOM para a simulação da partida não foram encontrados.");
-    return;
-  }
-
-  notificationsElement.innerHTML = '';
-  finalResultElement.innerHTML = '';
-  homeScoreElement.textContent = '0';
-  awayScoreElement.textContent = '0';
-  gameClockElement.textContent = '00:00';
-
-  const goalEvents = JSON.parse(matchCardBody.dataset.goalEvents);
-  const shownGoals = new Set();
-  let homeScore = 0;
-  let awayScore = 0;
-  let gameSeconds = 0;
-  const gameDurationInMinutes = 90;
-  const gameSpeedMultiplier = 10;
-
-  matchSimulationRunning = true;
-
-  matchSimulationInterval = setInterval(() => {
-    gameSeconds++;
-
-    const currentMinute = Math.floor(gameSeconds / 60);
-    const currentSecondInMinute = gameSeconds % 60;
-
-    gameClockElement.textContent = `${String(currentMinute).padStart(2, '0')}:${String(currentSecondInMinute).padStart(2, '0')}`;
-
-    goalEvents.forEach((goal, index) => {
-      if (currentMinute === goal.minute && !shownGoals.has(index)) {
-        const notification = document.createElement('p');
-        notification.innerHTML = `<strong>GOL!</strong> ${goal.team_name} marcou aos ${goal.minute}'.`;
-        notification.classList.add('goal-alert');
-        notificationsElement.prepend(notification);
-
-        // alert(`GOL! ${goal.team_name} marcou aos ${goal.minute}'`);
-
-        if (goal.type === 'home') {
-          homeScore++;
-          homeScoreElement.textContent = homeScore;
-        } else {
-          awayScore++;
-          awayScoreElement.textContent = awayScore;
-        }
-
-        shownGoals.add(index);
+    clear() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
       }
-    });
+      this.running = false;
+    }
 
-    if (currentMinute >= gameDurationInMinutes) {
-      clearInterval(matchSimulationInterval);
-      matchSimulationInterval = null;
-      matchSimulationRunning = false;
-      gameClockElement.textContent = "90:00";
+    start() {
+      if (this.running) return;
+
+      if (!this.validateElements()) return;
+
+      this.resetSimulation();
+      this.running = true;
+      window.matchSimulation = this;
+
+      this.interval = setInterval(() => this.updateSimulation(), 10 / this.gameSpeedMultiplier);
+    }
+
+    validateElements() {
+      const elements = [this.gameClockElement, this.notificationsElement, this.matchCardBody,
+                       this.homeScoreElement, this.awayScoreElement, this.finalResultElement];
+
+      if (elements.some(el => !el)) {
+        console.error("Um ou mais elementos do DOM para a simulação da partida não foram encontrados.");
+        return false;
+      }
+      return true;
+    }
+
+    resetSimulation() {
+      this.notificationsElement.innerHTML = '';
+      this.finalResultElement.innerHTML = '';
+      this.homeScoreElement.textContent = '0';
+      this.awayScoreElement.textContent = '0';
+      this.gameClockElement.textContent = '00:00';
+      this.shownGoals.clear();
+      this.homeScore = 0;
+      this.awayScore = 0;
+      this.gameSeconds = 0;
+    }
+
+    updateSimulation() {
+      this.gameSeconds++;
+      const currentMinute = Math.floor(this.gameSeconds / 60);
+      const currentSecondInMinute = this.gameSeconds % 60;
+
+      this.gameClockElement.textContent = `${String(currentMinute).padStart(2, '0')}:${String(currentSecondInMinute).padStart(2, '0')}`;
+
+      this.checkGoals(currentMinute);
+
+      if (currentMinute >= this.gameDurationInMinutes) {
+        this.endSimulation();
+      }
+    }
+
+    checkGoals(currentMinute) {
+      this.goalEvents.forEach((goal, index) => {
+        if (currentMinute === goal.minute && !this.shownGoals.has(index)) {
+          this.displayGoal(goal);
+          this.shownGoals.add(index);
+        }
+      });
+    }
+
+    displayGoal(goal) {
+      const notification = document.createElement('p');
+      notification.innerHTML = `<strong>GOL!</strong> ${goal.team_name} marcou aos ${goal.minute}'.`;
+      notification.classList.add('goal-alert');
+      this.notificationsElement.prepend(notification);
+
+      if (goal.type === 'home') {
+        this.homeScore++;
+        this.homeScoreElement.textContent = this.homeScore;
+      } else {
+        this.awayScore++;
+        this.awayScoreElement.textContent = this.awayScore;
+      }
+    }
+
+    endSimulation() {
+      this.clear();
+      this.gameClockElement.textContent = "90:00";
 
       <% if @match.winner %>
         const winnerMessage = document.createElement('p');
         winnerMessage.innerHTML = `<strong>Vencedor:</strong> <%= j @match.winner.name %>`;
-        finalResultElement.appendChild(winnerMessage);
+        this.finalResultElement.appendChild(winnerMessage);
       <% else %>
         const drawMessage = document.createElement('p');
         drawMessage.innerHTML = `<strong>Resultado:</strong> Empate`;
-        finalResultElement.appendChild(drawMessage);
+        this.finalResultElement.appendChild(drawMessage);
       <% end %>
-      
+
       const endMessage = document.createElement('p');
-      endMessage.innerHTML = "<strong>Histórico de Particas</strong>";
+      endMessage.innerHTML = "<strong>Histórico de Partidas</strong>";
       endMessage.classList.add('clickable-end-game');
-      finalResultElement.prepend(endMessage);
+      this.finalResultElement.prepend(endMessage);
 
       endMessage.addEventListener('click', () => {
         window.location.href = "<%= team_matches_path(@match.home_team.user ? @match.home_team : @match.away_team) %>";
       });
     }
-  }, 10 / gameSpeedMultiplier);
-}
-
-document.addEventListener('turbo:load', () => {
-  clearMatchSimulation();
-  
-  setTimeout(startMatchSimulation, 100);
-});
-
-document.addEventListener('turbo:before-cache', () => {
-  clearMatchSimulation();
-});
-
-document.addEventListener('beforeunload', () => {
-  clearMatchSimulation();
-});
+  }
 </script>

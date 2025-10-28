@@ -9,7 +9,7 @@ class Team < ApplicationRecord
   validates :budget, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def all_matches
-    Match.where("home_team_id = ? OR away_team_id = ?", id, id)
+    Match.where(home_team_id: id).or(Match.where(away_team_id: id))
   end
 
   def can_play_match?
@@ -39,6 +39,7 @@ class Team < ApplicationRecord
   def goals_against
     home_matches.sum(:away_goals) + away_matches.sum(:home_goals)
   end
+
 
   def goal_difference
     goals_for - goals_against

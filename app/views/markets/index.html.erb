@@ -31,7 +31,7 @@
                         <td><%= player.level %></td>
                         <td>$<%= number_with_delimiter(player.market_value) %></td>
                         <td>
-                          <%= button_to "Vender", sell_player_path(team_id: @team.id, id: player.id),
+                          <%= button_to "Vender", sell_player_team_market_path(team_id: @team.id, id: player.id),
                                 method: :post,
                                 data: { action: "click->sell-confirmation#confirm", "sell-confirmation-message-value": "Deseja vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
                                 class: "btn btn-sm btn-warning action-button", form: { data: { controller: "sell-confirmation" }, class: 'd-inline' } %>
@@ -76,7 +76,7 @@
                         <td>$<%= number_with_delimiter(player.market_value) %></td>
                         <td>
                           <% if @team.budget >= player.market_value %>
-                              <%= button_to "Comprar", buy_player_path(team_id: @team.id, id: player.id),
+                              <%= button_to "Comprar", buy_player_team_market_path(team_id: @team.id, id: player.id),
                                     method: :post,
                                     data: { action: "click->buy-confirmation#confirm", "buy-confirmation-message-value": "Deseja comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
                                     class: "btn btn-sm btn-success action-button", form: { data: { controller: "buy-confirmation" }, class: 'd-inline' } %>
