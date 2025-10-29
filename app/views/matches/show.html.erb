@@ -8,21 +8,24 @@
     <div class="match-show-card card d-flex justify-content-between align-items-center mb-1">
       <div class="match-show-card-body card-body" data-goal-events="<%= @goal_events.to_json %>">
         <div class="match-row row text-center">
-          <div class="col-md-4 col-12 align-self-center">
+          <div class="col-md-4 col-12">
             <p>Time da Casa</p>
-            <h3><%= @match.home_team.name %></h3>
+            <div class="mx-2">
+              <h3><%= @match.home_team.name %></h3>
+            </div>
           </div>
           <div class="match-result col-md-4 col-12">
-            <h2 id="home-score">0</h2>
+            <h2 class="mx-1" id="home-score">0</h2>
             <div class="match-time">
               <p id="game-clock">00:00</p>
             </div>
-            <h2 id="away-score">0</h2>
+            <h2 class="mx-1" id="away-score">0</h2>
           </div>
-          <div class="col-md-4 col-12 align-self-center">
+          <div class="col-md-4 col-12">
             <p>Time Visitante</p>
-            <h3><%= @match.away_team.name %></h3>
-            
+            <div class="mx-2">
+              <h3><%= @match.away_team.name %></h3>
+            </div>
           </div>
         </div>
         
