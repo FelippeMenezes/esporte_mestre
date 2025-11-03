@@ -9,9 +9,14 @@
       <div class="match-show-card-body card-body" data-goal-events="<%= @goal_events.to_json %>">
         <div class="match-row row text-center">
           <div class="col-md-4 col-12">
-            <p>Time da Casa</p>
-            <div class="mx-2">
-              <h3><%= @match.home_team.name %> <i class="fa-solid fa-flag" style="color: #ffffff;"></i> </h3>
+            <%# Verifica se o time da casa pertence ao usuário %>
+            <% if @match.home_team.user %>
+              <p>Time da Casa <i class="fa-solid fa-flag" style="color: #ffffff;"></i> <span class="badge bg-success">Seu time</span></p>
+            <% else %>
+              <p>Time da Casa <i class="fa-solid fa-flag" style="color: #ffffff;"></i></p>
+            <% end %>
+            <div class="teste">
+              <h3><%= @match.home_team.name %></h3>
             </div>
           </div>
           <div class="match-result col-md-4 col-12">
@@ -22,9 +27,14 @@
             <h2 class="mx-1" id="away-score">0</h2>
           </div>
           <div class="col-md-4 col-12">
-            <p>Time Visitante</p>
-            <div class="mx-2">
-              <h3><%= @match.away_team.name %> <i class="fa-regular fa-flag fa-sm" style="color: #ffffff;"></i> </h3>
+            <%# Verifica se o time visitante pertence ao usuário %>
+            <% if @match.away_team.user %>
+              <p>Visitante <i class="fa-regular fa-flag fa-sm" style="color: #ffffff;"></i><span class="badge bg-success">Seu time</span></p>
+            <% else %>
+              <p>Visitante <i class="fa-regular fa-flag fa-sm" style="color: #ffffff;"></i></p>
+            <% end %>
+            <div class="teste">
+              <h3><%= @match.away_team.name %></h3>
             </div>
           </div>
         </div>
