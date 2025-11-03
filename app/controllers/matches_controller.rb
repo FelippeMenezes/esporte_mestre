@@ -18,8 +18,14 @@ class MatchesController < ApplicationController
 
   def create
     @match = Match.new(match_params)
-    @match.home_team = @team
     @match.match_date = Time.current
+
+    if params[:match][:team_location] == 'away'
+      @match.away_team = @team
+      @match.home_team_id = params[:match][:away_team_id] # O adversário é o time da casa
+    else
+      @match.home_team = @team # Comportamento padrão
+    end
 
     unless @team.can_play_match?
       @rival_teams = @team.campaign.rival_teams

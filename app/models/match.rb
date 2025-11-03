@@ -1,4 +1,6 @@
 class Match < ApplicationRecord
+  attr_accessor :team_location
+
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
 
