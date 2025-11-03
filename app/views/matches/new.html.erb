@@ -12,6 +12,13 @@
       <%= simple_form_for [@team, @match] do |f| %>
         <div class="card">
           <div class="match-new-card-body card-body">
+            <%= f.input :team_location,
+                        as: :select,
+                        collection: [['Casa', 'home'], ['Visitante', 'away']],
+                        label: "Jogar como:",
+                        item_wrapper_class: 'form-check-inline',
+                        selected: 'home' %>
+
             <%= f.input :away_team_id, label: "Time Adversário", 
                         collection: @rival_teams.map { |team| [team.name, team.id] },
                         prompt: "Selecione o time adversário",
