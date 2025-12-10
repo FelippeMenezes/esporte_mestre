@@ -81,4 +81,10 @@ production:
   <<: *default
   database: esporte_mestre_production
   username: esporte_mestre
-  password: <%= ENV["ESPORTE_MESTRE_DATABASE_PASSWORD"] %>
+  # No Render, a DATABASE_URL é fornecida automaticamente,
+  # então o username e password não são estritamente necessários aqui,
+  # mas mantê-los para clareza ou outros ambientes é válido.
+  # O Render preenche a DATABASE_URL com as credenciais corretas.
+  # Se você precisar de um password específico para um ambiente que não usa DATABASE_URL,
+  # você pode usar uma variável de ambiente como esta:
+  password: <%= ENV["ESPORTE_MESTRE_DATABASE_PASSWORD"] %> # Ou remova se usar apenas DATABASE_URL
