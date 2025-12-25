@@ -1,24 +1,20 @@
 databases:
-  - name: esporte_mestre_db
+  - name: esporte-mestre-db
     databaseName: esporte_mestre_production
-    user: esporte_mestre
+    user: esporte_mestre_user
     plan: free
-    region: oregon
 
 services:
   - type: web
-    name: esporte_mestre
-    env: ruby
+    name: esporte-mestre
+    runtime: ruby
     plan: free
-    region: oregon
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: esporte_mestre_db
+          name: esporte-mestre-db
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
-      - key: WEB_CONCURRENCY
-        value: 2
