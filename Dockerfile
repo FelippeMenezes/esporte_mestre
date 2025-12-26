@@ -30,6 +30,9 @@ RUN bundle install && \
 # Copy application code
 COPY . .
 
+# Explicitly check if entrypoint exists during build to fail fast if missing
+COPY bin/docker-entrypoint /rails/bin/docker-entrypoint
+
 # Ensure bin files are executable and have unix line endings
 RUN chmod +x bin/* && sed -i 's/\r$//' bin/*
 
