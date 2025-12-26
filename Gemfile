@@ -1,5 +1,4 @@
 source "https://rubygems.org"
-ruby "3.1.4"
 gem "rails", "~> 7.1.5"
 gem "pg", "~> 1.1"
 gem "puma", ">= 6.0"
