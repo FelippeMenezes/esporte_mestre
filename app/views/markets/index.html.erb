@@ -1,7 +1,9 @@
 <div class="market-index">
   <div class="market-index-container container mt-1">
-    <h1>Mercado de Transferências - <%= @team.name %></h1>
-    
+    <div class="d-flex justify-content-between align-items-center m-1">
+      <h1>Mercado</h1> <%= link_to "Voltar", @team, class: "back-btn btn btn-outline-light" %>
+    </div>
+
     <div class="row">
 
       <div class="col-md-6">
@@ -51,7 +53,7 @@
       <div class="col-md-6">
         <div class="player-box-buy card">
           <div class="card-header">
-            <h5>Jogadores Disponíveis para Compra</h5>
+            <h5>Jogadores à venda</h5>
             <small>Orçamento disponível: $<strong><%= number_with_delimiter(@team.budget) %></strong></small>
           </div>
           <div class="market-card-buy card-body">
@@ -99,7 +101,7 @@
     </div>
 
     <div class="mt-4">
-      <%= link_to "Voltar para o Time", @team, class: "back-btn btn btn-secondary" %>
+      <%= link_to "Voltar", @team, class: "back-btn btn btn-outline-light" %>
     </div>
   </div>
 </div>
