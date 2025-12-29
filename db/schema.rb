@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_19_202904) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_28_215602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_19_202904) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "championships", force: :cascade do |t|
+    t.string "name"
+    t.integer "season"
+    t.bigint "campaign_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_championships_on_campaign_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -28,7 +37,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_19_202904) do
     t.datetime "match_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "championship_id"
+    t.integer "round"
+    t.integer "status", default: 0
     t.index ["away_team_id"], name: "index_matches_on_away_team_id"
+    t.index ["championship_id"], name: "index_matches_on_championship_id"
     t.index ["home_team_id"], name: "index_matches_on_home_team_id"
   end
 
@@ -67,6 +80,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_19_202904) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "championships", "campaigns"
+  add_foreign_key "matches", "championships"
   add_foreign_key "matches", "teams", column: "away_team_id"
   add_foreign_key "matches", "teams", column: "home_team_id"
   add_foreign_key "players", "teams"

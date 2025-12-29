@@ -3,10 +3,13 @@ class Match < ApplicationRecord
 
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
+  belongs_to :championship, optional: true
 
-  validates :home_goals, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :away_goals, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :match_date, presence: true
+  enum status: { scheduled: 0, finished: 1 }
+
+  validates :home_goals, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: :finished?
+  validates :away_goals, presence: true, numericality: { greater_than_or_equal_to: 0 }, if: :finished?
+  validates :match_date, presence: true, if: :finished?
 
   def winner
     return nil if home_goals == away_goals

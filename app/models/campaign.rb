@@ -1,5 +1,6 @@
 class Campaign < ApplicationRecord
   has_many :teams, dependent: :destroy
+  has_many :championships, dependent: :destroy
 
   validates :name, presence: true
 

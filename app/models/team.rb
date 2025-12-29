@@ -21,31 +21,27 @@ class Team < ApplicationRecord
   end
 
   def wins
-    all_matches.select { |match| match.winner == self }.count
+    all_matches.where.not(match_date: nil).select { |match| match.winner == self }.count
   end
 
   def draws
-    all_matches.select { |match| match.winner.nil? }.count
+    all_matches.where.not(match_date: nil).select { |match| match.winner.nil? }.count
   end
 
   def losses
-    all_matches.count - wins - draws
+    all_matches.where.not(match_date: nil).count - wins - draws
   end
 
   def goals_for
-    home_matches.sum(:home_goals) + away_matches.sum(:away_goals)
+    home_matches.where.not(match_date: nil).sum(:home_goals) + away_matches.where.not(match_date: nil).sum(:away_goals)
   end
 
   def goals_against
-    home_matches.sum(:away_goals) + away_matches.sum(:home_goals)
+    home_matches.where.not(match_date: nil).sum(:away_goals) + away_matches.where.not(match_date: nil).sum(:home_goals)
   end
 
 
   def goal_difference
     goals_for - goals_against
-  end
-
-  def points
-    wins * 3 + draws
   end
 end
