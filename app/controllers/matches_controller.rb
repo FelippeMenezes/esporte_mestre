@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: [:index, :new, :create]
-  before_action :set_match, only: [:show]
+  before_action :set_team, only: [:index, :new, :create, :play]
+  before_action :set_match, only: [:show, :play]
 
   def index
     @matches = @team.all_matches.order(match_date: :desc)
@@ -41,11 +41,36 @@ class MatchesController < ApplicationController
 
     simulate_match(@match)
     if @match.save
-      redirect_to @match
+      redirect_to team_match_path(@team, @match)
     else
       @rival_teams = @team.campaign.rival_teams
       render :new
     end
+  end
+
+  def play
+    unless @team.can_play_match?
+      redirect_to team_championship_path(@team, @match.championship), alert: 'Seu time precisa de 11 jogadores.' and return
+    end
+
+    # Simula o jogo do usuário
+    simulate_match(@match)
+    @match.match_date = Time.current
+    @match.status = :finished
+    @match.save!
+
+    # Simula o restante da rodada (CPU vs CPU)
+    if @match.championship
+      other_matches = @match.championship.matches.where(round: @match.round, status: :scheduled).where.not(id: @match.id)
+      other_matches.each do |m|
+        simulate_match(m)
+        m.match_date = Time.current
+        m.status = :finished
+        m.save!
+      end
+    end
+
+    redirect_to team_match_path(@team, @match), notice: "Partida finalizada!"
   end
 
   private
@@ -59,7 +84,7 @@ class MatchesController < ApplicationController
   end
 
   def match_params
-    params.require(:match).permit(:away_team_id)
+    params.require(:match).permit(:away_team_id, :team_location)
   end
 
   def simulate_match(match)

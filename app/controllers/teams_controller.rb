@@ -9,6 +9,7 @@ class TeamsController < ApplicationController
   def show
     @players = @team.players.order(:position, :name)
     @recent_matches = @team.all_matches.includes(:home_team, :away_team)
+                           .where.not(match_date: nil)
                            .order(match_date: :desc).limit(5)
     @team_stats = calculate_team_stats(@team)
   end
@@ -78,14 +79,13 @@ class TeamsController < ApplicationController
 
   def calculate_team_stats(team)
     {
-      total_matches: team.all_matches.count,
+      total_matches: team.all_matches.where.not(match_date: nil).count,
       wins: team.wins,
       draws: team.draws,
       losses: team.losses,
       goals_for: team.goals_for,
       goals_against: team.goals_against,
-      goal_difference: team.goal_difference,
-      points: team.points
+      goal_difference: team.goal_difference
     }
   end
 
@@ -125,28 +125,30 @@ class TeamsController < ApplicationController
 
   def generate_player_name
     first_names = [
-      'João', 'Pedro', 'Carlos', 'Luis', 'André', 'Rafael', 'Bruno', 'Diego', 'Felipe', 'Gabriel',
-      'Marcos', 'Paulo', 'Ricardo', 'Fernando', 'Roberto', 'Alexandre', 'Rodrigo', 'Daniel', 'Thiago', 'Leonardo',
-      'Lucas', 'Matheus', 'Vinícius', 'Eduardo', 'Marcelo', 'Vitor', 'Gustavo', 'Henrique', 'Júlio',
-      'Ramon', 'Murilo', 'Elias', 'Breno', 'César', 'Hugo', 'Samuel', 'Túlio', 'Otávio', 'Cauã',
-      'Miguel', 'Benício', 'Antônio', 'Davi', 'Erick'
+      'João', 'Raul', 'Igor', 'Yago', 'Caio', 'Davi', 'Hugo', 'Beto', 'Enzo', 'José', 'Luiz',
+      'Juan', 'Alan', 'Eder', 'Ivan', 'Luca', 'Nilo', 'Otto', 'Cauã', 'Ravi', 'Yuri', 'Zeca',
+      'Noah', 'Theo', 'Gael', 'Ciro', 'Eros', 'Iago', 'Luan', 'Alex', 'Breno', 'Dante', 'Davi',
+      'Dudu', 'Eloi', 'Guto', 'Heitor', 'Iago', 'Jean', 'Joel', 'Kadu', 'Léo', 'Levi', 'Max',
+      'Ney', 'Olavo', 'Pery', 'Rui', 'Tito'
     ]
     last_names = [
-      'Silva', 'Santos', 'Oliveira', 'Souza', 'Lima', 'Costa', 'Pereira', 'Alves', 'Ferreira', 'Rodrigues',
-      'Carvalho', 'Araújo', 'Gomes', 'Barbosa', 'Rocha', 'Dias', 'Monteiro', 'Cardoso', 'Reis',
-      'Paulista', 'Carioca', 'Paraíba', 'Mineiro', 'Gaúcho', 'Pará', 'Goiano', 'Baiano'
+      'Silva', 'Lima', 'Rosa', 'Dias', 'Reis', 'Cruz', 'Melo', 'Pina', 'Maia', 'Sena', 'Lira',
+      'Vale', 'Gois', 'Lapa', 'Mota', 'Paes', 'Rios', 'Lage', 'Sá', 'Neto', 'Nery', 'Real',
+      'Vaz', 'Boni', 'Sena', 'Faro', 'Gama', 'Lous', 'Mata', 'Leal', 'Vane', 'Ledo', 'Luz',
+      'Ares', 'Reis', 'Paulista', 'Carioca', 'Paraíba', 'Mineiro', 'Gaúcho', 'Pará',
+      'Goiano', 'Baiano'
     ]
-    
     "#{first_names.sample} #{last_names.sample}"
   end
 
   def generate_team_name
-    team_name = [
-      'Flamingo', 'Cristovão Colombo', 'Três Marias', 'Litoral', 'Vale Alto',
-      'Interior', 'Capital', 'Nacional', 'Praia', 'Montanha'
-    ]
-    suffixes = ['FC', 'CF', 'AF', 'SC']
-    
-    "#{team_name.sample} #{suffixes.sample}"
+    team_name = ['Cosmos', 'Nova', 'Capital', 'Solar', 'Tropical', 'Rural', 'Opera', 'Oasis',
+    'Mineral', 'Animal', 'Formula', 'Lava', 'Natural', 'Panda', 'Prisma', 'Zebra', 'Elite',
+    'Atlas', 'Titan', 'Bravo', 'Delta', 'Popular', 'Base', 'Canal', 'Coral', 'Junior']
+    prefixes = ['Premier', 'Metro', 'Central', 'Social', 'Original', 'Naval', 'Principal',
+    'Real', 'Regular', 'Terminal']
+    suffixes = ['FC', 'AA', 'UA', 'CR', 'AF', 'CF', 'AC', 'RF', 'RC', 'UC']
+
+    "#{team_name.sample} #{prefixes.sample} #{suffixes.sample}"
   end
 end

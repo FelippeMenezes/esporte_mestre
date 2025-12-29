@@ -63,10 +63,6 @@
                       <span class="badge bg-<%= @team_stats[:goal_difference] >= 0 ? 'success' : 'danger' %>"><%= @team_stats[:goal_difference] > 0 ? '+' : '' %><%= @team_stats[:goal_difference] %></span>
                     </td>
                   </tr>
-                  <tr>
-                    <td><strong>Pontos:</strong></td>
-                    <td class="text-light"><span class="badge bg-<%= @team_stats[:points] >= 0 ? 'success' : 'danger' %>"><%= @team_stats[:points] %></span></td>
-                  </tr>
                 </table>
               </div>
             </div>
@@ -116,6 +112,11 @@
             <%= link_to team_market_path(@team), class: "btn btn-success btn-block mb-2 w-100" do %>
               <div class="d-flex justify-content-between align-items-center">
                 <i class="fa-solid fa-store" style="color: #ffffff;"></i> Mercado <i class="fa-solid fa-store" style="color: #ffffff;"></i>
+              </div>
+            <% end %>
+            <%= button_to team_championships_path(@team), method: :post, class: "btn btn-success btn-block mb-2 w-100" do %>
+              <div class="d-flex justify-content-between align-items-center">
+                <i class="fa-solid fa-trophy" style="color: #ffffff;"></i> Iniciar Campeonato <i class="fa-solid fa-trophy" style="color: #ffffff;"></i>
               </div>
             <% end %>
             <% if @team.can_play_match? %>
