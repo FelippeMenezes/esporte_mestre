@@ -127,16 +127,25 @@ class TeamsController < ApplicationController
     first_names = [
       'João', 'Raul', 'Igor', 'Yago', 'Caio', 'Davi', 'Hugo', 'Beto', 'Enzo', 'José', 'Luiz',
       'Juan', 'Alan', 'Eder', 'Ivan', 'Luca', 'Nilo', 'Otto', 'Cauã', 'Ravi', 'Yuri', 'Zeca',
-      'Noah', 'Theo', 'Gael', 'Ciro', 'Eros', 'Iago', 'Luan', 'Alex', 'Breno', 'Dante', 'Davi',
-      'Dudu', 'Eloi', 'Guto', 'Heitor', 'Iago', 'Jean', 'Joel', 'Kadu', 'Léo', 'Levi', 'Max',
-      'Ney', 'Olavo', 'Pery', 'Rui', 'Tito'
+      'Noah', 'Theo', 'Gael', 'Ciro', 'Eros', 'Iago', 'Luan', 'Alex', 'Davi',
+      'Dudu', 'Eloi', 'Guto', 'Iago', 'Jean', 'Joel', 'Kadu', 'Léo', 'Levi', 'Max',
+      'Ney', 'Pery', 'Rui', 'Tito', 'André', 'Bruno', 'César', 'Diego', 'Elias', 'Fábio',
+      'Gomes', 'Hélio', 'Isaac', 'Jorge', 'Kevin', 'Lucas', 'Mário', 'Natan', 'Osmar',
+      'Paulo', 'Ruan', 'Silas', 'Tiago', 'Vitor', 'Ariel', 'Bento', 'Cauê', 'Denis',
+      'Érico', 'Félix', 'Guido', 'Ítalo', 'Jonas', 'Lauro', 'Mauro', 'Nunes', 'Oscar',
+      'Piero', 'Renan', 'Simão', 'Túlio', 'Vasco', 'Abner', 'Breno', 'Clóvis', 'Dário',
+      'Edson', 'Freder', 'Gilmar', 'Irineu', 'Jaime', 'Luan', 'Marco', 'Tomás'
     ]
     last_names = [
       'Silva', 'Lima', 'Rosa', 'Dias', 'Reis', 'Cruz', 'Melo', 'Pina', 'Maia', 'Sena', 'Lira',
       'Vale', 'Gois', 'Lapa', 'Mota', 'Paes', 'Rios', 'Lage', 'Sá', 'Neto', 'Nery', 'Real',
       'Vaz', 'Boni', 'Sena', 'Faro', 'Gama', 'Lous', 'Mata', 'Leal', 'Vane', 'Ledo', 'Luz',
-      'Ares', 'Reis', 'Paulista', 'Carioca', 'Paraíba', 'Mineiro', 'Gaúcho', 'Pará',
-      'Goiano', 'Baiano'
+      'Ares', 'Reis', 'Souza', 'Costa', 'Alves', 'Matos', 'Pinto', 'Ramos', 'Rocha', 'Lopes',
+      'Gomes', 'Frota', 'Brito', 'Mello', 'Sales', 'Paiva', 'Pires', 'Teles', 'Aires', 'Nunes',
+      'Vieira', 'Neves', 'Dutra', 'Moura', 'Muniz', 'Faria', 'Assis', 'Leite', 'Serra', 'Prado',
+      'Borba', 'Froes', 'Viana', 'Ayres', 'Braga', 'Baros', 'Porto', 'Sique', ' Abreu', 'Godoy',
+      'Cunha', 'Regis', 'Aguiar', 'Lemos', 'Frois', 'Ferraz', 'Maia', 'Vidal''Paulista', 'Carioca',
+      'Paraíba', 'Mineiro', 'Gaúcho', 'Pará', 'Goiano', 'Baiano'
     ]
     "#{first_names.sample} #{last_names.sample}"
   end
@@ -144,9 +153,9 @@ class TeamsController < ApplicationController
   def generate_team_name
     team_name = ['Cosmos', 'Nova', 'Capital', 'Solar', 'Tropical', 'Rural', 'Opera', 'Oasis',
     'Mineral', 'Animal', 'Formula', 'Lava', 'Natural', 'Panda', 'Prisma', 'Zebra', 'Elite',
-    'Atlas', 'Titan', 'Bravo', 'Delta', 'Popular', 'Base', 'Canal', 'Coral', 'Junior']
+    'Atlas',  'Base', 'Canal', 'Coral', 'Junior']
     prefixes = ['Premier', 'Metro', 'Central', 'Social', 'Original', 'Naval', 'Principal',
-    'Real', 'Regular', 'Terminal']
+    'Real', 'Regular', 'Terminal', 'Titan', 'Bravo', 'Delta', 'Popular']
     suffixes = ['FC', 'AA', 'UA', 'CR', 'AF', 'CF', 'AC', 'RF', 'RC', 'UC']
 
     "#{team_name.sample} #{prefixes.sample} #{suffixes.sample}"
