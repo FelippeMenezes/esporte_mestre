@@ -19,29 +19,32 @@
           </thead>
           <tbody>
             <% @matches.each do |match| %>
-              <tr>
-                <td class="text-center">
-                  <% if match.home_team == @team %>
-                    <span class="badge-matches badge bg-light mb-1"><small>Seu Time</small></span>
-                  <% end %>
-                  <div class="text-center"><%= match.home_team.name %></div>
+              <% if match.match_date != nil %>
+                <tr>
+                  <td class="text-center">
+                    <% if match.home_team == @team %>
+                      <span class="badge-matches badge bg-light mb-1"><small>Seu Time</small></span>
+                    <% end %>
+                    <div class="text-center"><%= match.home_team.name %></div>
 
-                </td>
-                <td class="text-center">
-                  <strong><%= match.home_goals %></strong>
-                </td>
-                <td class="text-center">X</td>
-                <td class="text-center">
-                  <strong><%= match.away_goals %></strong>
-                </td>
-                <td class="text-center">
-                  <%= match.away_team.name %>
-                  <% if match.away_team == @team %>
-                    <span class="badge-matches badge bg-light mb-1"><small>Seu Time</small></span>
-                  <% end %>
-                </td>
-              </tr>
+                  </td>
+                  <td class="text-center">
+                    <strong><%= match.home_goals %></strong>
+                  </td>
+                  <td class="text-center">X</td>
+                  <td class="text-center">
+                    <strong><%= match.away_goals %></strong>
+                  </td>
+                  <td class="text-center">
+                    <%= match.away_team.name %>
+                    <% if match.away_team == @team %>
+                      <span class="badge-matches badge bg-light mb-1"><small>Seu Time</small></span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
+
           </tbody>
         </table>
       </div>

@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   resources :teams do
     resources :players, only: [:index, :create]
-    resources :matches, only: [:index, :new, :create]
+    resources :championships, only: [:create, :show]
+    resources :matches, only: [:index, :new, :create, :show] do
+      member do
+        post :play
+      end
+    end
     resource :market, only: [:show], controller: 'markets' do
       get '', action: :index
       get ':id', action: :show, as: :player
@@ -14,7 +19,6 @@ Rails.application.routes.draw do
   end
 
   resources :players, only: [:show, :update]
-  resources :matches, only: [:show]
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
