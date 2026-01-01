@@ -70,7 +70,7 @@ class MatchesController < ApplicationController
       end
     end
 
-    redirect_to team_match_path(@team, @match), notice: "Partida finalizada!"
+    redirect_to team_championship_path(@team, @match.championship), notice: "Rodada finalizada!"
   end
 
   private
