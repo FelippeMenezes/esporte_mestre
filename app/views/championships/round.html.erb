@@ -1,0 +1,160 @@
+<div class="round-show">
+  <div class="container mt-1">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h1>Rodada <%= @match.round %> <i class="fa-regular fa-futbol fa-spin fa-sm" style="color: #ffffff;"></i></h1>
+      <div class="card bg-dark">
+        <div class="card-body py-2 px-4">
+            <h5 id="global-game-clock" class="m-0">00:00</h5>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container de dados oculto para passar os eventos para o JS -->
+    <div id="round-data" data-all-goal-events="<%= @all_goal_events.to_json %>"></div>
+
+    <div class="row">
+      <% @matches.each do |match| %>
+        <div class="col-12 mb-2">
+          <div class="card shadow-sm">
+            <div class="card-body match-card-body">
+                <div class="row text-center align-items-center">
+                    <!-- Time da Casa -->
+                    <div class="col-5">
+                        <% if match.home_team.user %>
+                            <span class="badge bg-success">Seu time</span>
+                        <% end %>
+                        <h5 class="fw-bold"><%= match.home_team.name %></h5>
+                    </div>
+
+                    <!-- Placar -->
+                    <div class="col-2">
+                        <div class="d-flex justify-content-center align-items-center bg-light rounded py-1 mt-2">
+                            <h5 id="home-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
+                            <span class="mx-1 text-muted">x</span>
+                            <h5 id="away-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
+                        </div>
+                    </div>
+
+                    <!-- Time Visitante -->
+                    <div class="col-5">
+                        <% if match.away_team.user %>
+                            <span class="badge bg-success">Seu time</span>
+                        <% end %>
+                        <h5 class="fw-bold"><%= match.away_team.name %></h5>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="round-final-actions" class="text-center mt-2 d-none">
+        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-success btn-sm" %>
+    </div>
+  </div>
+</div>
+
+<script>
+  class RoundSimulation {
+    constructor() {
+      const dataEl = document.getElementById('round-data');
+      if (!dataEl) return;
+
+      this.allGoalEvents = JSON.parse(dataEl.dataset.allGoalEvents);
+      this.gameClockElement = document.getElementById('global-game-clock');
+      this.finalActionsElement = document.getElementById('round-final-actions');
+
+      this.interval = null;
+      this.running = false;
+      this.gameSeconds = 0;
+      this.gameDurationInMinutes = 90;
+      this.gameSpeedMultiplier = 10;
+      this.shownGoals = new Set(); // Formato: "matchId-eventIndex"
+
+      // Inicializa mapa de placares
+      this.scores = {};
+      Object.keys(this.allGoalEvents).forEach(matchId => {
+          this.scores[matchId] = { home: 0, away: 0 };
+      });
+    }
+
+    clear() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
+      this.running = false;
+    }
+
+    start() {
+      if (this.running || !this.gameClockElement) return;
+
+      this.running = true;
+      window.roundSimulation = this;
+      this.interval = setInterval(() => this.updateSimulation(), 10 / this.gameSpeedMultiplier);
+    }
+
+    updateSimulation() {
+      this.gameSeconds++;
+      const currentMinute = Math.floor(this.gameSeconds / 60);
+      const currentSecondInMinute = this.gameSeconds % 60;
+
+      this.gameClockElement.textContent = `${String(currentMinute).padStart(2, '0')}:${String(currentSecondInMinute).padStart(2, '0')}`;
+
+      this.checkGoals(currentMinute);
+
+      if (currentMinute >= this.gameDurationInMinutes) {
+        this.endSimulation();
+      }
+    }
+
+    checkGoals(currentMinute) {
+      Object.entries(this.allGoalEvents).forEach(([matchId, events]) => {
+        events.forEach((goal, index) => {
+            const goalKey = `${matchId}-${index}`;
+            if (currentMinute === goal.minute && !this.shownGoals.has(goalKey)) {
+                this.displayGoal(matchId, goal);
+                this.shownGoals.add(goalKey);
+            }
+        });
+      });
+    }
+
+    displayGoal(matchId, goal) {
+      let scoreElement;
+      if (goal.type === 'home') {
+        this.scores[matchId].home++;
+        scoreElement = document.getElementById(`home-score-${matchId}`);
+        scoreElement.textContent = this.scores[matchId].home;
+      } else {
+        this.scores[matchId].away++;
+        scoreElement = document.getElementById(`away-score-${matchId}`);
+        scoreElement.textContent = this.scores[matchId].away;
+      }
+
+      scoreElement.classList.add('score-flash');
+      setTimeout(() => {
+        scoreElement.classList.remove('score-flash');
+      }, 1000);
+    }
+
+    endSimulation() {
+      this.clear();
+      this.gameClockElement.textContent = "90:00";
+
+      if (this.finalActionsElement) this.finalActionsElement.classList.remove('d-none');
+    }
+  }
+
+  document.addEventListener('turbo:load', () => {
+    const roundSimulation = new RoundSimulation();
+    roundSimulation.start();
+  });
+
+  document.addEventListener('turbo:before-cache', () => {
+    if (window.roundSimulation) {
+      window.roundSimulation.clear();
+    }
+  });
+</script>

@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     resources :championships, only: [:create, :show]
     resources :matches, only: [:index, :new, :create, :show] do
       member do
-        post :play
+        post :play_round
+        get :round
       end
     end
     resource :market, only: [:show], controller: 'markets' do
