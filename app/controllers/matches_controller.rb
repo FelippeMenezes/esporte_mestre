@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: [:index, :new, :create, :play]
-  before_action :set_match, only: [:show, :play]
+  before_action :set_team, only: [:index, :new, :create, :play_round, :round]
+  before_action :set_match, only: [:show, :play_round, :round]
 
   def index
     @matches = @team.all_matches.order(match_date: :desc)
@@ -48,21 +48,14 @@ class MatchesController < ApplicationController
     end
   end
 
-  def play
+  def play_round
     unless @team.can_play_match?
       redirect_to team_championship_path(@team, @match.championship), alert: 'Seu time precisa de 11 jogadores.' and return
     end
 
-    # Simula o jogo do usuário
-    simulate_match(@match)
-    @match.match_date = Time.current
-    @match.status = :finished
-    @match.save!
-
-    # Simula o restante da rodada (CPU vs CPU)
     if @match.championship
-      other_matches = @match.championship.matches.where(round: @match.round, status: :scheduled).where.not(id: @match.id)
-      other_matches.each do |m|
+      round_matches = @match.championship.matches.where(round: @match.round, status: :scheduled)
+      round_matches.each do |m|
         simulate_match(m)
         m.match_date = Time.current
         m.status = :finished
@@ -70,7 +63,16 @@ class MatchesController < ApplicationController
       end
     end
 
-    redirect_to team_championship_path(@team, @match.championship), notice: "Rodada finalizada!"
+    redirect_to round_team_match_path(@team, @match)
+  end
+
+  def round
+    @championship = @match.championship
+    @matches = @championship.matches.where(round: @match.round)
+    @all_goal_events = @matches.each_with_object({}) do |match, hash|
+      hash[match.id] = generate_goal_events(match)
+    end
+    render 'championships/round'
   end
 
   private
@@ -96,6 +98,7 @@ class MatchesController < ApplicationController
 
     match.home_goals = [(home_performance / rand(2..5)), 0].max
     match.away_goals = [(away_performance / rand(2..5)), 0].max
+    match.status = :finished
   end
 
   def calculate_team_strength(team)

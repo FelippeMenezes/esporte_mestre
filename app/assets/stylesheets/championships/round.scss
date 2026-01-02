@@ -1,0 +1,101 @@
+.round-show {
+  // Container principal com fundo verde, similar ao show da partida
+  .container {
+    background-color: #198754;
+    color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    color: white;
+    margin-bottom: 0;
+  }
+
+  // Card do relógio global
+  .card.bg-dark {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    height: 45px;
+
+    #global-game-clock {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      color: #ffc107; // Amarelo para destaque
+      text-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    }
+  }
+
+  // Cards das partidas individuais
+  .card {
+    border: none;
+    background-color: transparent; // Remove fundo padrão para usar o nosso estilo
+    height: 50px;
+
+    .match-card-body {
+      background-color: #1d975e; // Verde mais claro, consistente com match show
+      color: white;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      padding: 0;
+
+      h5 {
+        font-size: 15px;
+        margin-bottom: 5px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .badge {
+        font-size: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        border: 1px solid rgba(255,255,255,0.3);
+      }
+
+      // Placar central
+      .bg-light {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        color: #198754;
+        border: 2px solid #157347;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+
+        .score-flash {
+          color: #ffc107 !important;
+          transition: color 0.2s ease-in-out;
+        }
+      }
+    }
+  }
+
+  // Botão de ação final
+  #round-final-actions {
+    .btn-primary {
+      background-color: white;
+      color: #198754;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+
+      &:hover {
+        background-color: #f8f9fa;
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+// Ajustes responsivos
+@media (max-width: 768px) {
+  .round-show {
+    .container {
+      padding: 2px;
+    }
+  }
+}
