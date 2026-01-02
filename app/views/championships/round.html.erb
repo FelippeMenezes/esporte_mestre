@@ -1,7 +1,7 @@
 <div class="round-show">
   <div class="container mt-1">
     <div class="d-flex justify-content-between align-items-center mb-2">
-      <h1>Rodada <%= @match.round %> <i class="fa-regular fa-futbol fa-spin fa-sm" style="color: #ffffff;"></i></h1>
+      <h1 class="mx-2"> Rodada <%= @match.round %></h1>
       <div class="card bg-dark">
         <div class="card-body py-2 px-4">
             <h5 id="global-game-clock" class="m-0">00:00</h5>
@@ -14,7 +14,7 @@
 
     <div class="row">
       <% @matches.each do |match| %>
-        <div class="col-12 mb-2">
+        <div class="col-12 mb-1">
           <div class="card shadow-sm">
             <div class="card-body match-card-body">
                 <div class="row text-center align-items-center">
@@ -23,12 +23,12 @@
                         <% if match.home_team.user %>
                             <span class="badge bg-success">Seu time</span>
                         <% end %>
-                        <h5 class="fw-bold"><%= match.home_team.name %></h5>
+                        <h5><%= match.home_team.name %></h5>
                     </div>
 
                     <!-- Placar -->
                     <div class="col-2">
-                        <div class="d-flex justify-content-center align-items-center bg-light rounded py-1 mt-2">
+                        <div class="d-flex justify-content-center align-items-center bg-light rounded py-1 mt-1 mb-1">
                             <h5 id="home-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
                             <span class="mx-1 text-muted">x</span>
                             <h5 id="away-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
@@ -40,7 +40,7 @@
                         <% if match.away_team.user %>
                             <span class="badge bg-success">Seu time</span>
                         <% end %>
-                        <h5 class="fw-bold"><%= match.away_team.name %></h5>
+                        <h5><%= match.away_team.name %></h5>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
     </div>
 
     <div id="round-final-actions" class="text-center mt-2 d-none">
-        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-success btn-sm" %>
+        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-success" %>
     </div>
   </div>
 </div>
