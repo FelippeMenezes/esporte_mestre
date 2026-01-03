@@ -1,23 +1,41 @@
 <div class="championship-show">
-    <div class="championship-show-container container mt-1 texte-center">
+    <div class="championship-show-container container mt-1">
         <div class="d-flex justify-content-between">
-            <h1>Campeonato <%= @championship.name %></h1>
+            <h1><%= @championship.name %></h1>
             <div class="d-flex align-items-center">
-                <%= link_to "Voltar para o Time", @team, class: "match-back-btn btn btn-outline-light" %>
+                <%= link_to "Voltar", @team, class: "match-back-btn btn btn-outline-light" %>
             </div>
         </div>
         <% next_playable_round = @championship.matches.scheduled.where("home_team_id = ? OR away_team_id = ?", @team.id, @team.id).minimum(:round) %>
         <% @championship.matches.order(:round).group_by(&:round).each do |round, matches| %>
-        <div class="championship-show-card-body text-center mt-2 pt-2">
-            <h3 class="">Rodada <%= round %></h3>
+        <div class="championship-show-card-body text-center">
+            <h3 class="m-2">Rodada <%= round %></h3>
             <% if round == next_playable_round && match_to_play = matches.find { |m| m.status == 'scheduled' && (m.home_team_id == @team.id || m.away_team_id == @team.id) } %>
                 <%= button_to "Jogar Rodada", play_round_team_match_path(@team, match_to_play), method: :post, class: "btn btn-success btn-sm mb-2" %>
             <% end %>
-            <% matches.each do |match| %>
-                <p>
-                <%= match.home_team.name %> <%= match.home_goals %> x <%= match.away_goals %> <%= match.away_team.name %>
-                </p>
-            <% end %>
+            <div>
+                <% matches.each do |match| %>
+                    <div class="match-round-col d-flex justify-content-between mb-2">
+
+                        <div class="team-round-name col-5">
+                            <% if match.home_team.user %>
+                                <span class="badge bg-success">Seu time</span>
+                            <% end %>
+                            <%= match.home_team.name %>
+                        </div>
+
+                        <div class="team-round-score col-2"><%= match.home_goals %> x <%= match.away_goals %></div>
+
+                        <div class="team-round-name col-5">
+                            <% if match.away_team.user %>
+                                <span class="badge bg-success">Seu time</span>
+                            <% end %>
+                            <%= match.away_team.name %>
+                        </div>
+
+                    </div>
+                <% end %>
+            </div>
         </div>
         <% end %>
 

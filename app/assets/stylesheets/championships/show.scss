@@ -4,5 +4,30 @@
 }
 
 .championship-show-card-body {
-    background-color: #1d975e;
+    background-color: #10693f;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
 }
+
+.match-round-col {
+    background-color: #198754;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 400px;
+    margin: 5px;
+    padding: 5px;
+
+    .badge {
+        color: yellow;
+        border: white 1px solid;
+    }
+}
+
+

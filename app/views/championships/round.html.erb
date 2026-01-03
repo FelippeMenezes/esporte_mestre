@@ -12,46 +12,53 @@
     <!-- Container de dados oculto para passar os eventos para o JS -->
     <div id="round-data" data-all-goal-events="<%= @all_goal_events.to_json %>"></div>
 
-    <div class="row">
-      <% @matches.each do |match| %>
-        <div class="col-12 mb-1">
-          <div class="card shadow-sm">
-            <div class="card-body match-card-body">
-                <div class="row text-center align-items-center">
-                    <!-- Time da Casa -->
-                    <div class="col-5">
-                        <% if match.home_team.user %>
-                            <span class="badge bg-success">Seu time</span>
-                        <% end %>
-                        <h5><%= match.home_team.name %></h5>
-                    </div>
+    <div class="round-container py-2">
 
-                    <!-- Placar -->
-                    <div class="col-2">
-                        <div class="d-flex justify-content-center align-items-center bg-light rounded py-1 mt-1 mb-1">
-                            <h5 id="home-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
-                            <span class="mx-1">x</span>
-                            <h5 id="away-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
-                        </div>
-                    </div>
+      <div class="row">
+        <% @matches.each do |match| %>
+          <div class="col-12 mb-1">
+            <div class="card shadow-sm">
+              <div class="card-body match-card-body">
+                  <div class="row text-center align-items-center">
+                      <!-- Time da Casa -->
+                      <div class="col-5">
+                          <% if match.home_team.user %>
+                              <span class="badge bg-success">Seu time</span>
+                          <% end %>
+                          <h5><%= match.home_team.name %></h5>
+                      </div>
 
-                    <!-- Time Visitante -->
-                    <div class="col-5">
-                        <% if match.away_team.user %>
-                            <span class="badge bg-success">Seu time</span>
-                        <% end %>
-                        <h5><%= match.away_team.name %></h5>
-                    </div>
-                </div>
+                      <!-- Placar -->
+                      <div class="col-2">
+                          <div class="d-flex justify-content-center align-items-center bg-light rounded py-1 mt-1 mb-1">
+                              <h5 id="home-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
+                              <span class="mx-1">x</span>
+                              <h5 id="away-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
+                          </div>
+                      </div>
+
+                      <!-- Time Visitante -->
+                      <div class="col-5">
+                          <% if match.away_team.user %>
+                              <span class="badge bg-success">Seu time</span>
+                          <% end %>
+                          <h5><%= match.away_team.name %></h5>
+                      </div>
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+
+      <div id="round-final-actions" class="text-center mt-2 d-none">
+        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-success" %>
+      </div>
     </div>
 
-    <div id="round-final-actions" class="text-center mt-2 d-none">
-        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-success" %>
-    </div>
+
+
+
   </div>
 </div>
 
