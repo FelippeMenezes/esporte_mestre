@@ -114,10 +114,19 @@
                 <i class="fa-solid fa-store" style="color: #ffffff;"></i> Mercado <i class="fa-solid fa-store" style="color: #ffffff;"></i>
               </div>
             <% end %>
-            <%= button_to team_championships_path(@team), method: :post, class: "btn btn-success btn-block mb-2 w-100" do %>
-              <div class="d-flex justify-content-between align-items-center">
-                <i class="fa-solid fa-trophy" style="color: #ffffff;"></i> Iniciar Campeonato <i class="fa-solid fa-trophy" style="color: #ffffff;"></i>
-              </div>
+            <% last_championship = @team.campaign&.championships&.last %>
+            <% if last_championship && last_championship.matches.scheduled.exists? %>
+              <%= link_to team_championship_path(@team, last_championship), class: "btn btn-success btn-block mb-2 w-100" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <i class="fa-solid fa-trophy" style="color: #ffffff;"></i> Continuar Campeonato <i class="fa-solid fa-trophy" style="color: #ffffff;"></i>
+                </div>
+              <% end %>
+            <% else %>
+              <%= button_to team_championships_path(@team), method: :post, class: "btn btn-success btn-block mb-2 w-100" do %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <i class="fa-solid fa-trophy" style="color: #ffffff;"></i> Iniciar Campeonato <i class="fa-solid fa-trophy" style="color: #ffffff;"></i>
+                </div>
+              <% end %>
             <% end %>
             <% if @team.can_play_match? %>
               <%= link_to new_team_match_path(@team), class: "btn btn-success btn-block mb-2 w-100" do %>
