@@ -38,7 +38,7 @@
     .match-show-card {
     background-color: #1d975e;
     color: white;
-      
+
       p {
         margin-bottom: 0;
         font-size: 0.9rem;
@@ -94,7 +94,7 @@
       .notifications-and-results {
         text-align: center;
         padding: 2px;
-        
+
         #goal-notifications {
           .goal-alert {
             color: #ffc107;
@@ -149,26 +149,26 @@
     .match-show-container {
       margin-left: 5px;
       margin-right: 5px;
-      
+
       .match-show-card-body {
         margin-left: 5px;
         margin-right: 5px;
-        
+
         .row {
           margin: 0;
-          
+
           .col-12 {
             padding-left: 5px;
             padding-right: 5px;
             margin-bottom: 3px;
           }
         }
-        
+
         .notifications-and-results {
           padding: 15px 10px;
-          
+
           #goal-notifications {
-            
+
             .goal-alert {
               font-size: 0.95em;
               padding: 10px;
@@ -180,7 +180,7 @@
           }
 
           #final-result {
-            
+
             p {
               font-size: 1.05em;
               padding: 12px;
@@ -201,31 +201,31 @@
     .match-show-container {
       margin-left: 2px;
       margin-right: 2px;
-      
+
       h1 {
         font-size: 1.5em;
         margin-left: 5px;
       }
-      
+
       .match-date {
         font-size: 0.9em;
         margin-right: 5px;
       }
 
-      
+
       .match-show-card-body {
-        .match-row { 
+        .match-row {
           margin-bottom: 0px;
         }
         .notifications-and-results {
           padding-top: 0px;
           padding: 10px 5px;
-          
+
           #goal-notifications .goal-alert {
             font-size: 0.9em;
             padding: 8px;
           }
-          
+
           #final-result p {
             font-size: 1em;
             padding: 10px;
