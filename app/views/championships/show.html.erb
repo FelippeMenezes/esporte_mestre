@@ -16,24 +16,31 @@
             <% end %>
             <div>
                 <% matches.each do |match| %>
-                    <div class="match-round-col d-flex justify-content-between mb-2 <%= 'finished' if round_finished %>">
-
-                        <div class="team-round-name col-5">
-                            <% if match.home_team.user %>
-                                <span class="badge bg-success">Seu time</span>
+                    <div class="last-matches-row mb-2 <%= 'finished' if round_finished %>">
+                        <div class="match-details">
+                            <% if match.match_date %>
+                                <small class="match-date"><%= match.match_date.strftime("%d/%m/%Y") %></small>
                             <% end %>
-                            <%= match.home_team.name %>
+                            <div class="last-results">
+                                <div class="team-home">
+                                    <% if match.home_team.user %>
+                                        <span class="badge bg-success mb-1" style="font-size: 0.6em;">Seu time</span><br>
+                                    <% end %>
+                                    <%= match.home_team.name %>
+                                </div>
+                                <div class="goals"><strong><%= match.home_goals %></strong></div>
+                                <div class="result-badge">
+                                    <span class="badge bg-success">X</span>
+                                </div>
+                                <div class="goals"><strong><%= match.away_goals %></strong></div>
+                                <div class="team-away">
+                                    <% if match.away_team.user %>
+                                        <span class="badge bg-success mb-1" style="font-size: 0.6em;">Seu time</span><br>
+                                    <% end %>
+                                    <%= match.away_team.name %>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="team-round-score col-2"><%= match.home_goals %> x <%= match.away_goals %></div>
-
-                        <div class="team-round-name col-5">
-                            <% if match.away_team.user %>
-                                <span class="badge bg-success">Seu time</span>
-                            <% end %>
-                            <%= match.away_team.name %>
-                        </div>
-
                     </div>
                 <% end %>
             </div>
