@@ -8,14 +8,15 @@
         </div>
         <% next_playable_round = @championship.matches.scheduled.where("home_team_id = ? OR away_team_id = ?", @team.id, @team.id).minimum(:round) %>
         <% @championship.matches.order(:round).group_by(&:round).each do |round, matches| %>
-        <div class="championship-show-card-body text-center">
+        <% round_finished = matches.all? { |m| m.status == 'finished' } %>
+        <div class="championship-show-card-body text-center <%= 'finished' if round_finished %>">
             <h3 class="m-2">Rodada <%= round %></h3>
             <% if round == next_playable_round && match_to_play = matches.find { |m| m.status == 'scheduled' && (m.home_team_id == @team.id || m.away_team_id == @team.id) } %>
-                <%= button_to "Jogar Rodada", play_round_team_match_path(@team, match_to_play), method: :post, class: "btn btn-success btn-sm mb-2" %>
+                <%= button_to "Jogar Rodada", play_round_team_match_path(@team, match_to_play), method: :post, class: "btn btn-success btn-sm mb-2", id: "active-round-btn" %>
             <% end %>
             <div>
                 <% matches.each do |match| %>
-                    <div class="match-round-col d-flex justify-content-between mb-2">
+                    <div class="match-round-col d-flex justify-content-between mb-2 <%= 'finished' if round_finished %>">
 
                         <div class="team-round-name col-5">
                             <% if match.home_team.user %>
@@ -41,3 +42,12 @@
 
     </div>
 </div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    const activeBtn = document.getElementById("active-round-btn");
+    if (activeBtn) {
+      activeBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
+</script>
