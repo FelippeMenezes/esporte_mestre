@@ -47,7 +47,9 @@
   document.addEventListener("turbo:load", function() {
     const activeBtn = document.getElementById("active-round-btn");
     if (activeBtn) {
-      activeBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+      const yOffset = -115;
+      const y = activeBtn.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   });
 </script>
