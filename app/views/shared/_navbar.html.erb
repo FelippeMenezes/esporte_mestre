@@ -11,18 +11,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
-          <%  
+          <%
           menu_items = []
 
-            if @team && @team.persisted? 
+            if @team && @team.persisted?
               menu_items.push({text: "#{@team.name}", path: team_path(@team)})
               menu_items.push({ type: :divider })
               menu_items.push({text: "Seus Jogadores", path: team_players_path(@team)})
               menu_items.push({ type: :divider })
               menu_items.push({text: "Suas Partidas", path: team_matches_path(@team)})
               if @team.can_play_match?
-                menu_items.push({ type: :divider })
-                menu_items.push({text: "Criar Partida", path: new_team_match_path(@team)})
+                  menu_items.push({ type: :divider })
+                  menu_items.push({text: "Criar Partida", path: new_team_match_path(@team)})
+                if @team.campaign&.championships&.last
+                  menu_items.push({ type: :divider })
+                  menu_items.push({text: "Continuar Campeonato", path: team_championship_path(@team, @team.campaign&.championships&.last)})
+                else
+                  menu_items.push({ type: :divider })
+                  menu_items.push({text: "Iniciar Campeonato", path: team_championships_path(@team), data: { turbo_method: :post }})
+                end
               end
               menu_items.push({ type: :divider })
               menu_items.push({text: "Mercado", path: team_market_path(@team)})
