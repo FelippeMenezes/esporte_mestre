@@ -1,84 +1,88 @@
-
 .matches-index {
     display: flex;
     justify-content: center;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    margin-left: 5px;
-    margin-right: 5px;
+
+    h1 {
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        color: white;
+        margin-left: 10px;
+    }
 
     .matches-index-container {
         background-color: #198754;
         color: white;
         border-radius: 5px;
-        padding-top: 15px;
-        padding-left: 0;
-        padding-right: 0;
-        margin-left: 5px;
-        margin-right: 5px;
+        padding: 15px;
         margin-bottom: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
 
-        h1 {
-            margin-left: 20px;
-        }
-
-        .new-match-btn-matches {
-            margin-right: 5px;
-            color: #21ad6a;
-            text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
-            text-align: center;
-            height: 100%;
-        }
-
-        .table-matches {
-            font-size: 1rem;
-            border-radius: 5px;
-            margin: 5px;
-            vertical-align: middle;
-
-            .table {
-                --bs-table-color: white;
-                --bs-table-bg: #198754;
-                --bs-table-border-color: #1d975e;
-                --bs-table-striped-bg: #1d975e;
-                --bs-table-striped-color: white;
-                --bs-table-hover-bg: #21ad6a;
-                --bs-table-hover-color: white;
-
-                color: var(--bs-table-color);
-                border-color: var(--bs-table-border-color);
-                vertical-align: middle;
-            }
-
-            th {
-            background-color: #21ad6a;
+        .last-matches-row {
+            background-color: #1d975e;
             color: white;
-            vertical-align: middle;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 100%;
+
+            .match-date {
+                text-align: center;
+                display: block;
+                margin-bottom: 5px;
+                font-size: 0.875rem;
             }
 
-            td {
-                padding-top: 0.5rem;
-                padding-right: 0.2rem;
-                padding-bottom: 0.5rem;
-                padding-left: 0.2rem;
+            .last-results {
+                display: grid;
+                grid-template-columns: 1fr auto auto auto 1fr;
+                align-items: center;
+                justify-items: center;
+            }
+
+            .team-home {
+                justify-self: start;
+                word-wrap: break-word;
+                hyphens: auto;
+                max-width: 150px;
+                text-align: left;
+            }
+
+            .team-away {
+                justify-self: end;
+                word-wrap: break-word;
+                hyphens: auto;
+                max-width: 150px;
+                text-align: right;
+            }
+
+            .goals {
+                font-weight: bold;
+                min-width: 20px;
+                text-align: center;
+            }
+
+            .result-badge {
+                text-align: center;
+            }
+
+            @media (max-width: 576px) {
+                .last-results {
+                    grid-template-columns: 1fr auto auto auto 1fr;
+                    gap: 5px;
+                }
+
+                .team-home,
+                .team-away {
+                    max-width: none;
+                }
             }
         }
+    }
 
-        .badge-matches {
-            color: #21ad6a;
-            text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
-        }
-
-        .match-info {
-            color: #21ad6a;
-            text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
-        }
-
-        .match-back-btn {
-            margin-left: 15px;
-            margin-bottom: 15px;
-            color: #21ad6a;
-            text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
-            
-        }
+    .match-back-btn,
+    .new-match-btn-matches {
+        color: #1d975e;
+        font-weight: bold;
     }
 }
