@@ -1,7 +1,7 @@
 class Player < ApplicationRecord
   POSITION_NAMES = {
     'G' => 'Goleiro',
-    'D' => 'Defensor',
+    'D' => 'Zagueiro',
     'M' => 'Meio-campo',
     'A' => 'Atacante'
   }.freeze
