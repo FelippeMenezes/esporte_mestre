@@ -6,11 +6,11 @@ class MarketsController < ApplicationController
   def index
     order_clause = sort_column == "market_value" ? market_value_order_sql : "players.#{sort_column}"
 
-    @available_players = Player.joins(:team)
-                               .where(teams: { is_user_team: false, campaign_id: @team.campaign_id })
+    @available_players = apply_filters(Player.joins(:team)
+                               .where(teams: { is_user_team: false, campaign_id: @team.campaign_id }))
                                .order(Arel.sql("#{order_clause} #{sort_direction}"))
 
-    @my_players = @team.players.order(Arel.sql("#{order_clause} #{sort_direction}"))
+    @my_players = apply_filters(@team.players).order(Arel.sql("#{order_clause} #{sort_direction}"))
   end
 
   def market_value_order_sql
@@ -68,6 +68,13 @@ class MarketsController < ApplicationController
   end
 
   private
+
+  def apply_filters(scope)
+    scope = scope.where(position: params[:position]) if params[:position].present?
+    scope = scope.where("players.level >= ?", params[:level_min]) if params[:level_min].present?
+    scope = scope.where("players.level <= ?", params[:level_max]) if params[:level_max].present?
+    scope
+  end
 
   def sort_column
     %w[name position level market_value].include?(params[:sort]) ? params[:sort] : "name"
