@@ -19,8 +19,39 @@
                   <thead>
                     <tr>
                       <th><%= sortable "name", "Nome" %></th>
-                      <th><%= sortable "position", "P" %></th>
-                      <th><%= sortable "level", "L" %></th>
+                      <th>
+                        <div class="d-flex justify-content-center align-items-center">
+                          P
+                          <div class="dropdown">
+                            <button class="btn btn-link text-white p-0 ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa-solid fa-filter" style="font-size: 0.7rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to "Todas", request.query_parameters.merge(position: nil), class: "dropdown-item text-dark"%></li>
+                              <% Player::POSITION_NAMES.each do |key, value| %>
+                                <li><%= link_to value, request.query_parameters.merge(position: key), class: "dropdown-item text-dark" %></li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="d-flex justify-content-center align-items-center">
+                          L
+                          <div class="dropdown">
+                            <button class="btn btn-link text-white p-0 ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa-solid fa-filter" style="font-size: 0.7rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to "Todos", request.query_parameters.merge(level_min: nil, level_max: nil), class: "dropdown-item text-primary" %></li>
+                              <li><%= link_to "1-2", request.query_parameters.merge(level_min: 1, level_max: 2), class: "dropdown-item text-danger" %></li>
+                              <li><%= link_to "3-5", request.query_parameters.merge(level_min: 3, level_max: 5), class: "dropdown-item text-warning" %></li>
+                              <li><%= link_to "6-9", request.query_parameters.merge(level_min: 6, level_max: 9), class: "dropdown-item text-success" %></li>
+                              <li><%= link_to "10", request.query_parameters.merge(level_min: 10, level_max: 10), class: "dropdown-item text-info" %></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </th>
                       <th><%= sortable "market_value", "$" %></th>
                       <th scope="col"></th>
                     </tr>
@@ -29,14 +60,24 @@
                     <% @my_players.each do |player| %>
                       <tr>
                         <td><%= player.name %></td>
-                        <td><%= player.position %></td>
-                        <td><%= player.level %></td>
+                        <td><small class="badge bg-dark"><%= player.position %></small></td>
+                        <td>
+                          <% if player.level < 3 %>
+                            <small class="badge bg-danger"><%= player.level %></small>
+                          <% elsif player.level < 6 %>
+                            <small class="badge bg-warning"><%= player.level %></small>
+                          <% elsif player.level < 10 %>
+                            <small class="badge bg-success"><%= player.level %></small>
+                          <% else %>
+                            <small class="badge bg-info"><%= player.level %></small>
+                          <% end %>
+                        </td>
                         <td>$<%= number_with_delimiter(player.market_value) %></td>
                         <td>
                           <%= button_to "Vender", sell_player_team_market_path(team_id: @team.id, id: player.id),
                                 method: :post,
                                 data: { action: "click->sell-confirmation#confirm", "sell-confirmation-message-value": "Deseja vender #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
-                                class: "btn btn-sm btn-warning action-button", form: { data: { controller: "sell-confirmation" }, class: 'd-inline' } %>
+                                class: "btn btn-sm btn-outline-warning action-button", form: { data: { controller: "sell-confirmation" }, class: 'd-inline' } %>
                         </td>
                       </tr>
                     <% end %>
@@ -44,7 +85,6 @@
                 </table>
               </div>
             <% else %>
-              <div data-controller="no-player-team"></div>
             <% end %>
           </div>
         </div>
@@ -63,8 +103,39 @@
                   <thead>
                     <tr>
                       <th><%= sortable "name", "Nome" %></th>
-                      <th><%= sortable "position", "P" %></th>
-                      <th><%= sortable "level", "L" %></th>
+                      <th>
+                        <div class="d-flex justify-content-center align-items-center">
+                          P
+                          <div class="dropdown">
+                            <button class="btn btn-link text-white p-0 ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa-solid fa-filter" style="font-size: 0.7rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to "Todas", request.query_parameters.merge(position: nil), class: "dropdown-item text-dark" %></li>
+                              <% Player::POSITION_NAMES.each do |key, value| %>
+                                <li><%= link_to value, request.query_parameters.merge(position: key), class: "dropdown-item text-dark" %></li>
+                              <% end %>
+                            </ul>
+                          </div>
+                        </div>
+                      </th>
+                      <th>
+                        <div class="d-flex justify-content-center align-items-center">
+                          L
+                          <div class="dropdown">
+                            <button class="btn btn-link text-white p-0 ms-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="fa-solid fa-filter" style="font-size: 0.7rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><%= link_to "Todos", request.query_parameters.merge(level_min: nil, level_max: nil), class: "dropdown-item text-primary" %></li>
+                              <li><%= link_to "1-2", request.query_parameters.merge(level_min: 1, level_max: 2), class: "dropdown-item text-danger" %></li>
+                              <li><%= link_to "3-5", request.query_parameters.merge(level_min: 3, level_max: 5), class: "dropdown-item text-warning" %></li>
+                              <li><%= link_to "6-9", request.query_parameters.merge(level_min: 6, level_max: 9), class: "dropdown-item text-success" %></li>
+                              <li><%= link_to "10", request.query_parameters.merge(level_min: 10, level_max: 10), class: "dropdown-item text-info" %></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </th>
                       <th><%= sortable "market_value", "$" %></th>
                       <th scope="col"></th>
                     </tr>
@@ -73,15 +144,25 @@
                     <% @available_players.each do |player| %>
                       <tr>
                         <td><%= player.name %></td>
-                        <td><%= player.position %></td>
-                        <td><%= player.level %></td>
+                        <td><small class="badge bg-dark"><%= player.position %></small></td>
+                        <td>
+                          <% if player.level < 3 %>
+                            <small class="badge bg-danger"><%= player.level %></small>
+                          <% elsif player.level < 6 %>
+                            <small class="badge bg-warning"><%= player.level %></small>
+                          <% elsif player.level < 10 %>
+                            <small class="badge bg-success"><%= player.level %></small>
+                          <% else %>
+                            <small class="badge bg-info"><%= player.level %></small>
+                          <% end %>
+                        </td>
                         <td>$<%= number_with_delimiter(player.market_value) %></td>
                         <td>
                           <% if @team.budget >= player.market_value %>
                               <%= button_to "Comprar", buy_player_team_market_path(team_id: @team.id, id: player.id),
                                     method: :post,
                                     data: { action: "click->buy-confirmation#confirm", "buy-confirmation-message-value": "Deseja comprar #{player.name} por $#{number_with_delimiter(player.market_value)}?" },
-                                    class: "btn btn-sm btn-success action-button", form: { data: { controller: "buy-confirmation" }, class: 'd-inline' } %>
+                                    class: "btn btn-sm btn-outline-light action-button", form: { data: { controller: "buy-confirmation" }, class: 'd-inline' } %>
                           <% else %>
                             <span>Sem orçamento</span>
                           <% end %>
@@ -92,7 +173,6 @@
                 </table>
               </div>
             <% else %>
-              <div data-controller="no-available-players"></div>
             <% end %>
           </div>
         </div>

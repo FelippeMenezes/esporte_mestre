@@ -2,7 +2,7 @@
   <div class="team-show-container container mt-1">
     <div class="row">
       <div class="col-md-8">
-        <h1><%= @team.name %> <i class="fa-solid fa-flag" style="color: #ffffff;"></i> </h1>
+        <h1><%= @team.name %> </h1>
         <div class="team-card card mb-4">
           <div class="team-show-card-body card-body">
             <h5 class="card-title">Informações do Time</h5>
@@ -84,12 +84,25 @@
                     <h6><%= Player::POSITION_NAMES[position] %>s</h6>
                   </div>
                   <div class="team-show-card-body card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <p>Nome</p>
+                      <p>Nível</p>
+                    </div>
+
                     <% position_players = @players.select { |p| p.position == position } %>
                     <% if position_players.any? %>
                       <% position_players.each do |player| %>
-                        <div class="mb-2">
-                          <%= link_to player.name, player, class: "text-player-show text-decoration-none" %><br>
-                          <small>Nível: <%= player.level %></small>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                          <%= link_to player.name, player, class: "text-player-show text-decoration-none" %>
+                          <% if player.level < 3 %>
+                            <small class="badge bg-danger"><%= player.level %></small>
+                          <% elsif player.level < 6 %>
+                            <small class="badge bg-warning"><%= player.level %></small>
+                          <% elsif player.level < 10 %>
+                            <small class="badge bg-success"><%= player.level %></small>
+                          <% else %>
+                            <small class="badge bg-info"><%= player.level %></small>
+                          <% end %>
                         </div>
                       <% end %>
                     <% else %>
@@ -113,7 +126,7 @@
           </div>
           <div class="team-show-card-body card-body">
             <div class="row">
-              <div class="team-show-table col-md-6">
+              <div class="team-show-table">
                 <table class="table table-sm">
                   <tr>
                     <td><strong>Partidas Jogadas:</strong></td>
@@ -131,10 +144,6 @@
                     <td><strong>Derrotas:</strong></td>
                     <td class="text-danger"><span class="badge bg-danger"><%= @team_stats[:losses] %></span></td>
                   </tr>
-                </table>
-              </div>
-              <div class="col-md-6">
-                <table class="table table-sm">
                   <tr>
                     <td><strong>Gols Marcados:</strong></td>
                     <td class="text-light"><span class="badge bg-success"><%= @team_stats[:goals_for] %></span></td>
