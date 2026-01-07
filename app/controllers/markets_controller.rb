@@ -4,7 +4,11 @@ class MarketsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    order_clause = sort_column == "market_value" ? market_value_order_sql : "players.#{sort_column}"
+    order_clause = case sort_column
+                   when "market_value" then market_value_order_sql
+                   when "position"     then position_order_sql
+                   else "players.#{sort_column}"
+                   end
 
     @available_players = apply_filters(Player.joins(:team)
                                .where(teams: { is_user_team: false, campaign_id: @team.campaign_id }))
@@ -19,6 +23,14 @@ class MarketsController < ApplicationController
     "WHEN players.position = 'G' THEN players.level * 10000 " \
     "WHEN players.position = 'D' THEN players.level * 8000 " \
     "ELSE 5000 END"
+  end
+
+  def position_order_sql
+    "CASE WHEN players.position = 'G' THEN 1 " \
+    "WHEN players.position = 'D' THEN 2 " \
+    "WHEN players.position = 'M' THEN 3 " \
+    "WHEN players.position = 'A' THEN 4 " \
+    "ELSE 5 END"
   end
 
   def show
@@ -77,7 +89,7 @@ class MarketsController < ApplicationController
   end
 
   def sort_column
-    %w[name position level market_value].include?(params[:sort]) ? params[:sort] : "name"
+    %w[name position level market_value].include?(params[:sort]) ? params[:sort] : "position"
   end
 
   def sort_direction

@@ -19,16 +19,16 @@
                         item_wrapper_class: 'form-check-inline',
                         selected: 'home' %>
 
-            <%= f.input :away_team_id, label: "Time Adversário", 
+            <%= f.input :away_team_id, label: "Time Adversário",
                         collection: @rival_teams.map { |team| [team.name, team.id] },
                         prompt: "Selecione o time adversário",
                         required: true %>
-            
+
             <div data-controller="simulation-info"></div>
 
             <div class="d-flex justify-content-between">
-              <%= link_to "Cancelar", team_matches_path(@team), class: "btn btn-secondary" %>
-              <%= f.submit "Jogar Partida", class: "btn btn-success" %>
+              <%= link_to "Cancelar", team_matches_path(@team), class: "btn btn-outline-light" %>
+              <%= f.submit "Jogar Partida", class: "btn btn-outline-light" %>
             </div>
           </div>
         </div>

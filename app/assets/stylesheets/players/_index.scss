@@ -40,14 +40,10 @@
         }
     }
 
-    .btn-light {
-        margin-left: 5px;
-        margin-bottom: 5px;
-        color: #198754;
+    .btn-outline-light {
+        &:hover {
+        color: #1d975e;
+        }
     }
 
-    .btn-secondary {
-        margin-bottom: 5px;
-        margin-left: 5px;
-    }
 }

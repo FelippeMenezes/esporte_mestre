@@ -1,8 +1,8 @@
 <div class= "matches-index mt-2">
   <div class="container matches-index-container">
-    <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>Suas Partidas</h1>
-      <%= link_to "Nova Partida", new_team_match_path(@team), class: "new-match-btn-matches btn btn-light" %>
+      <%= link_to "Voltar", @team, class: "match-back-btn btn btn-outline-light" %>
     </div>
 
     <% if @matches.any? %>
@@ -43,8 +43,9 @@
       <div data-controller="no-matches" data-no-matches-new-match-path="<%= new_team_match_path(@team) %>"></div>
     <% end %>
 
-    <div class="mt-4">
-      <%= link_to "Voltar para o Time", @team, class: "match-back-btn btn btn-light" %>
+    <div class="d-flex justify-content-between align-items-center t-4">
+      <%= link_to "Voltar", @team, class: "match-back-btn btn btn-outline-light" %>
+      <%= link_to "Nova Partida", new_team_match_path(@team), class: "new-match-btn-matches btn btn-outline-light m-1" %>
     </div>
   </div>
 </div>

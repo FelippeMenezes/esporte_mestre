@@ -29,4 +29,10 @@
     border-radius: 5px;
     height: 250px;
   }
+
+  .btn-outline-light {
+    &:hover {
+      color: #1d975e;
+    }
+  }
 }
