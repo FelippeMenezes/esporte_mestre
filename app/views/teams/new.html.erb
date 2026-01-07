@@ -6,12 +6,12 @@
       <div class="card">
         <div class="team-new-card-body card-body">
           <%= f.input :name, label: "Nomeie o seu Time", class:"team-new-placeholder", placeholder: "Digite o nome do seu time" %>
-          
+
           <div data-controller="create-team-alert"></div>
 
           <div class="d-flex justify-content-between">
-            <%= link_to "Cancelar", teams_path, class: "btn btn-secondary" %>
-            <%= f.submit "Criar Time", class: "btn btn-success" %>
+            <%= link_to "Cancelar", teams_path, class: "btn btn-outline-light" %>
+            <%= f.submit "Criar Time", class: "btn btn-outline-light" %>
           </div>
         </div>
       </div>

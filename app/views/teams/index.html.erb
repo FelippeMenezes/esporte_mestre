@@ -2,7 +2,7 @@
   <div class="team-index-container container m-1">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>Meus Times</h1>
-      <%= link_to "Criar Novo Time", new_team_path, class: "btn btn-success" %>
+      <%= link_to "Criar Novo Time", new_team_path, class: "team-index-btn btn btn-outline-light" %>
     </div>
 
     <% if @teams.any? %>
@@ -27,12 +27,12 @@
                   </div>
                 </div>
 
-                
+
                 <p class="card-text">
                   <strong>Orçamento:</strong> $<%= number_with_delimiter(team.budget) %><br>
                   <strong>Jogadores:</strong> <%= team.total_players %>
                 </p>
-                <%= link_to "Ver Time", team, class: "team-index-btn btn btn-light" %>
+                <%= link_to "Ver Time", team, class: "team-index-btn btn btn-outline-light" %>
               </div>
             </div>
           </div>
@@ -46,4 +46,3 @@
       </div>
     <% end %>
   </div>
-  

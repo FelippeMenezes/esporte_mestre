@@ -1,13 +1,14 @@
 <div class="player-index">
   <div class="player-index-container container mt-1">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1>Jogadores - <%= @team.name %></h1>
+    <div class="d-flex justify-content-between align-items-center mb-1">
+      <h1>Jogadores</h1>
+      <%= link_to "Voltar", @team, class: "btn btn-outline-light m-2" %>
     </div>
 
     <% if @players.any? %>
       <div class="row">
         <% %w[G D M A].each do |position| %>
-          <div class="col-md-6 col-lg-3 mb-4">
+          <div class="col-md-6 col-lg-3 mb-1">
             <div class="card">
               <div class="card-header">
                 <h5><%= Player::POSITION_NAMES[position] %>s</h5>
@@ -16,7 +17,7 @@
                 <% position_players = @players.select { |p| p.position == position } %>
                 <% if position_players.any? %>
                   <% position_players.each do |player| %>
-                    <div class="mb-2">
+                    <div class="mb-1">
                       <%= link_to player.name, player, class: "player-name text-decoration-none" %><br>
                       <small>Nível: <%= player.level %></small>
                     </div>
@@ -33,9 +34,6 @@
       <div data-controller="no-players-alert"></div>
     <% end %>
 
-    <div class="d-flex justify-content-between mt-4">
-      <%= link_to "Voltar para o Time", @team, class: "btn btn-secondary" %>
-      <%= link_to "Mercado de Jogadores", team_market_path(@team), class: "btn btn-light" %>
-    </div>
+    <%= link_to "Voltar", @team, class: "btn btn-outline-light m-2" %>
   </div>
 </div>

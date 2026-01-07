@@ -26,4 +26,10 @@
     color: white;
     border-radius: 5px;
   }
+
+  .btn-outline-light{
+    &:hover {
+      color: #1d975e;
+    }
+  }
 }

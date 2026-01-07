@@ -54,9 +54,11 @@
   }
 
   .team-index-btn {
-    color: #1d975e;
     text-shadow: none;
-    font-weight: bold;
+
+    &:hover {
+      color: #1d975e;
+    }
   }
 
   .button-as-image {
