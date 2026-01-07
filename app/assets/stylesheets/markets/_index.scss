@@ -72,11 +72,19 @@
         margin-left: 2px;
         margin-right: 3px;
         font-size: 0.7rem;
-        font-weight: bold
+        font-weight: bold;
+
+        &:hover {
+        color: #1d975e;
+        }
     }
 
     .back-btn {
         margin-bottom: 10px;
+
+        &:hover {
+        color: #1d975e;
+        }
     }
 }
 

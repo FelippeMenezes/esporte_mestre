@@ -14,6 +14,12 @@
 
 }
 
+.btn-outline-light {
+    &:hover {
+    color: #1d975e;
+    }
+}
+
 .last-matches-row {
     background-color: #198754;
     color: white;
@@ -24,7 +30,7 @@
 
 
     &.finished {
-        background-color: #4e4e4e;
+        background-color: #40554b;
     }
 
     .match-date {

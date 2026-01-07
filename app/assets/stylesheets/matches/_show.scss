@@ -120,10 +120,14 @@
           .clickable-end-game {
             cursor: pointer;
             text-decoration: none;
-            background-color: white;
-            color: seagreen;
+            color: white;
+            border: white 1px solid;
+            border-radius: 5px;
+
             &:hover {
-              opacity: 0.8;
+              background-color: white;
+              color: #1d975e;
+              border-radius: 5px;
             }
           }
         }

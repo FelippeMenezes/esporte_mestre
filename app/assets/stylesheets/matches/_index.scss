@@ -82,7 +82,8 @@
 
     .match-back-btn,
     .new-match-btn-matches {
+        &:hover {
         color: #1d975e;
-        font-weight: bold;
+        }
     }
 }
