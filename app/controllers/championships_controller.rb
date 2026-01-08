@@ -6,7 +6,7 @@ class ChampionshipsController < ApplicationController
     # Cria um novo campeonato para a campanha atual
     @campaign = @team.campaign
     season_number = @campaign.championships.count + 1
-    @championship = @campaign.championships.create!(name: "Divisão Principal - Temporada #{season_number}", season: season_number)
+    @championship = @campaign.championships.create!(name: "Temporada #{season_number}", season: season_number)
 
     # Gera os jogos
     @championship.generate_matches!

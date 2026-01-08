@@ -10,8 +10,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5px;
 
+    .match-date {
+        text-align: center;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.8rem;
+    }
 }
 
 .btn-outline-light {
@@ -20,24 +25,26 @@
     }
 }
 
+.last-matches-container {
+
+    &.finished {
+        background-color: #6b8f7e;
+        border-radius: 10px;
+    }
+}
+
 .last-matches-row {
     background-color: #198754;
     color: white;
     margin-bottom: 10px;
     margin: 5px;
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 5px;
 
 
     &.finished {
-        background-color: #40554b;
-    }
-
-    .match-date {
-        text-align: center;
-        display: block;
-        margin-bottom: 5px;
-        font-size: 0.875rem;
+        background-color: #4b6458;
     }
 
     .last-results {
@@ -45,6 +52,7 @@
         grid-template-columns: 1fr auto auto auto 1fr;
         align-items: center;
         justify-items: center;
+        min-height: 50px;
     }
 
     .team-home {
@@ -71,6 +79,11 @@
 
     .result-badge {
         text-align: center;
+
+        .bg-light {
+            color:#198754;
+
+        }
     }
 
     @media (max-width: 576px) {
