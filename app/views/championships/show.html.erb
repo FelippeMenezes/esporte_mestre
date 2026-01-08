@@ -1,5 +1,5 @@
 <div class="championship-show">
-    <div class="championship-show-container container mt-1">
+    <div class="championship-show-container container">
         <div class="d-flex justify-content-between">
             <h1><%= @championship.name %></h1>
             <div class="d-flex align-items-center">
@@ -10,32 +10,37 @@
         <% @championship.matches.order(:round).group_by(&:round).each do |round, matches| %>
         <% round_finished = matches.all? { |m| m.status == 'finished' } %>
         <div class="championship-show-card-body text-center <%= 'finished' if round_finished %>">
-            <h3 class="m-2">Rodada <%= round %></h3>
-            <% if round == next_playable_round && match_to_play = matches.find { |m| m.status == 'scheduled' && (m.home_team_id == @team.id || m.away_team_id == @team.id) } %>
-                <%= button_to "Jogar Rodada", play_round_team_match_path(@team, match_to_play), method: :post, class: "btn btn-outline-light btn-sm mb-2", id: "active-round-btn" %>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mt-1">Rodada</h3>
+                <h3 class="badge bg-success mt-1" style="font-size: 1.3em;"><%= round %></h3>
+            </div>
+            <h3>
+            <% if matches.first.match_date %>
+                <small class="match-date bg-secondary text-white rounded fw-bold ps-4 pe-4 p-1"><%= matches.first.match_date.strftime("%d/%m/%Y %H:%M") %></small>
             <% end %>
-            <div>
+            </h3>
+            <% if round == next_playable_round && match_to_play = matches.find { |m| m.status == 'scheduled' && (m.home_team_id == @team.id || m.away_team_id == @team.id) } %>
+                <%= button_to "Jogar Rodada", play_round_team_match_path(@team, match_to_play), method: :post, class: "btn btn-outline-light btn-sm", id: "active-round-btn" %>
+            <% end %>
+            <div class="last-matches-container <%= 'finished' if round_finished %>">
                 <% matches.each do |match| %>
-                    <div class="last-matches-row mb-2 <%= 'finished' if round_finished %>">
+                    <div class="last-matches-row mb-1 <%= 'finished' if round_finished %>">
                         <div class="match-details">
-                            <% if match.match_date %>
-                                <small class="match-date"><%= match.match_date.strftime("%d/%m/%Y") %></small>
-                            <% end %>
                             <div class="last-results">
                                 <div class="team-home">
                                     <% if match.home_team.user %>
-                                        <span class="badge bg-success mb-1" style="font-size: 0.6em;">Seu time</span><br>
+                                        <span class="badge bg-light text-success" style="font-size: 0.6em;">Seu time</span><br>
                                     <% end %>
                                     <%= match.home_team.name %>
                                 </div>
                                 <div class="goals"><strong><%= match.home_goals %></strong></div>
                                 <div class="result-badge">
-                                    <span class="badge bg-success">X</span>
+                                    <span class="badge bg-light">X</span>
                                 </div>
                                 <div class="goals"><strong><%= match.away_goals %></strong></div>
                                 <div class="team-away">
                                     <% if match.away_team.user %>
-                                        <span class="badge bg-success mb-1" style="font-size: 0.6em;">Seu time</span><br>
+                                        <span class="badge bg-light text-success" style="font-size: 0.6em;">Seu time</span><br>
                                     <% end %>
                                     <%= match.away_team.name %>
                                 </div>

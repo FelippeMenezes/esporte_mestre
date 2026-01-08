@@ -19,30 +19,30 @@
           <div class="col-12 mb-1">
             <div class="card shadow-sm">
               <div class="card-body match-card-body">
-                  <div class="row text-center align-items-center">
+                  <div class="row text-center d-flex align-items-center">
                       <!-- Time da Casa -->
                       <div class="col-5">
                           <% if match.home_team.user %>
-                              <span class="badge bg-success">Seu time</span>
+                              <span class="badge bg-white p-1">Seu time</span>
                           <% end %>
-                          <h5><%= match.home_team.name %></h5>
+                          <h5 class="me-2"><%= match.home_team.name %></h5>
                       </div>
 
                       <!-- Placar -->
                       <div class="col-2">
-                          <div class="d-flex justify-content-center align-items-center bg-light rounded py-1 mt-1 mb-1">
-                              <h5 id="home-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
-                              <span class="mx-1">X</span>
-                              <h5 id="away-score-<%= match.id %>" class="m-0 fw-bold">0</h5>
+                          <div class="d-flex justify-content-center align-items-center bg-light rounded">
+                              <h5 id="home-score-<%= match.id %>" class="m-1 fw-bold">0</h5>
+                              <span class="badge bg-white mx-1">X</span>
+                              <h5 id="away-score-<%= match.id %>" class="m-1 fw-bold">0</h5>
                           </div>
                       </div>
 
                       <!-- Time Visitante -->
                       <div class="col-5">
                           <% if match.away_team.user %>
-                              <span class="badge bg-success">Seu time</span>
+                              <span class="badge bg-white p-1">Seu time</span>
                           <% end %>
-                          <h5><%= match.away_team.name %></h5>
+                          <h5 class="ms-2"><%= match.away_team.name %></h5>
                       </div>
                   </div>
               </div>
