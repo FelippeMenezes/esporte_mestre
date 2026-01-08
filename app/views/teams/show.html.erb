@@ -11,7 +11,7 @@
               <small>Orçamento Disponível</small>
             </div>
             <p><strong>Total de Jogadores:</strong> <%= @team.total_players %></p>
-            <p><strong>Pode Jogar:</strong>
+            <p class="m-0 p-0"><strong>Pode Jogar:</strong>
               <% if @team.can_play_match? %>
                 <span class="badge bg-success">Sim</span>
               <% else %>
