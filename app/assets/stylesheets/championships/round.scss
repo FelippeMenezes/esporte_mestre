@@ -6,12 +6,10 @@
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 425px;
 
     .round-container{
       background-color: #1d975e;
       border-radius: 10px;
-      height: 325px;
     }
   }
 
@@ -75,6 +73,24 @@
           color: #ffc107 !important;
           transition: color 0.2s ease-in-out;
         }
+      }
+    }
+  }
+
+  // Notificações de Gols (Idêntico ao matches/show)
+  .notifications-and-results {
+    text-align: center;
+    padding: 2px;
+
+    #goal-notifications {
+      .goal-alert {
+        color: #ffc107;
+        font-weight: bold;
+        animation: fadeIn 0.5s ease-in-out;
+        margin-bottom: 8px;
+        padding: 8px;
+        border-radius: 4px;
+        background-color: rgba(255, 193, 7, 0.1);
       }
     }
   }

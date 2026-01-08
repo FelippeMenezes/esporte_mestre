@@ -23,7 +23,7 @@
                       <!-- Time da Casa -->
                       <div class="col-5">
                           <% if match.home_team.user %>
-                              <span class="badge bg-white p-1">Seu time</span>
+                              <span class="badge bg-white p-1" style="font-size: 0.7em;">Seu time</span>
                           <% end %>
                           <h5 class="me-2"><%= match.home_team.name %></h5>
                       </div>
@@ -40,7 +40,7 @@
                       <!-- Time Visitante -->
                       <div class="col-5">
                           <% if match.away_team.user %>
-                              <span class="badge bg-white p-1">Seu time</span>
+                              <span class="badge bg-white p-1" style="font-size: 0.7em;">Seu time</span>
                           <% end %>
                           <h5 class="ms-2"><%= match.away_team.name %></h5>
                       </div>
@@ -52,13 +52,12 @@
       </div>
 
       <div id="round-final-actions" class="text-center mt-2 d-none">
-        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-outline-light" %>
-      </div>
+        <%= link_to "Voltar ao Campeonato", team_championship_path(@team, @championship), class: "btn btn-outline-light mb-1" %>
+      </div>     <!-- Container de Notificações de Gols -->
+    <div class="notifications-and-results mb-2">
+      <div id="goal-notifications"></div>
     </div>
-
-
-
-
+    </div>
   </div>
 </div>
 
@@ -71,6 +70,7 @@
       this.allGoalEvents = JSON.parse(dataEl.dataset.allGoalEvents);
       this.gameClockElement = document.getElementById('global-game-clock');
       this.finalActionsElement = document.getElementById('round-final-actions');
+      this.notificationsElement = document.getElementById('goal-notifications');
 
       this.interval = null;
       this.running = false;
@@ -129,6 +129,13 @@
     }
 
     displayGoal(matchId, goal) {
+      // Exibe a notificação de texto (Idêntico ao matches/show)
+      const notification = document.createElement('p');
+      notification.innerHTML = `<strong>GOL!</strong> ${goal.team_name} marcou aos ${goal.minute}'.`;
+      notification.classList.add('goal-alert');
+      if (this.notificationsElement) this.notificationsElement.prepend(notification);
+
+      // Atualiza o placar
       let scoreElement;
       if (goal.type === 'home') {
         this.scores[matchId].home++;
