@@ -11,7 +11,7 @@
           <% if match.match_date %>
             <div class="last-matches-row">
               <div class="match-details">
-                <small class="match-date"><%= match.match_date.strftime("%d/%m/%Y") %></small>
+                <small class="match-date bg-white text-success rounded fw-bold"><%= match.match_date.strftime("%d/%m/%Y %H:%M") %></small>
                 <div class="last-results">
                   <div class="team-home">
                     <% if match.home_team == @team %>
