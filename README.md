@@ -6,7 +6,7 @@
 [View the Live Preview here](https://future-puffin-esporte-mestre-a25dd968.koyeb.app/)
 
 ## 📷 Preview
-<img src=".app/assets/images/login.png" width="200"/>
+<img src="app/assets/images/login.png" width="200"/>
 
 ## 🛠️ Technologies Used
 
