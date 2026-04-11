@@ -2,7 +2,10 @@
 
 **Esporte Mestre** is a web application for managing sports teams, players, matches, and fantasy sports operations. Built with modern Ruby on Rails and optimized for performance and user experience.
 
-## 🚀 Technologies Used
+## 🚀 Live Demo
+[View the Live Preview here](https://future-puffin-esporte-mestre-a25dd968.koyeb.app/)
+
+## 🛠️ Technologies Used
 
 ### Core Framework
 - **[Ruby on Rails 7.1.5](https://rubyonrails.org/)** - Full-stack web framework
@@ -36,12 +39,12 @@
 - **Simple Form](https://github.com/heartcombo/simple_form)** - Flexible form builder
 - **Web Console](https://github.com/rails/web-console)** - Development debugging console
 
-### Testing
+## 📝 Testing
 - **[Capybara](https://github.com/teamcapybara/capybara)** - Integration testing framework
 
 ## 📋 Features
 
-### User Management
+## 🕹️ User Management
 - User registration and authentication via Devise
 - Secure login/logout functionality
 - User profile management
